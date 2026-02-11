@@ -1,0 +1,44 @@
+{
+  "name": "softleader-nuxt-core",
+  "version": "1.0.0",
+  "description": "Nuxt 3 Core Layer - 可重用的基礎架構",
+  "type": "module",
+  "files": [
+    "components",
+    "composables",
+    "layouts",
+    "plugins",
+    "styles",
+    "nuxt.config.ts",
+    "tsconfig.base.json",
+    "README.md"
+  ],
+  "exports": {
+    ".": "./nuxt.config.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "nuxi typecheck"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^3.15.4"
+  },
+  "devDependencies": {
+    "@nuxt/eslint-config": "^0.5.7",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "eslint": "^9.17.0",
+    "nuxt": "^3.15.4",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3",
+    "vue-tsc": "^2.2.0"
+  },
+  "keywords": [
+    "nuxt3",
+    "layer",
+    "design-system"
+  ],
+  "author": "",
+  "license": "MIT"
+}

@@ -1,0 +1,30 @@
+{
+  "name": "nuxt-layer-core-playground",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nuxt 3 Core Layer Playground - 可重用的 Nuxt 3 架構",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:playground": "npm run dev -w playground-app",
+    "dev:docs": "npm run dev -w ui-docs",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "lint:fix": "npm run lint:fix --workspaces --if-present"
+  },
+  "keywords": [
+    "nuxt3",
+    "layer",
+    "monorepo",
+    "design-system"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}
