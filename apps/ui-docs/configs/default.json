@@ -1,0 +1,7 @@
+{
+  "modules": ["showcase"],
+  "meta": {
+    "title": "SL Nuxt Core Documentation",
+    "description": "Professional documentation for SoftLeader Nuxt Core Layer"
+  }
+}

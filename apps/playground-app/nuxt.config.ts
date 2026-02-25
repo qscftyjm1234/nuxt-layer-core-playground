@@ -16,7 +16,10 @@ export default defineNuxtConfig({
   // TypeScript
   typescript: {
     strict: true,
-    typeCheck: true
+    typeCheck: true,
+    tsConfig: {
+      extends: '../../../tsconfig.base.json'
+    }
   },
 
   // 開發工具

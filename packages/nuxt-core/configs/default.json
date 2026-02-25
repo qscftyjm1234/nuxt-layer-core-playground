@@ -1,0 +1,14 @@
+{
+  "name": "Default Product",
+  "description": "Standard configuration enabling all modules",
+  "modules": ["showcase"],
+  "theme": {
+    "primary": "#1976D2"
+  },
+  "meta": {
+    "title": "Demo App",
+    "description": "Demo App",
+    "favicon": "/favicon.ico",
+    "themeColor": "#ffffff"
+  }
+}

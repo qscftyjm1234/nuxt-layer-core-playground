@@ -1,0 +1,54 @@
+{
+  "common": {
+    "companyName": "Demo App",
+    "welcome": "Welcome",
+    "login": "Login",
+    "logout": "Logout",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "back": "Back",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info",
+    "week": "Week",
+    "month": "Month",
+    "year": "Year",
+    "viewMore": "View More"
+  },
+  "login": {
+    "title": "Login",
+    "username": "Username",
+    "password": "Password",
+    "rememberMe": "Remember Me",
+    "forgotPassword": "Forgot Password?",
+    "loginButton": "Login",
+    "loginSuccess": "Login Successful",
+    "loginFailed": "Login Failed. Please check your credentials."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "stats": {
+      "totalUsers": "Total Users",
+      "totalOrders": "Total Orders",
+      "totalRevenue": "Total Revenue",
+      "activeSessions": "Active Sessions"
+    },
+    "welcomeMessage": "Welcome back, here is your system overview.",
+    "exportReport": "Export Report",
+    "trafficTrend": "Traffic Trend",
+    "chartPlaceholder": "Chart Area (Recommend integrating Chart.js or ECharts)",
+    "recentActivities": "Recent Activities"
+  },
+  "nav": {
+    "home": "Home",
+    "users": "User Management",
+    "settings": "Settings"
+  }
+}
