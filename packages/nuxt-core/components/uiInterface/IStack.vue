@@ -6,6 +6,8 @@
  */
 interface Props {
   direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse'
+  vertical?: boolean
+  horizontal?: boolean
   gap?: string | number
   align?: 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch'
   justify?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly'
@@ -14,12 +16,17 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  direction: 'row',
   gap: '0.5rem',
   align: 'stretch',
   justify: 'flex-start',
   wrap: 'nowrap',
   inline: false
+})
+
+const stackDirection = computed(() => {
+  if (props.vertical) return 'column'
+  if (props.horizontal) return 'row'
+  return props.direction || 'row'
 })
 </script>
 
@@ -28,7 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
     class="ui-stack"
     :style="{
       display: inline ? 'inline-flex' : 'flex',
-      flexDirection: direction,
+      flexDirection: stackDirection,
       gap: typeof gap === 'number' ? `${gap}rem` : gap,
       alignItems: align,
       justifyContent: justify,

@@ -19,11 +19,11 @@ export const appConfig: NuxtConfig['app'] = {
     /** 標題模板 - 用於動態設定頁面標題，%s 會被替換成頁面標題
      * @example 產品列表 - Nuxt 3 Kit
      */
-    titleTemplate: '%s - Nuxt 3 Kit',
+    titleTemplate: productConfig.meta?.titleTemplate || '%s - Nuxt 3 Kit',
 
     /** HTML 語言屬性 */
     htmlAttrs: {
-      lang: 'zh-TW'
+      lang: productConfig.meta?.lang || 'zh-TW'
     },
 
     // Meta 標籤
@@ -36,7 +36,7 @@ export const appConfig: NuxtConfig['app'] = {
           productConfig.meta?.description ||
           'Enterprise-grade Nuxt 3 Development Kit - Streamlining your frontend development'
       },
-      { name: 'author', content: 'Demo App' },
+      { name: 'author', content: productConfig.meta?.author || 'Softleader' },
       { name: 'robots', content: 'index, follow' }, // SEO：允許搜尋引擎索引
       { name: 'format-detection', content: 'telephone=no' }
     ],

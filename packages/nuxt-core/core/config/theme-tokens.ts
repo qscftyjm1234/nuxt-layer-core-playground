@@ -1,3 +1,4 @@
+import { productConfig } from '../../scripts/product-loader'
 import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context'
 
 /**
@@ -15,13 +16,13 @@ export const themeConfig = {
      * @nameZH 業務主要顏色
      * @description 用於特定的業務邏輯標示，例如: '#fa541c'
      */
-    colorBusiness: '#fa541c',
+    colorBusiness: productConfig.theme?.businessColor || '#fa541c',
     // ========================================================================
     // Seed Tokens (種子變數) - 影響所有其他 Token 的基礎變數
     // ========================================================================
-
+ 
     // 品牌色
-    colorPrimary: '#1677ff', // 品牌主色
+    colorPrimary: productConfig.theme?.primaryColor || '#1677ff', // 品牌主色
     colorSuccess: '#52c41a', // 成功色
     colorWarning: '#faad14', // 警戒色
     colorError: '#ff4d4f', // 錯誤色
@@ -52,7 +53,7 @@ export const themeConfig = {
     motionEaseOutQuint: 'cubic-bezier(0.23, 1, 0.32, 1)',
 
     // 圓角
-    borderRadius: 6, // 基礎圓角
+    borderRadius: productConfig.theme?.borderRadius ?? 6, // 基礎圓角
 
     // 尺寸
     sizeUnit: 4, // 尺寸單位

@@ -37,7 +37,7 @@ withDefaults(defineProps<Props>(), {
         v-if="title"
         class="alert-title"
       >
-        {{ title }}
+        title：{{ title }}
       </div>
       <div class="alert-text">
         <slot>{{ text }}</slot>

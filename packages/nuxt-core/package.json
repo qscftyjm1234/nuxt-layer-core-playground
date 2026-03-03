@@ -1,6 +1,6 @@
 {
   "name": "softleader-nuxt-core",
-  "version": "1.0.6",
+  "version": "1.0.9",
   "description": "Nuxt 3 Core Layer - 可重用的基礎架構",
   "type": "module",
   "files": [
@@ -13,7 +13,6 @@
     "layouts",
     "modules",
     "plugins",
-    "repositories",
     "router",
     "scripts",
     "styles",
@@ -29,6 +28,9 @@
   "exports": {
     ".": "./nuxt.config.ts",
     "./utils/scanner": "./router/routes-scanner.ts"
+  },
+  "bin": {
+    "softleader-nuxt-core": "./bin/init.mjs"
   },
   "scripts": {
     "lint": "eslint .",
@@ -60,6 +62,7 @@
   },
   "devDependencies": {
     "@types/lodash.clonedeep": "^4.5.9",
+    "@types/node": "latest",
     "cross-env": "7.0.3",
     "nuxt": "^3.15.4"
   },

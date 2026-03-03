@@ -39,9 +39,9 @@ export const runtimeConfig = {
     // API 連線相關設定
     api: {
       // API 伺服器的基礎路徑 (Base URL)
-      baseUrl: process.env.VITE_API_BASE_URL,
+      baseUrl: productConfig.api?.baseUrl || process.env.VITE_API_BASE_URL,
       // 請求超時時間 (毫秒)，預設 30 秒
-      timeout: Number(process.env.VITE_API_TIMEOUT) || 30000,
+      timeout: productConfig.api?.timeout || Number(process.env.VITE_API_TIMEOUT) || 30000,
       // 請求失敗後的自動重試次數，預設 0 次 (不重試)
       retry: Number(process.env.VITE_API_RETRY_COUNT) || 0,
       // 是否預設開啟全域 Loading 條 (上方藍色進度條)
@@ -51,9 +51,9 @@ export const runtimeConfig = {
     // 身分認證相關設定
     auth: {
       // 儲存 Token 的 Cookie 名稱
-      tokenKey: 'auth_token',
+      tokenKey: productConfig.auth?.tokenKey || 'auth_token',
       // Token 的有效期限 (秒)，預設 7 天
-      maxAge: 60 * 60 * 24 * 7
+      maxAge: productConfig.auth?.maxAge || 60 * 60 * 24 * 7
     },
 
     // Mock API 開關 (預設開啟以進行展示)

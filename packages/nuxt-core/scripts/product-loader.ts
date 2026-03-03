@@ -7,30 +7,48 @@ import fs from 'fs'
  * 規定 JSON 裡面可以寫什麼
  */
 export interface ProductConfig {
-  /**
-   * 要開哪些功能？
-   * 這裡寫的名稱，對應到 pages/ 底下的資料夾名字
-   * 例如寫了 ['member']，就會產生 member 相關的頁面路由
-   */
-  modules: string[]
-
-  /**
-   * 網站的基本資料 (標題、圖示...)
-   */
+  /** 專案名稱與 Meta */
   meta?: {
-    /** 瀏覽器分頁標題 */
     title?: string
-    /** 搜尋引擎看到的描述 */
     description?: string
-    /** 手機版網址列顏色 */
-    themeColor?: string
-    /** 網頁小圖示 (Favicon) */
-    favicon?: string
+    author?: string
+    lang?: string
   }
 
-  /**
-   * 允許寫其他的設定，不會報錯
-   */
+  /** 版面核心設定 */
+  layout?: {
+    branding?: {
+      title?: string
+      logoIcon?: string
+    }
+    header?: {
+      search?: boolean
+      searchPlaceholder?: string
+    }
+    sidebar?: {
+      mainMenuTitle?: string
+      width?: number
+    }
+    footer?: {
+      content?: string
+    }
+  }
+
+  /** 主題核心設定 */
+  theme?: {
+    primaryColor?: string
+    borderRadius?: number
+  }
+
+  /** API 設定 */
+  api?: {
+    baseUrl?: string
+  }
+
+  /** 功能模組開關 */
+  modules?: string[]
+
+  /** 其他擴充 */
   [key: string]: any
 }
 

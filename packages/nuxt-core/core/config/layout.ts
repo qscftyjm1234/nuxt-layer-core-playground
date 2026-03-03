@@ -111,21 +111,24 @@ export interface LayoutConfig {
  *
  * @see {@link LayoutConfig} 完整的設定介面定義
  */
+import { productConfig } from '../../scripts/product-loader'
+
 export const defaultLayoutConfig: LayoutConfig = {
   branding: {
     logo: {
-      icon: 'mdi-rocket-launch'
+      icon: productConfig.layout?.branding?.logoIcon || 'mdi-rocket-launch',
+      image: productConfig.layout?.branding?.logoImage
     },
-    title: 'Demo App Framework',
-    subtitle: 'Enterprise Framework'
+    title: productConfig.layout?.branding?.title || 'Demo App Framework',
+    subtitle: productConfig.layout?.branding?.subtitle || 'Enterprise Framework'
   },
   header: {
     visible: true,
-    height: 64,
+    height: productConfig.layout?.header?.height || 64,
     breadcrumbs: true,
-    search: true,
-    searchPlaceholder: '搜尋全站...',
-    notifications: true,
+    search: productConfig.layout?.header?.search ?? true,
+    searchPlaceholder: productConfig.layout?.header?.searchPlaceholder || '搜尋全站...',
+    notifications: productConfig.layout?.header?.notifications ?? true,
     userMenu: {
       visible: true,
       items: [
@@ -140,17 +143,17 @@ export const defaultLayoutConfig: LayoutConfig = {
   },
   sidebar: {
     visible: true,
-    width: 280,
+    width: productConfig.layout?.sidebar?.width || 280,
     collapsible: true,
-    mainMenuTitle: '主選單'
+    mainMenuTitle: productConfig.layout?.sidebar?.mainMenuTitle || '主選單'
   },
   footer: {
-    visible: true,
+    visible: productConfig.layout?.footer?.visible ?? true,
     fixed: false,
-    content: 'Copyright © 2026 Demo App. All rights reserved.'
+    content: productConfig.layout?.footer?.content || `Copyright © ${new Date().getFullYear()} Demo App. All rights reserved.`
   },
   theme: {
     defaultTheme: 'light',
-    primaryColor: '#1976D2'
+    primaryColor: productConfig.theme?.primaryColor || '#1976D2'
   }
 }
