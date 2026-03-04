@@ -19,4 +19,14 @@
 
 ---
 
+### 2. Property 'xxx' does not exist on type 'Options'
+
+- **發現日期**: 2026-03-04
+- **症狀**: 在頁面中使用 `useOptions()` 取得自動掃描的專案選項時，TypeScript 報錯屬性不存在。
+- **根本原因**: `options-scanner.ts` 生成的 `.d.ts` 語法錯誤。在 `interface CustomOptions` 中使用了不合法的 mapped type 語法 `[K in keyof typeof optX]: any`。
+- **最佳解決方案**: 修改 `packages/nuxt-core/modules/options-scanner.ts`，將 `CustomOptions` 改為透過 `extends` 合併多個匯出的型別：`interface CustomOptions extends typeof opt0, typeof opt1 {}`。
+- **預防措施**: 在生成型別定義時需遵守 TypeScript interface 語法限制，若需要合併多個型別，應優先使用 `extends` 或 `type` 交集。
+
+---
+
 _請使用相同格式在下方新增項目。_

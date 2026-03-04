@@ -1,7 +1,13 @@
 {
-  "modules": ["showcase"],
-  "meta": {
-    "title": "SL Nuxt Core Documentation",
-    "description": "Professional documentation for SoftLeader Nuxt Core Layer"
+  "branding": {
+    "name": "Softleader Nuxt Core Docs",
+    "appName": "UI Documentation Center",
+    "shortName": "SL-CORE-UI"
+  },
+  "layout": {
+    "menuStyle": "sidebar"
+  },
+  "features": {
+    "enableAuth": false
   }
 }

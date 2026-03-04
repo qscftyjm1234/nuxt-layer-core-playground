@@ -20,25 +20,18 @@ export default defineNuxtModule({
     const projectRootDir = nuxt.options.rootDir
     const optionsDir = join(projectRootDir, 'options')
 
-    // 1. 檢查專案是否有 options 目錄
-    if (!fs.existsSync(optionsDir)) {
-      return
-    }
-
-    // 2. 獲取所有 .ts 或 .js 檔案 (排除 index.ts 如果有的話，避免循環)
-    const files = fs.readdirSync(optionsDir)
-      .filter(f => (f.endsWith('.ts') || f.endsWith('.js')) && !f.startsWith('index'))
-      .map(f => f.replace(/\.(ts|js)$/, ''))
-
-    if (files.length === 0) {
-      return
+    const getOptionsFiles = () => {
+      if (!fs.existsSync(optionsDir)) return []
+      return fs.readdirSync(optionsDir)
+        .filter(f => (f.endsWith('.ts') || f.endsWith('.js')) && !f.startsWith('index'))
+        .map(f => f.replace(/\.(ts|js)$/, ''))
     }
 
     // 3. 生成編譯時期的虛擬 Plugin
-    // 這個 Plugin 會被注入到專案中，並在執行時自動註冊選項
-    addPluginTemplate({
+    const pluginTemplate = addPluginTemplate({
       filename: 'softleader-auto-options.mjs',
       getContents: () => {
+        const files = getOptionsFiles()
         const imports = files.map((file, i) => `import * as opt${i} from '~/options/${file}'`).join('\n')
         const registries = files.map((_, i) => `...opt${i}`).join(',\n      ')
 
@@ -62,35 +55,55 @@ export default defineNuxtPlugin((nuxtApp) => {
     })
 
     // 4. 生成型別宣告檔 (IDE 智慧提示)
-    // 透過 Module Augmentation 擴充 CustomOptions 介面
-    nuxt.hook('prepare:types', ({ references }) => {
-      const template = addTemplate({
-        filename: 'softleader-options.d.ts',
-        getContents: () => {
-          const imports = files.map((file, i) => `import * as opt${i} from '~/options/${file}'`).join('\n')
-          const keys = files.map((file, i) => {
-             // 這裡假設檔案導出的變數名稱就是 Option Key
-             // 我們透過 typeof 取得型別
-             return `    [K in keyof typeof opt${i}]: any`
-          }).join('\n')
+    const typeTemplate = addTemplate({
+      filename: 'softleader-options.d.ts',
+      getContents: () => {
+        const files = getOptionsFiles()
+        const imports = files.map((file, i) => `import * as opt${i} from '~/options/${file}'`).join('\n')
+        const types = files.map((_, i) => `typeof opt${i}`).join(' & ')
 
-          return `
+        return `
 import { CustomOptions } from 'softleader-nuxt-core/core/options/registry'
 ${imports}
 
 declare module 'softleader-nuxt-core/core/options/registry' {
-  interface CustomOptions {
-${files.map((file, i) => `    // 來自 options/${file}\n    [K in keyof typeof opt${i}]: any`).join('\n')}
+  interface CustomOptions extends AnyOptions {}
+  type AnyOptions = {
+    [K in keyof (${types || 'object'})]: any
   }
 }
 
 export {}
           `
-        }
-      })
+      }
+    })
+
+    // 將產生的型別檔加入 Nuxt 的型別參考中，並確保路徑映射正確
+    nuxt.hook('prepare:types', ({ references, tsConfig }) => {
+      references.push({ path: resolve(nuxt.options.buildDir, typeTemplate.filename) })
       
-      // 將產生的型別檔加入 Nuxt 的型別參考中
-      references.push({ path: resolve(nuxt.options.buildDir, template.filename) })
+      // [關鍵修復] 處理本地開發時 node_modules/softleader-nuxt-core 損壞或過舊的問題
+      // 強制將型別指向本地核心層，確保 Module Augmentation 能生效
+      if (tsConfig.compilerOptions) {
+        tsConfig.compilerOptions.paths = tsConfig.compilerOptions.paths || {}
+        const corePath = resolve('../') // 指向 packages/nuxt-core
+        
+        // 優先映射核心路徑
+        tsConfig.compilerOptions.paths['softleader-nuxt-core'] = [corePath]
+        tsConfig.compilerOptions.paths['softleader-nuxt-core/*'] = [`${corePath}/*`]
+      }
+    })
+
+    // 5. 監聽目錄變動，實現 HMR (無需手動重啟)
+    // 當 options 目錄下的檔案新增或刪除時，觸發 Template 重新產生
+    nuxt.hook('builder:watch', async (event, path) => {
+      if (path.startsWith(optionsDir)) {
+        console.log(`[Options Scanner] 偵測到變動 (${event}): ${path}, 正在重新整理虛擬檔案...`)
+        const { updateTemplates } = await import('@nuxt/kit')
+        await updateTemplates({
+          filter: (t) => t.filename === pluginTemplate.filename || t.filename === typeTemplate.filename
+        })
+      }
     })
   }
 })

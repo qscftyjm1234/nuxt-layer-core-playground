@@ -25,9 +25,8 @@ export interface CustomOptions {
 
 /** 
  * 選項物件類型 (核心 + 自定義)
+ * 轉為單一 mapped type 以提升型別相容性
  */
 export type Options = {
-  [K in OptionKey]: OptionArray
-} & {
-  [K in keyof CustomOptions]: OptionArray
+  [K in (OptionKey | keyof CustomOptions)]: OptionArray
 }

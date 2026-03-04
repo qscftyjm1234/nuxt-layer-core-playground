@@ -1,7 +1,7 @@
 import type { ApiResponse, UserListResponse } from '~/../packages/nuxt-core/types/api'
 
 /**
- * 使用者資料層 (從 nuxt3-test 遷移)
+ * 使用者資料層
  */
 const api = useClient('/users')
 

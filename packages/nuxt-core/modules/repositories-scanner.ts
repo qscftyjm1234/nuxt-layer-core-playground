@@ -55,7 +55,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     })
 
     // 4. 生成型別宣告檔
-    nuxt.hook('prepare:types', ({ references }) => {
+    nuxt.hook('prepare:types', ({ references, tsConfig }) => {
       const template = addTemplate({
         filename: 'softleader-repositories.d.ts',
         getContents: () => {
@@ -77,6 +77,14 @@ export {}
       })
       
       references.push({ path: resolve(nuxt.options.buildDir, template.filename) })
+
+      // [關鍵修復] 處理本地開發時 node_modules/softleader-nuxt-core 損壞或過舊的問題
+      if (tsConfig.compilerOptions) {
+        tsConfig.compilerOptions.paths = tsConfig.compilerOptions.paths || {}
+        const corePath = resolve('../') // 指向 packages/nuxt-core
+        tsConfig.compilerOptions.paths['softleader-nuxt-core'] = [corePath]
+        tsConfig.compilerOptions.paths['softleader-nuxt-core/*'] = [`${corePath}/*`]
+      }
     })
   }
 })

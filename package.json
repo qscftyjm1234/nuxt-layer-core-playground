@@ -10,11 +10,22 @@
   "scripts": {
     "prepare": "node scripts/setup-env.mjs",
     "dev:playground": "npm run dev -w playground-app",
-    "dev:docs": "npm run dev -w ui-docs",
+    "dev:ui-docs": "npm run dev -w ui-docs",
     "build": "npm run build --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
-    "lint:fix": "npm run lint:fix --workspaces --if-present"
+    "lint:fix": "npm run lint:fix --workspaces --if-present",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "commit": "cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": ".cz-config.cjs"
+    }
   },
   "keywords": [
     "nuxt3",
@@ -27,5 +38,9 @@
   "engines": {
     "node": ">=18.0.0",
     "pnpm": ">=8.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.1",
+    "typescript-eslint": "^8.56.1"
   }
 }

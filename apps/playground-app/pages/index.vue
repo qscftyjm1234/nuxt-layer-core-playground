@@ -16,9 +16,11 @@ console.log(appConfig)
       <v-card-title>專案專屬選項：保險類型 (insuranceType)</v-card-title>
       <v-card-text>
         <div class="d-flex ga-2">
-          <v-chip v-for="item in options.insuranceType" :key="item.value">
-            {{ item.label }} ({{ item.value }})
-          </v-chip>
+          <pre>{{ options.insuranceType.withAll }}</pre>
+          <pre>{{ options.yesNo.withAll }}</pre>
+          <pre>{{ options.abc }}</pre>
+          <pre>{{ options.abcb }}</pre>
+          <div v-for="item in options.yesNo.value">{{ item }}</div>
         </div>
       </v-card-text>
     </v-card>

@@ -27,7 +27,10 @@
   ],
   "exports": {
     ".": "./nuxt.config.ts",
-    "./utils/scanner": "./router/routes-scanner.ts"
+    "./utils/scanner": "./router/routes-scanner.ts",
+    "./core/options/registry": "./core/options/registry.ts",
+    "./core/options/types": "./core/options/types.ts",
+    "./core/config/*": "./core/config/*"
   },
   "bin": {
     "softleader-nuxt-core": "./bin/init.mjs"
@@ -51,12 +54,17 @@
     "ant-design-vue": "^4.2.1",
     "dayjs": "1.11.13",
     "eslint": "^9.22.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jsdoc": "^50.2.4",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-vue": "^9.28.0",
     "lodash.clonedeep": "4.5.0",
     "pinia": "3.0.1",
     "prettier": "^3.5.3",
     "sass": "^1.85.0",
     "typescript": "^5.7.3",
     "vite-plugin-vuetify": "^2.1.3",
+    "vue-eslint-parser": "^9.4.3",
     "vue-tsc": "^2.2.8",
     "vuetify": "^3.11.8"
   },
@@ -64,6 +72,7 @@
     "@types/lodash.clonedeep": "^4.5.9",
     "@types/node": "latest",
     "cross-env": "7.0.3",
+    "eslint-import-resolver-typescript": "^4.4.4",
     "nuxt": "^3.15.4"
   },
   "peerDependencies": {

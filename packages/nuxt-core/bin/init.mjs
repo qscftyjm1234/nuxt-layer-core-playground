@@ -60,7 +60,17 @@ const packageJson = {
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "commit": "cz",
+    "prepare": "husky"
+  },
+  config: {
+    commitizen: { path: "./node_modules/cz-customizable" },
+    "cz-customizable": { config: ".cz-config.cjs" }
   },
   dependencies: {
     "softleader-nuxt-core": "latest"
@@ -68,7 +78,13 @@ const packageJson = {
   devDependencies: {
     "nuxt": "^3.15.4",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.10",
+    "@commitlint/cli": "^19.5.0",
+    "commitizen": "^4.3.0",
+    "cz-customizable": "^7.0.0",
+    "cross-env": "^7.0.3"
   }
 }
 
@@ -76,6 +92,18 @@ fs.writeFileSync(
   path.join(targetDir, 'package.json'),
   JSON.stringify(packageJson, null, 2)
 )
+
+// 2.1 建立共享配置檔案
+const extConfigs = [
+  { name: 'eslint.config.mjs', content: "import coreConfig from 'softleader-nuxt-core/core/config/eslint.config.mjs'\n\nexport default [\n  ...coreConfig\n]\n" },
+  { name: '.prettierrc.cjs', content: "module.exports = {\n  ...require('softleader-nuxt-core/core/config/prettier.json')\n}\n" },
+  { name: '.commitlintrc.cjs', content: "module.exports = require('softleader-nuxt-core/core/config/git/commitlint.config.cjs')\n" },
+  { name: '.lintstagedrc.js', content: "export { default } from 'softleader-nuxt-core/core/config/git/lint-staged.config.js'\n" },
+  { name: '.cz-config.cjs', content: "module.exports = require('softleader-nuxt-core/core/config/git/cz-config.cjs')\n" }
+]
+for (const conf of extConfigs) {
+  fs.writeFileSync(path.join(targetDir, conf.name), conf.content)
+}
 
 // 3. 建立 nuxt.config.ts (預設繼承 softleader-nuxt-core Layer)
 const nuxtConfigTs = `// https://nuxt.com/docs/api/configuration/nuxt-config
@@ -209,38 +237,15 @@ const tsconfig = `{
 `
 fs.writeFileSync(path.join(targetDir, 'tsconfig.json'), tsconfig)
 
-// 9. 建立 .gitignore
-const gitignore = `.nuxt
-.output
-.env
-.env.*
-!.env.example
-.nitro
-
-# Node
-node_modules
-*.log*
-.DS_Store
-
-# Build
-dist
-.cache
-
-# IDE
-.vscode/*
-!.vscode/settings.json
-!.vscode/extensions.json
-.idea
-
-# TypeScript
-*.tsbuildinfo
-
-# Misc
-.turbo
-coverage
-.npmrc
-`
-fs.writeFileSync(path.join(targetDir, '.gitignore'), gitignore)
+// 9. 建立 .gitignore (自核心層讀取標準配置)
+const gitignoreTemplatePath = path.resolve(__dirname, '../core/config/gitignore')
+let gitignoreContent = ''
+if (fs.existsSync(gitignoreTemplatePath)) {
+  gitignoreContent = fs.readFileSync(gitignoreTemplatePath, 'utf8')
+} else {
+  gitignoreContent = '.nuxt\n.output\nnode_modules\n.env\ndist\n'
+}
+fs.writeFileSync(path.join(targetDir, '.gitignore'), gitignoreContent)
 
 // 10. 建立 .npmrc (確保依賴載入與本地行為一致的基礎最佳實踐)
 const npmrc = `shamefully-hoist=true
@@ -250,13 +255,20 @@ fs.writeFileSync(path.join(targetDir, '.npmrc'), npmrc)
 
 // 11. 初始化 Git 儲存庫並安裝 npm 依賴
 try {
-  console.log('正在安裝依賴，這可能需要一點時間 (Installing dependencies)...')
-  execSync('npm install', { cwd: targetDir, stdio: 'inherit' })
-  
   console.log('正在環境初始化 Git 儲存庫 (Initializing git repository)...')
   execSync('git init', { cwd: targetDir, stdio: 'ignore' })
+
+  console.log('正在安裝依賴，這可能需要一點時間 (Installing dependencies)...')
+  execSync('npm install', { cwd: targetDir, stdio: 'inherit' })
+
+  console.log('正在設定 Git Hooks...')
+  const huskyPreCommit = path.join(targetDir, '.husky', 'pre-commit')
+  const huskyCommitMsg = path.join(targetDir, '.husky', 'commit-msg')
+  fs.mkdirSync(path.join(targetDir, '.husky'), { recursive: true })
+  fs.writeFileSync(huskyPreCommit, 'npx lint-staged\n')
+  fs.writeFileSync(huskyCommitMsg, 'npx --no -- commitlint --edit "${1}"\n')
 } catch (error) {
-  console.log('警告 (Warning): 自動安裝指令執行失敗。您可能需要手動進入資料夾執行 npm install。')
+  console.log('警告 (Warning): 自動安裝指令執行失敗。')
 }
 
 console.log('\n專案 "' + projectName + '" 已準備就緒！\n\n下一步 (Next steps):\n  cd ' + projectName + '\n  npm run dev\n')

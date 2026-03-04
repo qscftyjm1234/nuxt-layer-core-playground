@@ -1,0 +1,30 @@
+# Nuxt
+.nuxt
+.output
+.env
+.env.*
+!.env.example
+.nitro
+
+# Node
+node_modules
+*.log*
+.DS_Store
+
+# Build
+dist
+.cache
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea
+
+# TypeScript
+*.tsbuildinfo
+
+# Misc
+.turbo
+coverage
+.npmrc
