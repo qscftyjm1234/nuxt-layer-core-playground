@@ -1,29 +1,22 @@
 import type { NuxtConfig } from 'nuxt/schema'
-import { productConfig } from '../../scripts/product-loader'
 
 /**
- * App 設定檔案
+ * App 標題與基礎 Meta 設定 (預設值)
  *
- * 主要用途：
- * - 定義 APP 的基本資訊（標題、描述、圖示等）
- * - 設定 HTML <head> 標籤內容
- * - 設定 SEO 相關的 meta 標籤
- *
- * @see https://nuxt.com/docs/api/nuxt-config#app
+ * 注意：這裡只放底層預設值。
+ * 實際專案設定會由 nuxt.config.ts 從 JSON 讀取並覆寫於此。
  */
 export const appConfig: NuxtConfig['app'] = {
   head: {
     /** 網頁標題 - 顯示在瀏覽器分頁上 */
-    title: productConfig.meta?.title || 'Nuxt 3 Development Kit',
+    title: 'Nuxt 3 Development Kit',
 
-    /** 標題模板 - 用於動態設定頁面標題，%s 會被替換成頁面標題
-     * @example 產品列表 - Nuxt 3 Kit
-     */
-    titleTemplate: productConfig.meta?.titleTemplate || '%s - Nuxt 3 Kit',
+    /** 標題模板 */
+    titleTemplate: '%s - Nuxt 3 Kit',
 
     /** HTML 語言屬性 */
     htmlAttrs: {
-      lang: productConfig.meta?.lang || 'zh-TW'
+      lang: 'zh-TW'
     },
 
     // Meta 標籤
@@ -32,18 +25,16 @@ export const appConfig: NuxtConfig['app'] = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         name: 'description',
-        content:
-          productConfig.meta?.description ||
-          'Enterprise-grade Nuxt 3 Development Kit - Streamlining your frontend development'
+        content: 'Enterprise-grade Nuxt 3 Development Kit'
       },
-      { name: 'author', content: productConfig.meta?.author || 'Softleader' },
-      { name: 'robots', content: 'index, follow' }, // SEO：允許搜尋引擎索引
+      { name: 'author', content: 'Softleader' },
+      { name: 'robots', content: 'index, follow' },
       { name: 'format-detection', content: 'telephone=no' }
     ],
 
     // 網站圖示
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: productConfig.meta?.favicon || '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   }
 }

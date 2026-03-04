@@ -1,4 +1,5 @@
 import type { NuxtConfig } from 'nuxt/schema'
+import { productConfig } from '../../scripts/product-loader'
 
 /**
  * CSS 設定
@@ -16,5 +17,7 @@ import type { NuxtConfig } from 'nuxt/schema'
  */
 export const cssConfig: NuxtConfig['css'] = [
   // 使用相對路徑以確保 Layer 正確解析
-  './assets/css/main.css'
+  './assets/css/main.css',
+  // [NEW] 從 JSON 配置中額外注入的 CSS
+  ...(productConfig.theme?.customCss || [])
 ]

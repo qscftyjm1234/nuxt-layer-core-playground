@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   // 覆寫 Runtime 配置
   runtimeConfig: {
     public: {
-      appName: 'Playground App',
+      appName: '松凌科技前端開發包',
       appType: 'playground'
     }
   },

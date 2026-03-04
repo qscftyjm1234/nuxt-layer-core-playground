@@ -98,7 +98,7 @@ fs.writeFileSync(path.join(targetDir, 'app.vue'), appVue)
 
 // 5. 建立範例頁面 pages/index.vue
 const pagesDir = path.join(targetDir, 'pages')
-fs.mkdirSync(pagesDir)
+fs.mkdirSync(pagesDir, { recursive: true })
 const indexVue = `<template>
   <Welcome />
 </template>
@@ -107,40 +107,97 @@ fs.writeFileSync(path.join(pagesDir, 'index.vue'), indexVue)
 
 // 6. 建立設定檔目錄 (configs) & 預設常數檔案
 const configsDir = path.join(targetDir, 'configs')
-fs.mkdirSync(configsDir)
+fs.mkdirSync(configsDir, { recursive: true })
 
 const defaultConfigContent = `{
-  "//": "Softleader Nuxt Core 專案常數設定檔",
+  "$schema": "./schema.json",
+  "//": "Softleader Nuxt Core 專案常數設定檔 (Blueprint)",
+  "branding": {
+    "name": "${projectName}",
+    "shortName": "${packageName.toUpperCase()}",
+    "logo": "/images/logo.png",
+    "icon": "/favicon.ico",
+    "copyright": "© 2026 Softleader Technical Team. All rights reserved."
+  },
   "meta": {
     "title": "${projectName}",
-    "description": "企業級 Nuxt 3 前端專案"
+    "description": "企業級 Nuxt 3 核心架構",
+    "author": "Softleader Team",
+    "lang": "zh-TW"
   },
   "layout": {
-    "branding": {
-      "title": "Softleader Enterprise",
-      "logoIcon": "mdi-rocket-launch"
+    "menuStyle": "sidebar",
+    "sidebar": {
+      "width": 260,
+      "title": "管理系統"
     },
-    "footer": {
-      "content": "Copyright © 2026 Softleader. All rights reserved."
+    "header": {
+      "fixed": true,
+      "search": true,
+      "searchPlaceholder": "搜尋組件..."
     }
   },
   "theme": {
-    "primaryColor": "#1677ff"
+    "primaryColor": "#2563eb",
+    "borderRadius": 12,
+    "animation": true,
+    "customCss": []
   },
-  "api": {
-    "baseUrl": "https://api.example.com"
+  "network": {
+    "apiBaseUrl": "/api/v1",
+    "proxy": {
+      "/api/v1": {
+        "target": "http://dev-api-server:8080",
+        "changeOrigin": true,
+        "rewrite": "^/api/v1"
+      }
+    }
+  },
+  "features": {
+    "enableWatermark": false,
+    "enableAuth": true,
+    "enableLog": true
+  },
+  "build": {
+    "compress": true,
+    "optimizeDeps": []
+  },
+  "modules": {
+    "@nuxtjs/i18n": true,
+    "@ant-design-vue/nuxt": true
   }
 }`
 fs.writeFileSync(path.join(configsDir, 'default.json'), defaultConfigContent)
 
+// 6a. 建立 schema 連結 (讓 IDE 能自動辨識 JSON 格式)
+const vscodeDir = path.join(targetDir, '.vscode')
+if (!fs.existsSync(vscodeDir)) fs.mkdirSync(vscodeDir, { recursive: true })
+
+const vscodeSettings = {
+  "json.schemas": [
+    {
+      "fileMatch": ["/configs/*.json"],
+      "url": "./configs/schema.json"
+    }
+  ]
+}
+fs.writeFileSync(
+  path.join(vscodeDir, 'settings.json'),
+  JSON.stringify(vscodeSettings, null, 2)
+)
+
+// 同步 schema 檔案到新專案中以便本地提示
+const schemaPath = path.resolve(__dirname, '../schemas/config.schema.json')
+if (fs.existsSync(schemaPath)) {
+  const schemaContent = fs.readFileSync(schemaPath, 'utf8')
+  fs.writeFileSync(path.join(configsDir, 'schema.json'), schemaContent)
+}
+
 // 7. 建立 app.config.ts (Nuxt 原生常數導出)
 const appConfigTs = `export default defineAppConfig({
   // 透過這個檔案，組員可以在 Vue 中使用 useAppConfig() 獲取核心設定
-  // 這裡預設將 productConfig 內容導出
-  title: '${projectName}',
-  theme: {
-    primaryColor: '#1677ff'
-  }
+  // 產品核心常數預設由 Layer 自動從 configs/default.json 載入
+  title: '${projectName}'
 })
 `
 fs.writeFileSync(path.join(targetDir, 'app.config.ts'), appConfigTs)
@@ -196,16 +253,10 @@ try {
   console.log('正在安裝依賴，這可能需要一點時間 (Installing dependencies)...')
   execSync('npm install', { cwd: targetDir, stdio: 'inherit' })
   
-  console.log('正在初始化 Git 儲存庫 (Initializing git repository)...')
+  console.log('正在環境初始化 Git 儲存庫 (Initializing git repository)...')
   execSync('git init', { cwd: targetDir, stdio: 'ignore' })
 } catch (error) {
   console.log('警告 (Warning): 自動安裝指令執行失敗。您可能需要手動進入資料夾執行 npm install。')
 }
 
-console.log(\`
-專案 "${projectName}" 已準備就緒！
-
-下一步 (Next steps):
-  cd ${projectName}
-  npm run dev
-\`)
+console.log('\n專案 "' + projectName + '" 已準備就緒！\n\n下一步 (Next steps):\n  cd ' + projectName + '\n  npm run dev\n')

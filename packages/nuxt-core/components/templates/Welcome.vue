@@ -13,7 +13,6 @@
       <!-- Left: Messaging & Branding -->
       <section class="branding-area">
         <div class="branding-content animate-reveal">
-          <div class="micro-label">SOFTLEADER NUXT FRAMEWORK</div>
           
           <h1 class="main-title">
             打造未來軟體<br />
@@ -22,26 +21,10 @@
           
           <p class="hero-desc">
             您的專案 <span class="highlight">{{ projectName }}</span> 已順利啟動。<br />
-            搭載原子化組件與動態常數系統，為企業級開發提供最專業的穩定守護。
+            讓前端團隊能穩定且一致性的開發。
           </p>
 
-          <!-- 3. Density: Stats Bar (New) -->
-          <div class="stats-bar animate-reveal-delayed">
-            <div class="stat-item">
-              <span class="stat-value">250ms</span>
-              <span class="stat-label">STARTUP</span>
-            </div>
-            <span class="stat-divider"></span>
-            <div class="stat-item">
-              <span class="stat-value">Zero</span>
-              <span class="stat-label">RUNTIME CSS</span>
-            </div>
-            <span class="stat-divider"></span>
-            <div class="stat-item">
-              <span class="stat-value">100%</span>
-              <span class="stat-label">TYPE SAFE</span>
-            </div>
-          </div>
+
 
           <div class="action-zone animate-reveal-delayed-2">
             <IButton 
@@ -49,7 +32,7 @@
               class="prime-cta shadow-blue-500/25"
               @click="handleStart"
             >
-              立即開啟探索
+              立即開始
               <IIcon icon="mdi-arrow-right" size="18" class="ml-2" />
             </IButton>
             
@@ -201,7 +184,7 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
   text-transform: uppercase;
   letter-spacing: 0.5em;
   color: #94a3b8;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.25rem;
   display: inline-block;
 }
 
@@ -210,7 +193,7 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
   font-weight: 900;
   line-height: 1;
   letter-spacing: -0.06em;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   color: #0f172a;
 }
 
@@ -226,7 +209,7 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
   color: #64748b;
   line-height: 1.8;
   max-width: 600px;
-  margin-bottom: 3.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .highlight { color: #0f172a; font-weight: 700; }
@@ -236,8 +219,8 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
   display: flex;
   align-items: center;
   gap: 32px;
-  margin-bottom: 4rem;
-  padding: 20px 0;
+  margin-bottom: 2.5rem;
+  padding: 12px 0;
 }
 
 .stat-item {
@@ -270,7 +253,7 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
 .action-zone {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 1.5rem;
 }
 
 .prime-cta {
@@ -322,7 +305,7 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
 
 /* Showcase Area */
 .visual-area { position: relative; display: flex; align-items: center; justify-content: center; }
-.showcase-stack { position: relative; width: 100%; max-width: 540px; height: 500px; }
+.showcase-stack { position: relative; width: 100%; max-width: 540px; height: 440px; }
 
 .showcase-card {
   position: absolute;

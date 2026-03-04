@@ -7,46 +7,102 @@ import fs from 'fs'
  * 規定 JSON 裡面可以寫什麼
  */
 export interface ProductConfig {
-  /** 專案名稱與 Meta */
-  meta?: {
-    title?: string
-    description?: string
-    author?: string
-    lang?: string
+  /** 1. 品牌資訊 (Branding) - 第一眼看到的門面 */
+  branding?: {
+    name?: string           // 公司名稱
+    shortName?: string      // 簡寫或標籤名
+    logo?: string           // 主 Logo 路徑
+    logoDark?: string       // 暗色版 Logo
+    icon?: string           // 網頁 Favicon/手機 Icon
+    copyright?: string      // Footer 版權文字
+    uaIdentifier?: string   // [NEW] App 識別字串 (User-Agent)
   }
 
-  /** 版面核心設定 */
+  /** 2. 全域 Meta 標籤 */
+  meta?: {
+    title?: string          // 預設網頁標題
+    titleTemplate?: string  // 標題模板 (%s - Kit)
+    description?: string    // SEO 描述
+    author?: string         // 作者/團隊
+    lang?: string           // 語系 (zh-TW, en, etc.)
+    favicon?: string        // 網站圖示
+  }
+
+  /** 3. 版面與導航設定 (Layout) */
   layout?: {
-    branding?: {
+    menuStyle?: 'sidebar' | 'topbar' | 'hybrid'
+    sidebar?: {
+      width?: number
+      collapsed?: boolean
       title?: string
-      logoIcon?: string
+      showIcon?: boolean
     }
     header?: {
+      fixed?: boolean
       search?: boolean
       searchPlaceholder?: string
-    }
-    sidebar?: {
-      mainMenuTitle?: string
-      width?: number
+      showUserAction?: boolean
+      globalLoading?: boolean  // [NEW] 是否開啟全域 Loading 條
     }
     footer?: {
+      visible?: boolean
       content?: string
     }
   }
 
-  /** 主題核心設定 */
+  /** 4. 主題視覺令牌 (Theme Tokens) - 所有配色與外觀 */
   theme?: {
-    primaryColor?: string
-    borderRadius?: number
+    primaryColor?: string   // 主色 (品牌色)
+    successColor?: string
+    warningColor?: string
+    errorColor?: string
+    infoColor?: string
+    borderRadius?: number   // 全域圓角大小
+    animation?: boolean     // 是否啟用微動畫
+    spacingSize?: 'small' | 'medium' | 'large' // 間距規格
+    customCss?: string[]    // [NEW] 允許專案額外注入全域 CSS 檔案
   }
 
-  /** API 設定 */
-  api?: {
-    baseUrl?: string
+  /** 5. 網路開發與代理 (Network & Proxy) - 解決 Nginx 同工不同酬的問題 */
+  network?: {
+    apiBaseUrl?: string      // API 基礎路徑
+    timeout?: number        // [NEW] 請求超時時間
+    retry?: number          // [NEW] 請求重試次數
+    proxy?: {
+      [prefix: string]: {    // 例: { "/api/v1": "https://dev-server.com" }
+        target: string
+        changeOrigin?: boolean
+        rewrite?: string     // 常見的路徑重寫
+      }
+    }
   }
 
-  /** 功能模組開關 */
-  modules?: string[]
+  /** 6. 功能模組與建置開關 (Features & Build) */
+  features?: {
+    enableWatermark?: boolean // 是否開啟浮水印
+    enableAuth?: boolean      // 是否開啟登入驗證
+    enableLog?: boolean       // 是否開啟前端 Log 紀錄
+    mockApi?: boolean         // [NEW] 是否開啟 Mock API
+    [key: string]: any
+  }
+
+  /** 7. 進階建置優化 (Build Optimization) - 給組員微調性能 */
+  build?: {
+    compress?: boolean        // 是否開啟 Nitro 資源壓縮
+    analyze?: boolean         // 是否開啟建置分析
+    optimizeDeps?: string[]   // 額外強制優化的套件
+  }
+
+  /** 8. 驗證與安全性 (Auth & Security) */
+  auth?: {
+    tokenKey?: string
+    maxAge?: number
+  }
+
+  /** 9. 模組精確控制 (Module Registry) */
+  modules?: {
+    [moduleName: string]: boolean // 例: { "@nuxtjs/i18n": false } 可停用 Layer 內建模組
+  }
 
   /** 其他擴充 */
   [key: string]: any
@@ -72,7 +128,7 @@ export function getProductConfig(rootDir: string = process.cwd()): ProductConfig
   const configPath = path.resolve(rootDir, 'configs', `${productConfigName}.json`)
 
   // 預設給一個空的，免得找不到檔案時出錯
-  let config: ProductConfig = { modules: [] }
+  let config: ProductConfig = { modules: {} }
 
   // 3. 真的去讀檔案
   if (fs.existsSync(configPath)) {

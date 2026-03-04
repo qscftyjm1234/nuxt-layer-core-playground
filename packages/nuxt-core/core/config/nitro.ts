@@ -1,4 +1,5 @@
 import type { NuxtConfig } from 'nuxt/schema'
+import { productConfig } from '../../scripts/product-loader'
 
 /**
  * Nitro 伺服器設定檔案
@@ -17,7 +18,7 @@ export const nitroConfig: NuxtConfig['nitro'] = {
    * 開啟後，Nuxt 會在建置時自動產生 .gz 與 .br 壓縮檔
    * 有助於減少傳輸流量並提升載入速度
    */
-  compressPublicAssets: true,
+  compressPublicAssets: productConfig.build?.compress ?? true,
 
   typescript: {
     tsConfig: {
@@ -32,21 +33,16 @@ export const nitroConfig: NuxtConfig['nitro'] = {
   /**
    * 開發環境代理 (Development Proxy)
    *
-   * 僅在 `npm run dev` 模式下生效
-   * 用於解決本機開發時的 CORS 跨域問題，或將 API 請求轉發到後端測試主機
-   *
-   * @example
-   * devProxy: {
-   *   '/api': {
-   *     target: 'https://dev-api.example.com',
-   *     changeOrigin: true,
-   *   }
-   * }
+   * 優先讀取 configs/*.json 中的 network.proxy 設定
    */
   devProxy: {
-    '/api': {
-      target: process.env.NUXT_PROXY_TARGET || 'http://localhost:8080',
-      changeOrigin: true
-    }
+    ...(productConfig.network?.proxy || {}),
+    // 備援：如果 JSON 沒設，才看環境變數
+    ...(Object.keys(productConfig.network?.proxy || {}).length === 0 ? {
+      '/api': {
+        target: process.env.NUXT_PROXY_TARGET || 'http://localhost:8080',
+        changeOrigin: true
+      }
+    } : {})
   }
 }

@@ -1,5 +1,6 @@
 import type { NuxtConfig } from 'nuxt/schema'
 import vuetify from 'vite-plugin-vuetify'
+import { productConfig } from '../../scripts/product-loader'
 
 /**
  * Vite 設定
@@ -28,6 +29,12 @@ export const viteConfig: NuxtConfig['vite'] = {
    * 強制 Vite 預先構建這些套件，避免 HMR Runtime 錯誤
    */
   optimizeDeps: {
-    include: ['ant-design-vue', 'dayjs', 'lodash.clonedeep', 'vuetify']
+    include: [
+      'ant-design-vue', 
+      'dayjs', 
+      'lodash.clonedeep', 
+      'vuetify',
+      ...(productConfig.build?.optimizeDeps || [])
+    ]
   }
 }

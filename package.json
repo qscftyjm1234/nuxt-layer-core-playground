@@ -8,6 +8,7 @@
     "apps/*"
   ],
   "scripts": {
+    "prepare": "node scripts/setup-env.mjs",
     "dev:playground": "npm run dev -w playground-app",
     "dev:docs": "npm run dev -w ui-docs",
     "build": "npm run build --workspaces --if-present",

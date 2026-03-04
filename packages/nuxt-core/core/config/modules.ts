@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { createResolver } from '@nuxt/kit'
 import type { NuxtConfig } from 'nuxt/schema'
+import { productConfig } from '../../scripts/product-loader'
 
 /**
  * 檢查套件是否已安裝 (存在於 package.json)
@@ -27,7 +28,6 @@ const isInstalled = (name: string) => {
  */
 export const modulesConfig: NuxtConfig['modules'] = [
   // 裝置偵測 (手機/平板/桌機)
-  // 裝置偵測 (手機/平板/桌機)
   isInstalled('@nuxtjs/device') && '@nuxtjs/device',
 
   // 國際化多語系支援
@@ -40,7 +40,6 @@ export const modulesConfig: NuxtConfig['modules'] = [
   isInstalled('@nuxt/eslint') && '@nuxt/eslint',
 
   // Ant Design Vue 整合
-  // 雖然在 devDependencies 但在 monorepo 中通常可用，改為檢查是否可解析比較保險，或是保持 isInstalled
   isInstalled('@ant-design-vue/nuxt') && '@ant-design-vue/nuxt',
 
   // Tailwind CSS 整合
@@ -51,4 +50,12 @@ export const modulesConfig: NuxtConfig['modules'] = [
 
   // 字體模組 [Core Provided]
   '@nuxt/fonts'
-].filter(Boolean) as string[]
+]
+  .filter(Boolean)
+  // [NEW] 透過 JSON 進行精確過濾
+  .filter((m) => {
+    const config = productConfig.modules || {}
+    // 如果 JSON 中明確設為 false，則不載入
+    if (config[m as string] === false) return false
+    return true
+  }) as string[]
