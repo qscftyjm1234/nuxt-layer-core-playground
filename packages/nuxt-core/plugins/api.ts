@@ -21,11 +21,14 @@ export default defineNuxtPlugin(() => {
 
   // 2. 建立一個 Proxy 物件，讓 $api 可以動態存取註冊進來的內容
   // 這解決了「App 層註冊的內容，在 Core 層也能透過 $api 存取」的問題
-  const apiProxy = new Proxy({}, {
-    get(target, prop: string) {
-      return registry.getExports()[prop]
+  const apiProxy = new Proxy(
+    {},
+    {
+      get(target, prop: string) {
+        return registry.getExports()[prop]
+      }
     }
-  })
+  )
 
   return {
     provide: {

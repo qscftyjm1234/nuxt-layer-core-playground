@@ -39,7 +39,8 @@ const vuetifyBindings = computed(() => ({
   title: props.title,
   subtitle: props.subtitle,
   elevation: props.variant === 'elevated' ? props.elevation : 0,
-  variant: props.variant === 'outlined' ? 'outlined' : props.variant === 'flat' ? 'flat' : 'elevated',
+  variant:
+    props.variant === 'outlined' ? 'outlined' : props.variant === 'flat' ? 'flat' : 'elevated',
   color: props.color === 'white' ? undefined : props.color,
   class: 'ui-card'
 }))
@@ -56,7 +57,7 @@ const vuetifyBindings = computed(() => ({
     >
       <slot name="header" />
     </template>
-    
+
     <!-- Vuetify v-card-text provides consistent padding -->
     <v-card-text class="card-content">
       <slot />
@@ -115,7 +116,9 @@ const vuetifyBindings = computed(() => ({
 }
 
 :deep(.v-card--variant-elevated) {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
 }
 
 :deep(.v-card--variant-outlined) {
@@ -157,7 +160,9 @@ const vuetifyBindings = computed(() => ({
 }
 
 .variant-elevated {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
   border: 1px solid transparent;
 }
 

@@ -8,7 +8,7 @@
     "apps/*"
   ],
   "scripts": {
-    "prepare": "node scripts/setup-env.mjs",
+    "prepare": "node scripts/setup-env.mjs && git config core.hooksPath packages/nuxt-core/core/templates/husky",
     "dev:playground": "npm run dev -w playground-app",
     "dev:ui-docs": "npm run dev -w ui-docs",
     "build": "npm run build --workspaces --if-present",
@@ -24,8 +24,19 @@
       "path": "./node_modules/cz-customizable"
     },
     "cz-customizable": {
-      "config": ".cz-config.cjs"
+      "config": "./node_modules/softleader-nuxt-core/cz.config.cjs"
     }
+  },
+  "prettier": "softleader-nuxt-core/prettier",
+  "commitlint": {
+    "extends": [
+      "softleader-nuxt-core/commitlint"
+    ]
+  },
+  "lint-staged": {
+    "extends": [
+      "softleader-nuxt-core/lint-staged"
+    ]
   },
   "keywords": [
     "nuxt3",

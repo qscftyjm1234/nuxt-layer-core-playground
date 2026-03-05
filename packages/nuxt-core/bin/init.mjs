@@ -36,7 +36,11 @@ const projectName = positionals[0] || 'my-nuxt-app'
 // 解析出目標資料夾的絕對路徑
 const targetDir = path.resolve(process.cwd(), projectName)
 // 產生合法的 npm package name (轉小寫並移除非英數字元)
-const packageName = path.basename(targetDir).toLowerCase().replace(/[^a-z0-9-]/g, '') || 'my-nuxt-app'
+const packageName =
+  path
+    .basename(targetDir)
+    .toLowerCase()
+    .replace(/[^a-z0-9-]/g, '') || 'my-nuxt-app'
 
 // 檢查資料夾是否已存在
 if (fs.existsSync(targetDir)) {
@@ -52,54 +56,70 @@ fs.mkdirSync(targetDir, { recursive: true })
 // 2. 建立 package.json
 const packageJson = {
   name: packageName,
-  version: "1.0.0",
+  version: '1.0.0',
   private: true,
-  type: "module",
+  type: 'module',
   scripts: {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "commit": "cz",
-    "prepare": "husky"
+    build: 'nuxt build',
+    dev: 'nuxt dev',
+    generate: 'nuxt generate',
+    preview: 'nuxt preview',
+    postinstall: 'nuxt prepare',
+    lint: 'eslint .',
+    'lint:fix': 'eslint . --fix',
+    format: 'prettier --write .',
+    'format:check': 'prettier --check .',
+    commit: 'cz',
+    prepare: 'husky'
   },
   config: {
-    commitizen: { path: "./node_modules/cz-customizable" },
-    "cz-customizable": { config: ".cz-config.cjs" }
+    commitizen: { path: './node_modules/cz-customizable' },
+    'cz-customizable': { config: '.cz-config.cjs' }
   },
   dependencies: {
-    "softleader-nuxt-core": "latest"
+    'softleader-nuxt-core': 'latest'
   },
   devDependencies: {
-    "nuxt": "^3.15.4",
-    "vue": "latest",
-    "vue-router": "latest",
-    "husky": "^9.1.5",
-    "lint-staged": "^15.2.10",
-    "@commitlint/cli": "^19.5.0",
-    "commitizen": "^4.3.0",
-    "cz-customizable": "^7.0.0",
-    "cross-env": "^7.0.3"
+    nuxt: '^3.15.4',
+    vue: 'latest',
+    'vue-router': 'latest',
+    husky: '^9.1.5',
+    'lint-staged': '^15.2.10',
+    '@commitlint/cli': '^19.5.0',
+    commitizen: '^4.3.0',
+    'cz-customizable': '^7.0.0',
+    'cross-env': '^7.0.3'
   }
 }
 
-fs.writeFileSync(
-  path.join(targetDir, 'package.json'),
-  JSON.stringify(packageJson, null, 2)
-)
+fs.writeFileSync(path.join(targetDir, 'package.json'), JSON.stringify(packageJson, null, 2))
 
 // 2.1 建立共享配置檔案
 const extConfigs = [
-  { name: 'eslint.config.mjs', content: "import coreConfig from 'softleader-nuxt-core/core/config/eslint.config.mjs'\n\nexport default [\n  ...coreConfig\n]\n" },
-  { name: '.prettierrc.cjs', content: "module.exports = {\n  ...require('softleader-nuxt-core/core/config/prettier.json')\n}\n" },
-  { name: '.commitlintrc.cjs', content: "module.exports = require('softleader-nuxt-core/core/config/git/commitlint.config.cjs')\n" },
-  { name: '.lintstagedrc.js', content: "export { default } from 'softleader-nuxt-core/core/config/git/lint-staged.config.js'\n" },
-  { name: '.cz-config.cjs', content: "module.exports = require('softleader-nuxt-core/core/config/git/cz-config.cjs')\n" }
+  {
+    name: 'eslint.config.mjs',
+    content:
+      "import coreConfig from 'softleader-nuxt-core/core/config/eslint.config.mjs'\n\nexport default [\n  ...coreConfig\n]\n"
+  },
+  {
+    name: '.prettierrc.cjs',
+    content:
+      "module.exports = {\n  ...require('softleader-nuxt-core/core/config/prettier.json')\n}\n"
+  },
+  {
+    name: '.commitlintrc.cjs',
+    content:
+      "module.exports = require('softleader-nuxt-core/core/config/git/commitlint.config.cjs')\n"
+  },
+  {
+    name: '.lintstagedrc.js',
+    content:
+      "export { default } from 'softleader-nuxt-core/core/config/git/lint-staged.config.js'\n"
+  },
+  {
+    name: '.cz-config.cjs',
+    content: "module.exports = require('softleader-nuxt-core/core/config/git/cz-config.cjs')\n"
+  }
 ]
 for (const conf of extConfigs) {
   fs.writeFileSync(path.join(targetDir, conf.name), conf.content)
@@ -202,17 +222,14 @@ const vscodeDir = path.join(targetDir, '.vscode')
 if (!fs.existsSync(vscodeDir)) fs.mkdirSync(vscodeDir, { recursive: true })
 
 const vscodeSettings = {
-  "json.schemas": [
+  'json.schemas': [
     {
-      "fileMatch": ["/configs/*.json"],
-      "url": "./configs/schema.json"
+      fileMatch: ['/configs/*.json'],
+      url: './configs/schema.json'
     }
   ]
 }
-fs.writeFileSync(
-  path.join(vscodeDir, 'settings.json'),
-  JSON.stringify(vscodeSettings, null, 2)
-)
+fs.writeFileSync(path.join(vscodeDir, 'settings.json'), JSON.stringify(vscodeSettings, null, 2))
 
 // 同步 schema 檔案到新專案中以便本地提示
 const schemaPath = path.resolve(__dirname, '../schemas/config.schema.json')
@@ -238,7 +255,7 @@ const tsconfig = `{
 fs.writeFileSync(path.join(targetDir, 'tsconfig.json'), tsconfig)
 
 // 9. 建立 .gitignore (自核心層讀取標準配置)
-const gitignoreTemplatePath = path.resolve(__dirname, '../core/config/gitignore')
+const gitignoreTemplatePath = path.resolve(__dirname, '../core/templates/gitignore')
 let gitignoreContent = ''
 if (fs.existsSync(gitignoreTemplatePath)) {
   gitignoreContent = fs.readFileSync(gitignoreTemplatePath, 'utf8')
@@ -262,13 +279,51 @@ try {
   execSync('npm install', { cwd: targetDir, stdio: 'inherit' })
 
   console.log('正在設定 Git Hooks...')
-  const huskyPreCommit = path.join(targetDir, '.husky', 'pre-commit')
-  const huskyCommitMsg = path.join(targetDir, '.husky', 'commit-msg')
-  fs.mkdirSync(path.join(targetDir, '.husky'), { recursive: true })
-  fs.writeFileSync(huskyPreCommit, 'npx lint-staged\n')
-  fs.writeFileSync(huskyCommitMsg, 'npx --no -- commitlint --edit "${1}"\n')
+  const huskyDir = path.join(targetDir, '.husky')
+  fs.mkdirSync(huskyDir, { recursive: true })
+
+  // 自核心層範本讀取 Husky Hook 內容
+  const templateHuskyDir = path.resolve(__dirname, '../core/templates/husky')
+  const hooks = ['pre-commit', 'commit-msg']
+
+  hooks.forEach((hook) => {
+    const templatePath = path.join(templateHuskyDir, hook)
+    const targetPath = path.join(huskyDir, hook)
+    if (fs.existsSync(templatePath)) {
+      fs.copyFileSync(templatePath, targetPath)
+    } else {
+      // 若範本不存在則使用基本內容
+      const content =
+        hook === 'pre-commit'
+          ? 'npx lint-staged\n'
+          : 'npx --no -- commitlint --edit "${1}"\n'
+      fs.writeFileSync(targetPath, content)
+    }
+    // 在 Linux/macOS 下需要執行權限 (雖然 Windows 不需要，但這是好習慣)
+    try {
+      fs.chmodSync(targetPath, '755')
+    } catch (e) {}
+  })
+
+  console.log('正在配置 VS Code 建置環境 (Configuring VS Code environment)...')
+  const vscodeTargetDir = path.join(targetDir, '.vscode')
+  if (!fs.existsSync(vscodeTargetDir)) fs.mkdirSync(vscodeTargetDir, { recursive: true })
+
+  const templateVscodeDir = path.resolve(__dirname, '../core/templates/vscode')
+  if (fs.existsSync(templateVscodeDir)) {
+    const files = fs.readdirSync(templateVscodeDir)
+    files.forEach((file) => {
+      fs.copyFileSync(path.join(templateVscodeDir, file), path.join(vscodeTargetDir, file))
+    })
+  }
 } catch (error) {
   console.log('警告 (Warning): 自動安裝指令執行失敗。')
 }
 
-console.log('\n專案 "' + projectName + '" 已準備就緒！\n\n下一步 (Next steps):\n  cd ' + projectName + '\n  npm run dev\n')
+console.log(
+  '\n專案 "' +
+    projectName +
+    '" 已準備就緒！\n\n下一步 (Next steps):\n  cd ' +
+    projectName +
+    '\n  npm run dev\n'
+)

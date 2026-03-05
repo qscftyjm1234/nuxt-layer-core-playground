@@ -38,11 +38,13 @@ export const nitroConfig: NuxtConfig['nitro'] = {
   devProxy: {
     ...(productConfig.network?.proxy || {}),
     // 備援：如果 JSON 沒設，才看環境變數
-    ...(Object.keys(productConfig.network?.proxy || {}).length === 0 ? {
-      '/api': {
-        target: process.env.NUXT_PROXY_TARGET || 'http://localhost:8080',
-        changeOrigin: true
-      }
-    } : {})
+    ...(Object.keys(productConfig.network?.proxy || {}).length === 0
+      ? {
+          '/api': {
+            target: process.env.NUXT_PROXY_TARGET || 'http://localhost:8080',
+            changeOrigin: true
+          }
+        }
+      : {})
   }
 }

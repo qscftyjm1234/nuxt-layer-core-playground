@@ -102,8 +102,16 @@
       "type": "object",
       "description": "建置與性能優化設定",
       "properties": {
-        "compress": { "type": "boolean", "default": true, "description": "是否開啟 Nitro 資源壓縮 (.gz, .br)" },
-        "analyze": { "type": "boolean", "default": false, "description": "是否開啟建置分析 (Bundle Analyzer)" },
+        "compress": {
+          "type": "boolean",
+          "default": true,
+          "description": "是否開啟 Nitro 資源壓縮 (.gz, .br)"
+        },
+        "analyze": {
+          "type": "boolean",
+          "default": false,
+          "description": "是否開啟建置分析 (Bundle Analyzer)"
+        },
         "optimizeDeps": {
           "type": "array",
           "items": { "type": "string" },

@@ -14,8 +14,8 @@ export default defineNuxtPlugin((nuxtApp) => {
       defaultSet: 'mdi',
       aliases,
       sets: {
-        mdi,
-      },
+        mdi
+      }
     },
     theme: {
       defaultTheme: 'light',
@@ -23,11 +23,11 @@ export default defineNuxtPlugin((nuxtApp) => {
         light: {
           colors: {
             primary: '#6366f1',
-            secondary: '#4f46e5',
-          },
-        },
-      },
-    },
+            secondary: '#4f46e5'
+          }
+        }
+      }
+    }
   })
   nuxtApp.vueApp.use(vuetify)
 })

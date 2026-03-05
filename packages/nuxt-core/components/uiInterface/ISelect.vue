@@ -24,12 +24,12 @@ interface SelectOption {
    * 選項的值
    */
   value: any
-  
+
   /**
    * 顯示的標籤
    */
   label: string
-  
+
   /**
    * 是否禁用此選項
    */
@@ -42,58 +42,58 @@ interface Props {
    * 綁定值 (v-model)
    */
   modelValue?: any
-  
+
   /**
    * 選項列表
    */
   items: SelectOption[]
-  
+
   /**
    * 標籤文字
    */
   label?: string
-  
+
   /**
    * 佔位符文字
    * @default '請選擇'
    */
   placeholder?: string
-  
+
   /**
    * 是否禁用
    * @default false
    */
   disabled?: boolean
-  
+
   /**
    * 是否可清除
    * @default false
    */
   clearable?: boolean
-  
+
   /**
    * 是否多選
    * @default false
    */
   multiple?: boolean
-  
+
   /**
    * 顏色主題
    * @default 'primary'
    */
   color?: string
-  
+
   /**
    * 排列密度
    * @default 'compact'
    */
   density?: 'default' | 'comfortable' | 'compact'
-  
+
   /**
    * 錯誤訊息
    */
   errorMessages?: string | string[]
-  
+
   /**
    * 是否隱藏詳細訊息
    * @default false
@@ -163,22 +163,44 @@ const vuetifyBindings = computed(() => {
     bg-color="white"
     class="i-select-field"
   >
-    <template v-for="(_, name) in $slots" #[name]="slotProps">
-      <slot :name="name" v-bind="slotProps" />
+    <template
+      v-for="(_, name) in $slots"
+      #[name]="slotProps"
+    >
+      <slot
+        :name="name"
+        v-bind="slotProps"
+      />
     </template>
   </v-select>
 
   <!-- Native Implementation Support (Simplified Fallback) -->
-  <div v-else class="i-select">
-    <label v-if="label" class="field-label">{{ label }}</label>
-    <div class="select-wrapper" :class="{ 'is-disabled': disabled }">
+  <div
+    v-else
+    class="i-select"
+  >
+    <label
+      v-if="label"
+      class="field-label"
+    >
+      {{ label }}
+    </label>
+    <div
+      class="select-wrapper"
+      :class="{ 'is-disabled': disabled }"
+    >
       <select
         v-model="internalValue"
         :disabled="disabled"
         :multiple="multiple"
         class="select-field"
       >
-        <option v-if="placeholder && !multiple" value="" disabled selected>
+        <option
+          v-if="placeholder && !multiple"
+          value=""
+          disabled
+          selected
+        >
           {{ placeholder }}
         </option>
         <option
@@ -191,7 +213,10 @@ const vuetifyBindings = computed(() => {
         </option>
       </select>
     </div>
-    <div v-if="errorMessages" class="field-error">
+    <div
+      v-if="errorMessages"
+      class="field-error"
+    >
       {{ Array.isArray(errorMessages) ? errorMessages[0] : errorMessages }}
     </div>
   </div>

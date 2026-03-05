@@ -4,7 +4,7 @@ import { defineNuxtModule, addPluginTemplate, addTemplate, createResolver } from
 
 /**
  * 零配置選項自動掃描模組 (Zero-Config Options Scanner)
- * 
+ *
  * 任務：
  * 1. 偵測專案目錄 (Host App) 下是否有 'options' 資料夾。
  * 2. 如果有，掃描裡面所有的 .ts 檔案。
@@ -22,9 +22,10 @@ export default defineNuxtModule({
 
     const getOptionsFiles = () => {
       if (!fs.existsSync(optionsDir)) return []
-      return fs.readdirSync(optionsDir)
-        .filter(f => (f.endsWith('.ts') || f.endsWith('.js')) && !f.startsWith('index'))
-        .map(f => f.replace(/\.(ts|js)$/, ''))
+      return fs
+        .readdirSync(optionsDir)
+        .filter((f) => (f.endsWith('.ts') || f.endsWith('.js')) && !f.startsWith('index'))
+        .map((f) => f.replace(/\.(ts|js)$/, ''))
     }
 
     // 3. 生成編譯時期的虛擬 Plugin
@@ -32,7 +33,9 @@ export default defineNuxtModule({
       filename: 'softleader-auto-options.mjs',
       getContents: () => {
         const files = getOptionsFiles()
-        const imports = files.map((file, i) => `import * as opt${i} from '~/options/${file}'`).join('\n')
+        const imports = files
+          .map((file, i) => `import * as opt${i} from '~/options/${file}'`)
+          .join('\n')
         const registries = files.map((_, i) => `...opt${i}`).join(',\n      ')
 
         return `
@@ -59,7 +62,9 @@ export default defineNuxtPlugin((nuxtApp) => {
       filename: 'softleader-options.d.ts',
       getContents: () => {
         const files = getOptionsFiles()
-        const imports = files.map((file, i) => `import * as opt${i} from '~/options/${file}'`).join('\n')
+        const imports = files
+          .map((file, i) => `import * as opt${i} from '~/options/${file}'`)
+          .join('\n')
         const types = files.map((_, i) => `typeof opt${i}`).join(' & ')
 
         return `
@@ -81,13 +86,13 @@ export {}
     // 將產生的型別檔加入 Nuxt 的型別參考中，並確保路徑映射正確
     nuxt.hook('prepare:types', ({ references, tsConfig }) => {
       references.push({ path: resolve(nuxt.options.buildDir, typeTemplate.filename) })
-      
+
       // [關鍵修復] 處理本地開發時 node_modules/softleader-nuxt-core 損壞或過舊的問題
       // 強制將型別指向本地核心層，確保 Module Augmentation 能生效
       if (tsConfig.compilerOptions) {
         tsConfig.compilerOptions.paths = tsConfig.compilerOptions.paths || {}
         const corePath = resolve('../') // 指向 packages/nuxt-core
-        
+
         // 優先映射核心路徑
         tsConfig.compilerOptions.paths['softleader-nuxt-core'] = [corePath]
         tsConfig.compilerOptions.paths['softleader-nuxt-core/*'] = [`${corePath}/*`]
@@ -101,7 +106,8 @@ export {}
         console.log(`[Options Scanner] 偵測到變動 (${event}): ${path}, 正在重新整理虛擬檔案...`)
         const { updateTemplates } = await import('@nuxt/kit')
         await updateTemplates({
-          filter: (t) => t.filename === pluginTemplate.filename || t.filename === typeTemplate.filename
+          filter: (t) =>
+            t.filename === pluginTemplate.filename || t.filename === typeTemplate.filename
         })
       }
     })

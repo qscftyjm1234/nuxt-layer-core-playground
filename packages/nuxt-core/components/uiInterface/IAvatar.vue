@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
   color: '#e0e0e0',
   rounded: true,
   icon: '',
-  image: '',
+  image: ''
 })
 
 const avatarStyle = computed(() => ({

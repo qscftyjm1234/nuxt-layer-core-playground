@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // 組件說明頁面
-const { data: page } = await useAsyncData('doc-button', () => 
+const { data: page } = await useAsyncData('doc-button', () =>
   queryContent('/components/buttons').findOne()
 )
 
@@ -22,12 +22,20 @@ useHead({
         <ClientOnly>
           <IButton variant="primary">Primary</IButton>
           <IButton variant="outlined">Outlined</IButton>
-          <IButton variant="primary" loading>Loading</IButton>
+          <IButton
+            variant="primary"
+            loading
+          >
+            Loading
+          </IButton>
         </ClientOnly>
       </div>
     </section>
 
-    <div v-if="page" class="prose-section mt-10">
+    <div
+      v-if="page"
+      class="prose-section mt-10"
+    >
       <h2 class="text-2xl font-semibold mb-4 text-primary border-b pb-2">詳細文件</h2>
       <div class="prose">
         <ContentRenderer :value="page" />

@@ -128,7 +128,7 @@ export interface OptionArray extends Array<OptionItem> {
    * await options.countries.reload()
    */
   reload: () => Promise<OptionItem[]>
-  
+
   /**
    * 取得原始資料（純陣列）
    */

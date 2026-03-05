@@ -19,7 +19,7 @@ import { useFeatureStore } from '../stores/features'
 type FeaturePath =
   | `devTools.${keyof typeof defaultFeatures.devTools}`
   | `devTools.${keyof typeof defaultFeatures.devTools}`
-  // logging removed as it's not in defaultFeatures
+// logging removed as it's not in defaultFeatures
 
 /**
  * 從環境變數或設定中獲取功能狀態

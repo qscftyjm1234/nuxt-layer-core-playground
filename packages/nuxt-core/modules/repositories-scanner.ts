@@ -21,9 +21,10 @@ export default defineNuxtModule({
     }
 
     // 2. 獲取所有檔案 (排除 index)
-    const files = fs.readdirSync(repoDir)
-      .filter(f => (f.endsWith('.ts') || f.endsWith('.js')) && !f.startsWith('index'))
-      .map(f => f.replace(/\.(ts|js)$/, ''))
+    const files = fs
+      .readdirSync(repoDir)
+      .filter((f) => (f.endsWith('.ts') || f.endsWith('.js')) && !f.startsWith('index'))
+      .map((f) => f.replace(/\.(ts|js)$/, ''))
 
     if (files.length === 0) {
       return
@@ -33,7 +34,9 @@ export default defineNuxtModule({
     addPluginTemplate({
       filename: 'softleader-auto-repositories.mjs',
       getContents: () => {
-        const imports = files.map((file, i) => `import repo${i} from '~/repositories/${file}'`).join('\n')
+        const imports = files
+          .map((file, i) => `import repo${i} from '~/repositories/${file}'`)
+          .join('\n')
         const registries = files.map((file, i) => `${file}: repo${i}`).join(',\n      ')
 
         return `
@@ -59,8 +62,10 @@ export default defineNuxtPlugin((nuxtApp) => {
       const template = addTemplate({
         filename: 'softleader-repositories.d.ts',
         getContents: () => {
-          const imports = files.map((file, i) => `import repo${i} from '~/repositories/${file}'`).join('\n')
-          
+          const imports = files
+            .map((file, i) => `import repo${i} from '~/repositories/${file}'`)
+            .join('\n')
+
           return `
 import { CustomRepositories } from 'softleader-nuxt-core/composables/useRepo'
 ${imports}
@@ -75,7 +80,7 @@ export {}
           `
         }
       })
-      
+
       references.push({ path: resolve(nuxt.options.buildDir, template.filename) })
 
       // [關鍵修復] 處理本地開發時 node_modules/softleader-nuxt-core 損壞或過舊的問題

@@ -401,7 +401,11 @@ const headerHeight = computed(() => {
 </script>
 
 <template>
-  <div class="s-data-table-new" :class="$attrs.class" :style="$attrs.style">
+  <div
+    class="s-data-table-new"
+    :class="$attrs.class"
+    :style="$attrs.style"
+  >
     <!-- 統一專業儀表板卡片 -->
     <div class="unified-card">
       <!-- 佈局變革：雙行策略（針對側邊欄進行簡化） -->
@@ -420,7 +424,11 @@ const headerHeight = computed(() => {
             rounded="lg"
             @click="isExpanded = !isExpanded"
           >
-            <v-icon start icon="mdi-filter-variant" size="20"></v-icon>
+            <v-icon
+              start
+              icon="mdi-filter-variant"
+              size="20"
+            ></v-icon>
             <span class="text-button font-weight-bold">篩選</span>
             <v-badge
               v-if="activeFilters.length > 0"
@@ -433,9 +441,15 @@ const headerHeight = computed(() => {
           </IButton>
 
           <!-- 全域操作（右側對齊） -->
-          <div class="d-flex align-center" style="gap: 8px">
+          <div
+            class="d-flex align-center"
+            style="gap: 8px"
+          >
             <!-- 功能：重新整理 -->
-            <v-tooltip text="重新整理" location="bottom">
+            <v-tooltip
+              text="重新整理"
+              location="bottom"
+            >
               <template #activator="{ props }">
                 <v-btn
                   v-bind="props"
@@ -449,7 +463,10 @@ const headerHeight = computed(() => {
             </v-tooltip>
 
             <!-- 功能：顯示設定 -->
-            <v-menu :close-on-content-click="false" location="bottom end">
+            <v-menu
+              :close-on-content-click="false"
+              location="bottom end"
+            >
               <template #activator="{ props }">
                 <v-btn
                   v-bind="props"
@@ -459,8 +476,14 @@ const headerHeight = computed(() => {
                   color="grey-darken-1"
                 ></v-btn>
               </template>
-              <v-card min-width="240" class="pa-2 rounded-lg border">
-                <v-list-item title="檢視設定" subtitle="自訂您的表格顯示"></v-list-item>
+              <v-card
+                min-width="240"
+                class="pa-2 rounded-lg border"
+              >
+                <v-list-item
+                  title="檢視設定"
+                  subtitle="自訂您的表格顯示"
+                ></v-list-item>
                 <v-divider class="mb-2"></v-divider>
 
                 <div class="px-3 pb-2 text-caption text-grey-darken-1 font-weight-bold">
@@ -475,8 +498,18 @@ const headerHeight = computed(() => {
                   class="d-flex mx-2 mb-3"
                   divide
                 >
-                  <v-btn value="default" class="flex-grow-1">舒適</v-btn>
-                  <v-btn value="compact" class="flex-grow-1">緊湊</v-btn>
+                  <v-btn
+                    value="default"
+                    class="flex-grow-1"
+                  >
+                    舒適
+                  </v-btn>
+                  <v-btn
+                    value="compact"
+                    class="flex-grow-1"
+                  >
+                    緊湊
+                  </v-btn>
                 </v-btn-toggle>
 
                 <v-divider class="mb-2"></v-divider>
@@ -502,7 +535,11 @@ const headerHeight = computed(() => {
               </v-card>
             </v-menu>
 
-            <div v-if="$slots.actionButton" class="d-flex align-center" style="gap: 8px">
+            <div
+              v-if="$slots.actionButton"
+              class="d-flex align-center"
+              style="gap: 8px"
+            >
               <slot name="actionButton"></slot>
             </div>
           </div>
@@ -528,12 +565,16 @@ const headerHeight = computed(() => {
             style="border-color: var(--color-gray-300, #cbd5e1)"
             @click:close="removeFilter(filter.key)"
           >
-            <span class="text-grey-darken-1 mr-1"
-              >{{ filter.label }}<span v-if="!filter.hideValue">:</span></span
+            <span class="text-grey-darken-1 mr-1">
+              {{ filter.label }}
+              <span v-if="!filter.hideValue">:</span>
+            </span>
+            <span
+              v-if="!filter.hideValue"
+              class="text-grey-darken-4 font-weight-bold"
             >
-            <span v-if="!filter.hideValue" class="text-grey-darken-4 font-weight-bold">{{
-              filter.value
-            }}</span>
+              {{ filter.value }}
+            </span>
           </v-chip>
 
           <v-btn
@@ -549,7 +590,10 @@ const headerHeight = computed(() => {
       </div>
 
       <!-- 表格區域（貼齊） -->
-      <div class="card-table-wrapper" :style="{ top: `${headerHeight}px` }">
+      <div
+        class="card-table-wrapper"
+        :style="{ top: `${headerHeight}px` }"
+      >
         <IDataTable
           v-bind="$attrs"
           v-model="selectedItems"
@@ -572,13 +616,22 @@ const headerHeight = computed(() => {
           "
         >
           <!-- 將所有插槽轉發至 IDataTable -->
-          <template v-for="(_, slot) in $slots" #[slot]="scope">
-            <slot :name="slot" v-bind="scope"></slot>
+          <template
+            v-for="(_, slot) in $slots"
+            #[slot]="scope"
+          >
+            <slot
+              :name="slot"
+              v-bind="scope"
+            ></slot>
           </template>
 
           <template #item.actions="{ item }">
             <div class="d-flex">
-              <template v-for="(actionItem, actionIndex) in actionBtnsList" :key="actionIndex">
+              <template
+                v-for="(actionItem, actionIndex) in actionBtnsList"
+                :key="actionIndex"
+              >
                 <IButton
                   size="small"
                   :color="actionItem.color"
@@ -588,9 +641,12 @@ const headerHeight = computed(() => {
                   @click="actionItem.handle(item, actionItem.updateStatus, doFetch)"
                 >
                   <v-icon size="small">{{ actionItem.icon }}</v-icon>
-                  <span v-if="actionItem.type === 'customize'" class="ml-1 font-weight-bold">{{
-                    actionItem.desc
-                  }}</span>
+                  <span
+                    v-if="actionItem.type === 'customize'"
+                    class="ml-1 font-weight-bold"
+                  >
+                    {{ actionItem.desc }}
+                  </span>
                 </IButton>
               </template>
             </div>
@@ -613,16 +669,38 @@ const headerHeight = computed(() => {
           "
         >
           <div class="d-flex align-center font-weight-bold">
-            <v-icon start icon="mdi-checkbox-marked-circle-outline" color="blue-lighten-2"></v-icon>
+            <v-icon
+              start
+              icon="mdi-checkbox-marked-circle-outline"
+              color="blue-lighten-2"
+            ></v-icon>
             已選取 {{ selectedItems.length }} 筆
           </div>
 
-          <div class="vr bg-grey-darken-2 mx-2" style="height: 20px; width: 1px"></div>
+          <div
+            class="vr bg-grey-darken-2 mx-2"
+            style="height: 20px; width: 1px"
+          ></div>
 
           <!-- 批次操作插槽或預設按鈕 -->
-          <slot name="batchActions" :selected="selectedItems">
-            <v-btn size="small" variant="text" color="white"> 批次核准 </v-btn>
-            <v-btn size="small" variant="text" color="red-lighten-2"> 刪除 </v-btn>
+          <slot
+            name="batchActions"
+            :selected="selectedItems"
+          >
+            <v-btn
+              size="small"
+              variant="text"
+              color="white"
+            >
+              批次核准
+            </v-btn>
+            <v-btn
+              size="small"
+              variant="text"
+              color="red-lighten-2"
+            >
+              刪除
+            </v-btn>
           </slot>
 
           <v-spacer></v-spacer>
@@ -696,7 +774,12 @@ const headerHeight = computed(() => {
         style="position: sticky; top: 0; z-index: 10"
       >
         <span class="text-subtitle-1 font-weight-bold text-grey-darken-3">篩選條件</span>
-        <IButton icon variant="text" density="comfortable" @click="isExpanded = false">
+        <IButton
+          icon
+          variant="text"
+          density="comfortable"
+          @click="isExpanded = false"
+        >
           <v-icon icon="mdi-close"></v-icon>
         </IButton>
       </div>
@@ -707,9 +790,12 @@ const headerHeight = computed(() => {
           ref="form"
           class="d-flex flex-column"
           style="gap: 16px"
-          @submit.prevent="searchBtn('btn'), (clickSearch = true), (isExpanded = false)"
+          @submit.prevent="(searchBtn('btn'), (clickSearch = true), (isExpanded = false))"
         >
-          <slot name="conditions" :conditions="conditions"></slot>
+          <slot
+            name="conditions"
+            :conditions="conditions"
+          ></slot>
         </v-form>
       </div>
 
@@ -734,7 +820,7 @@ const headerHeight = computed(() => {
             height="40"
             rounded="lg"
             elevation="0"
-            @click="searchBtn('btn'), (clickSearch = true), (isExpanded = false)"
+            @click="(searchBtn('btn'), (clickSearch = true), (isExpanded = false))"
           >
             <span class="text-body-2 font-weight-bold">篩選</span>
           </IButton>
@@ -813,11 +899,13 @@ const headerHeight = computed(() => {
   .position-fixed {
     background: var(--color-gray-900, #0f172a) !important; // Slate 900
     border: 1px solid var(--color-gray-700, #334155);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
     backdrop-filter: blur(8px);
-    
+
     // 讓其懸浮感更重
-    bottom: 32px !important; 
+    bottom: 32px !important;
   }
 
   // 優化分頁選擇器

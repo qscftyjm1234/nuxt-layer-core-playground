@@ -63,13 +63,13 @@ interface Props {
    * @default false
    */
   hideDetails?: boolean | 'auto'
-  
+
   /**
    * 排列密度
    * @default 'compact'
    */
   density?: 'default' | 'comfortable' | 'compact'
-  
+
   /**
    * 是否為唯讀
    * @default false
@@ -109,7 +109,7 @@ const isChecked = computed(() => {
 
 const handleChange = (event: any) => {
   // Vuetify 的 @update:model-value 會直接給出新值，若是原生則需處理 event
-  const newValue = event 
+  const newValue = event
   emit('update:modelValue', newValue)
   emit('change', newValue)
 }
@@ -141,7 +141,10 @@ const vuetifyBindings = computed(() => {
     class="i-checkbox-field"
     @update:model-value="handleChange"
   >
-    <template v-if="$slots.label" #label>
+    <template
+      v-if="$slots.label"
+      #label
+    >
       <slot name="label">{{ label }}</slot>
     </template>
   </v-checkbox>
@@ -165,7 +168,10 @@ const vuetifyBindings = computed(() => {
       @change="(e) => handleChange((e.target as HTMLInputElement).checked)"
     />
     <span class="i-checkbox__checkmark"></span>
-    <span v-if="label || $slots.label" class="i-checkbox__label">
+    <span
+      v-if="label || $slots.label"
+      class="i-checkbox__label"
+    >
       <slot name="label">{{ label }}</slot>
     </span>
   </label>
@@ -174,7 +180,7 @@ const vuetifyBindings = computed(() => {
 <style scoped>
 .i-checkbox-field {
   /* Aligns with standard text height */
-  margin-top: 0; 
+  margin-top: 0;
 }
 
 /* Vuetify Style Overrides for Corporate Trust */

@@ -1,7 +1,7 @@
 import { reactive } from 'vue'
 import coreRepositories from '../repositories'
 
-/** 
+/**
  * 提供專案層級擴充的介面
  * 開發者可以透過 Declare Module 方式擴充此介面
  */
@@ -9,7 +9,7 @@ export interface CustomRepositories {
   // 由 scanner 自動產生或手動擴充
 }
 
-/** 
+/**
  * Repository 物件型別 (核心 + 自定義)
  */
 export type Repositories = typeof coreRepositories & CustomRepositories

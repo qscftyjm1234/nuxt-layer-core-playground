@@ -21,12 +21,22 @@
     "types",
     "nuxt.config.ts",
     "tsconfig.json",
+    "eslint.config.mjs",
+    "prettier.config.cjs",
+    "commitlint.config.cjs",
+    "cz.config.cjs",
+    "lint-staged.config.js",
     ".eslintrc.cjs",
     ".prettierrc",
     "README.md"
   ],
   "exports": {
     ".": "./nuxt.config.ts",
+    "./eslint": "./eslint.config.mjs",
+    "./prettier": "./prettier.config.cjs",
+    "./commitlint": "./commitlint.config.cjs",
+    "./cz": "./cz.config.cjs",
+    "./lint-staged": "./lint-staged.config.js",
     "./utils/scanner": "./router/routes-scanner.ts",
     "./core/options/registry": "./core/options/registry.ts",
     "./core/options/types": "./core/options/types.ts",
@@ -38,7 +48,8 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "typecheck": "nuxi typecheck"
+    "typecheck": "nuxi typecheck",
+    "sync-configs": "node scripts/sync-configs.mjs"
   },
   "dependencies": {
     "@ant-design-vue/nuxt": "^1.0.0",

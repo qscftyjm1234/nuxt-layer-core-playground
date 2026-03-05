@@ -130,7 +130,10 @@ const vuetifyBindings = computed(() => {
     class="i-switch-field"
     @update:model-value="handleToggle"
   >
-    <template v-if="$slots.label" #label>
+    <template
+      v-if="$slots.label"
+      #label
+    >
       <slot name="label">{{ label }}</slot>
     </template>
   </v-switch>
@@ -156,10 +159,18 @@ const vuetifyBindings = computed(() => {
       :class="{ 'i-switch__track--checked': isChecked }"
     >
       <span class="i-switch__thumb">
-        <span v-if="loading" class="i-switch__loading">⏳</span>
+        <span
+          v-if="loading"
+          class="i-switch__loading"
+        >
+          ⏳
+        </span>
       </span>
     </span>
-    <span v-if="label || $slots.label" class="i-switch__label">
+    <span
+      v-if="label || $slots.label"
+      class="i-switch__label"
+    >
       <slot name="label">{{ label }}</slot>
     </span>
   </label>

@@ -24,7 +24,12 @@ navigation: true
 
 ```vue
 <template>
-  <IButton variant="primary" @click="handleClick"> 提交 </IButton>
+  <IButton
+    variant="primary"
+    @click="handleClick"
+  >
+    提交
+  </IButton>
 </template>
 ```
 

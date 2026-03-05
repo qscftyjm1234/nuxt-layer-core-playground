@@ -10,6 +10,5 @@
   "bracketSpacing": true,
   "vueIndentScriptAndStyle": false,
   "htmlWhitespaceSensitivity": "ignore",
-  "singleAttributePerLine": true,
-  "vueBlockOrder": ["script", "template", "style"]
+  "singleAttributePerLine": true
 }

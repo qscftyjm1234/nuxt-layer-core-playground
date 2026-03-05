@@ -10,10 +10,10 @@
 
 ```typescript
 export default defineNuxtConfig({
-  extends: ["softleader-nuxt-core"], // 繼承 npm 套件
+  extends: ['softleader-nuxt-core'] // 繼承 npm 套件
   // 或本地路徑
   // extends: ['../packages/nuxt-core'],
-});
+})
 ```
 
 ### 2. 配置產品參數 (Configs)
@@ -37,13 +37,13 @@ export default defineNuxtConfig({
 export default defineAppConfig({
   core: {
     branding: {
-      name: "我的子專案名稱",
+      name: '我的子專案名稱'
     },
     layout: {
-      menuStyle: "topbar", // 這裡會有自動提示可用選項
-    },
-  },
-});
+      menuStyle: 'topbar' // 這裡會有自動提示可用選項
+    }
+  }
+})
 ```
 
 ---
@@ -128,15 +128,15 @@ VITE_API_BASE_URL=https://api.example.com
 
 ```typescript
 // repositories/user.ts
-const api = useClient("/users");
+const api = useClient('/users')
 
 const userRepository = {
   getUsers(params = {}) {
-    return api.get<UserListResponse>("/", { query: params });
-  },
-};
+    return api.get<UserListResponse>('/', { query: params })
+  }
+}
 
-export default userRepository;
+export default userRepository
 ```
 
 ---
@@ -148,13 +148,13 @@ export default userRepository;
 1. 在頁面或組件中註冊本地選項：
 
 ```typescript
-const options = useOptions();
+const options = useOptions()
 options.registerLocalOptions({
   status: [
-    { label: "啟用", value: "Y" },
-    { label: "停用", value: "N" },
-  ],
-});
+    { label: '啟用', value: 'Y' },
+    { label: '停用', value: 'N' }
+  ]
+})
 ```
 
 ---

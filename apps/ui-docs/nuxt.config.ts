@@ -5,10 +5,7 @@ export default defineNuxtConfig({
   extends: ['../../packages/nuxt-core'],
 
   // 2. 註冊模組
-  modules: [
-    '@nuxt/content',
-    '@nuxt/fonts'
-  ],
+  modules: ['@nuxt/content', '@nuxt/fonts'],
 
   // 3. 配置 Content (MDC 支援在 Markdown 中渲染組件)
   content: {

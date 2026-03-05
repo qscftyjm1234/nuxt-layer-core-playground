@@ -1,0 +1,16 @@
+{
+  "Function with verb": {
+    "prefix": "func",
+    "body": [
+      "/**",
+      " * ${1:description}",
+      " * @param {${2:type}} ${3:param}",
+      " * @returns {${4:type}}",
+      " */",
+      "function ${5|get,set,fetch,handle,click,submit,validate,create,update,delete,toggle,show,hide,initialize,process,execute,perform|}${6:Name}($3) {",
+      "  $0",
+      "}"
+    ],
+    "description": "Create function with approved verb prefix"
+  }
+}

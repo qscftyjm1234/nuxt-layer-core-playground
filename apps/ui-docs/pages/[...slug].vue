@@ -2,7 +2,7 @@
 const route = useRoute()
 
 // 手動查詢內容，這比 <ContentDoc /> 更靈活
-const { data: page } = await useAsyncData(`content-${route.path}`, () => 
+const { data: page } = await useAsyncData(`content-${route.path}`, () =>
   queryContent(route.path).findOne()
 )
 
@@ -20,7 +20,10 @@ useHead({
 <template>
   <div class="prose">
     <!-- 使用 ContentRenderer 渲染查詢到的資料 -->
-    <ContentRenderer v-if="page" :value="page">
+    <ContentRenderer
+      v-if="page"
+      :value="page"
+    >
       <template #empty>
         <div class="text-center py-20">
           <p>此頁面尚無內容。</p>

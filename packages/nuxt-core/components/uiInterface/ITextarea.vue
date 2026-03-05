@@ -24,69 +24,69 @@ interface Props {
    * 綁定值 (v-model)
    */
   modelValue?: string
-  
+
   /**
    * 標籤文字
    */
   label?: string
-  
+
   /**
    * 佔位符文字
    */
   placeholder?: string
-  
+
   /**
    * 是否禁用
    * @default false
    */
   disabled?: boolean
-  
+
   /**
    * 是否唯讀
    * @default false
    */
   readonly?: boolean
-  
+
   /**
    * 行數
    * @default 3
    */
   rows?: number
-  
+
   /**
    * 最大字數限制
    */
   maxlength?: number
-  
+
   /**
    * 是否自動調整高度
    * @default false
    */
   autoGrow?: boolean
-  
+
   /**
    * 顏色主題
    * @default 'primary'
    */
   color?: string
-  
+
   /**
    * 排列密度
    * @default 'compact'
    */
   density?: 'default' | 'comfortable' | 'compact'
-  
+
   /**
    * 錯誤訊息
    */
   errorMessages?: string | string[]
-  
+
   /**
    * 是否顯示字數統計
    * @default false
    */
   counter?: boolean | number
-  
+
   /**
    * 是否隱藏詳細訊息
    * @default false
@@ -187,14 +187,28 @@ const vuetifyBindings = computed(() => {
     @blur="(e) => emit('blur', e)"
     @focus="(e) => emit('focus', e)"
   >
-    <template v-for="(_, name) in $slots" #[name]="slotProps">
-      <slot :name="name" v-bind="slotProps" />
+    <template
+      v-for="(_, name) in $slots"
+      #[name]="slotProps"
+    >
+      <slot
+        :name="name"
+        v-bind="slotProps"
+      />
     </template>
   </v-textarea>
 
   <!-- Native Implementation Support (Simplified Fallback) -->
-  <div v-else class="i-textarea">
-    <label v-if="label" class="field-label">{{ label }}</label>
+  <div
+    v-else
+    class="i-textarea"
+  >
+    <label
+      v-if="label"
+      class="field-label"
+    >
+      {{ label }}
+    </label>
     <div
       class="textarea-wrapper"
       :class="{ 'has-error': !!errorMessages, 'is-disabled': disabled }"
@@ -212,13 +226,22 @@ const vuetifyBindings = computed(() => {
         @focus="(e) => emit('focus', e)"
       />
     </div>
-    
+
     <!-- 底部資訊列 -->
-    <div v-if="errorMessages || counter" class="textarea-footer">
-      <div v-if="errorMessages" class="field-error">
+    <div
+      v-if="errorMessages || counter"
+      class="textarea-footer"
+    >
+      <div
+        v-if="errorMessages"
+        class="field-error"
+      >
         {{ Array.isArray(errorMessages) ? errorMessages[0] : errorMessages }}
       </div>
-      <div v-if="counter" class="char-count">
+      <div
+        v-if="counter"
+        class="char-count"
+      >
         {{ charCount }}{{ maxlength ? ` / ${maxlength}` : '' }}
       </div>
     </div>

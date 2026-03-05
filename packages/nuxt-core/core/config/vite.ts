@@ -20,9 +20,7 @@ export const viteConfig: NuxtConfig['vite'] = {
   // },
   // 移除 SCSS modern-compiler 設定（Nuxt 3 不支援）
 
-  plugins: [
-    vuetify({ autoImport: true })
-  ],
+  plugins: [vuetify({ autoImport: true })],
 
   /**
    * 依賴優化設定
@@ -30,9 +28,9 @@ export const viteConfig: NuxtConfig['vite'] = {
    */
   optimizeDeps: {
     include: [
-      'ant-design-vue', 
-      'dayjs', 
-      'lodash.clonedeep', 
+      'ant-design-vue',
+      'dayjs',
+      'lodash.clonedeep',
       'vuetify',
       ...(productConfig.build?.optimizeDeps || [])
     ]

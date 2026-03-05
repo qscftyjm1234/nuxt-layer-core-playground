@@ -85,7 +85,7 @@ interface Props {
    * @default 'outlined'
    */
   variant?: 'filled' | 'outlined' | 'plain' | 'underlined' | 'solo'
-  
+
   /**
    * 自定義與輸入框互動的顏色
    * @default 'primary'
@@ -171,17 +171,30 @@ const vuetifyBindings = computed(() => {
   />
 
   <!-- Native Fallback (Simplified) -->
-  <div v-else class="ui-text-field">
-    <label v-if="label" class="field-label">{{ label }}</label>
-    <div 
+  <div
+    v-else
+    class="ui-text-field"
+  >
+    <label
+      v-if="label"
+      class="field-label"
+    >
+      {{ label }}
+    </label>
+    <div
       class="field-wrapper"
       :class="{
-        'field-wrapper--focused': false, /* TODO: Add focus state logic if needed for native */
+        'field-wrapper--focused': false /* TODO: Add focus state logic if needed for native */,
         'field-wrapper--disabled': disabled,
         'field-wrapper--error': !!errorMessages
       }"
     >
-      <span v-if="prependIcon" class="field-icon prepend">{{ prependIcon }}</span>
+      <span
+        v-if="prependIcon"
+        class="field-icon prepend"
+      >
+        {{ prependIcon }}
+      </span>
       <input
         v-model="internalValue"
         :type="type"
@@ -192,10 +205,24 @@ const vuetifyBindings = computed(() => {
         @focus="(e) => emit('focus', e)"
         @blur="(e) => emit('blur', e)"
       />
-      <button v-if="clearable && internalValue" class="field-icon append clickable" @click="handleClear">×</button>
-      <span v-else-if="appendIcon" class="field-icon append">{{ appendIcon }}</span>
+      <button
+        v-if="clearable && internalValue"
+        class="field-icon append clickable"
+        @click="handleClear"
+      >
+        ×
+      </button>
+      <span
+        v-else-if="appendIcon"
+        class="field-icon append"
+      >
+        {{ appendIcon }}
+      </span>
     </div>
-    <div v-if="errorMessages" class="field-error">
+    <div
+      v-if="errorMessages"
+      class="field-error"
+    >
       {{ Array.isArray(errorMessages) ? errorMessages[0] : errorMessages }}
     </div>
   </div>
@@ -220,7 +247,9 @@ const vuetifyBindings = computed(() => {
 :deep(.v-field--focused .v-field__outline__notch) {
   border-color: var(--color-primary-500, #6366f1) !important;
   border-width: 1px !important;
-  box-shadow: 0 0 0 1px #6366f1, 0 0 0 4px rgba(99, 102, 241, 0.1);
+  box-shadow:
+    0 0 0 1px #6366f1,
+    0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
 :deep(.v-field--error:not(.v-field--disabled) .v-field__outline__start),

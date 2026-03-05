@@ -10,9 +10,9 @@ export const sCommon = defineStore('common', () => {
   const getProductGroupText = (value: any) => {
     // 模擬實作，實際應從 API 或配置取得
     const map: Record<string, string> = {
-      'Admin': '管理員',
-      'User': '一般用戶',
-      'Guest': '訪客'
+      Admin: '管理員',
+      User: '一般用戶',
+      Guest: '訪客'
     }
     return map[value] || value
   }

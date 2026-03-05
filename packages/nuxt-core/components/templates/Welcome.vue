@@ -13,32 +13,45 @@
       <!-- Left: Messaging & Branding -->
       <section class="branding-area">
         <div class="branding-content animate-reveal">
-          
           <h1 class="main-title">
-            打造未來軟體<br />
+            打造未來軟體
+            <br />
             <span class="gradient-text">引領極致效能</span>
           </h1>
-          
+
           <p class="hero-desc">
-            您的專案 <span class="highlight">{{ projectName }}</span> 已順利啟動。<br />
+            您的專案
+            <span class="highlight">{{ projectName }}</span>
+            已順利啟動。
+            <br />
             讓前端團隊能穩定且一致性的開發。
           </p>
 
-
-
           <div class="action-zone animate-reveal-delayed-2">
-            <IButton 
-              size="large" 
+            <IButton
+              size="large"
               class="prime-cta shadow-blue-500/25"
               @click="handleStart"
             >
               立即開始
-              <IIcon icon="mdi-arrow-right" size="18" class="ml-2" />
+              <IIcon
+                icon="mdi-arrow-right"
+                size="18"
+                class="ml-2"
+              />
             </IButton>
-            
+
             <div class="meta-links">
-              <a href="https://github.com" target="_blank" class="github-link">
-                <IIcon icon="mdi-github" size="20" class="mr-2" />
+              <a
+                href="https://github.com"
+                target="_blank"
+                class="github-link"
+              >
+                <IIcon
+                  icon="mdi-github"
+                  size="20"
+                  class="mr-2"
+                />
                 SOURCE
               </a>
               <span class="separator"></span>
@@ -56,7 +69,12 @@
         <div class="showcase-stack">
           <!-- Glass Card: Architecture (Floating) -->
           <div class="showcase-card architecture-card hover-lift">
-            <div class="card-icon blue"><IIcon icon="mdi-layers-triple-outline" size="24" /></div>
+            <div class="card-icon blue">
+              <IIcon
+                icon="mdi-layers-triple-outline"
+                size="24"
+              />
+            </div>
             <div class="card-details">
               <h4>Layered Engine</h4>
               <p>Multidimensional scaling</p>
@@ -65,7 +83,12 @@
 
           <!-- Glass Card: Performance (Floating) -->
           <div class="showcase-card performance-card hover-lift">
-            <div class="card-icon emerald"><IIcon icon="mdi-lightning-bolt" size="24" /></div>
+            <div class="card-icon emerald">
+              <IIcon
+                icon="mdi-lightning-bolt"
+                size="24"
+              />
+            </div>
             <div class="card-details">
               <h4>Turbo Mode</h4>
               <p>Optimized bundle delivery</p>
@@ -84,12 +107,39 @@
             </div>
             <div class="window-content">
               <div class="scan-line"></div>
-              <div class="code-line"><span class="k">export</span> <span class="k">default</span> <span class="f">defineNuxtConfig</span>({</div>
-              <div class="code-line indent"><span class="p">extends</span>: [<span class="s">'@softleader/nuxt-core'</span>],</div>
-              <div class="code-line indent"><span class="p">modules</span>: [<span class="s">'@nuxtjs/tailwindcss'</span>],</div>
-              <div class="code-line indent"><span class="p">core</span>: {</div>
-              <div class="code-line indent-2"><span class="p">mode</span>: <span class="s">'enterprise'</span>,</div>
-              <div class="code-line indent-2"><span class="p">autoOptimization</span>: <span class="v">true</span></div>
+              <div class="code-line">
+                <span class="k">export</span>
+                <span class="k">default</span>
+                <span class="f">defineNuxtConfig</span>
+                ({
+              </div>
+              <div class="code-line indent">
+                <span class="p">extends</span>
+                : [
+                <span class="s">'@softleader/nuxt-core'</span>
+                ],
+              </div>
+              <div class="code-line indent">
+                <span class="p">modules</span>
+                : [
+                <span class="s">'@nuxtjs/tailwindcss'</span>
+                ],
+              </div>
+              <div class="code-line indent">
+                <span class="p">core</span>
+                : {
+              </div>
+              <div class="code-line indent-2">
+                <span class="p">mode</span>
+                :
+                <span class="s">'enterprise'</span>
+                ,
+              </div>
+              <div class="code-line indent-2">
+                <span class="p">autoOptimization</span>
+                :
+                <span class="v">true</span>
+              </div>
               <div class="code-line indent">}</div>
               <div class="code-line">})</div>
             </div>
@@ -117,7 +167,9 @@ const runtimeConfig = useRuntimeConfig()
 const productConfig = runtimeConfig.public.app.productConfig as any
 
 const projectName = computed(() => productConfig?.meta?.title || 'Softleader Project')
-const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior: 'smooth' }) }
+const handleStart = () => {
+  window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })
+}
 </script>
 
 <style scoped>
@@ -130,7 +182,11 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 /* Background Visuals */
@@ -143,7 +199,7 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
 .grid-overlay {
   position: absolute;
   inset: 0;
-  background-image: 
+  background-image:
     linear-gradient(to right, #e2e8f0 1px, transparent 1px),
     linear-gradient(to bottom, #e2e8f0 1px, transparent 1px);
   background-size: 60px 60px;
@@ -158,9 +214,27 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
   opacity: 0.35;
 }
 
-.glow-1 { top: -15%; right: -5%; width: 50vw; height: 50vw; background: rgba(59, 130, 246, 0.1); }
-.glow-2 { bottom: -10%; left: -5%; width: 45vw; height: 45vw; background: rgba(124, 58, 237, 0.08); }
-.glow-3 { top: 30%; left: 50%; width: 30vw; height: 30vw; background: rgba(14, 165, 233, 0.05); }
+.glow-1 {
+  top: -15%;
+  right: -5%;
+  width: 50vw;
+  height: 50vw;
+  background: rgba(59, 130, 246, 0.1);
+}
+.glow-2 {
+  bottom: -10%;
+  left: -5%;
+  width: 45vw;
+  height: 45vw;
+  background: rgba(124, 58, 237, 0.08);
+}
+.glow-3 {
+  top: 30%;
+  left: 50%;
+  width: 30vw;
+  height: 30vw;
+  background: rgba(14, 165, 233, 0.05);
+}
 
 /* Layout Structure */
 .content-layout {
@@ -175,7 +249,9 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
   gap: 80px;
 }
 
-.branding-area { text-align: left; }
+.branding-area {
+  text-align: left;
+}
 
 /* Micro Labels & Headings */
 .micro-label {
@@ -212,7 +288,10 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
   margin-bottom: 2.5rem;
 }
 
-.highlight { color: #0f172a; font-weight: 700; }
+.highlight {
+  color: #0f172a;
+  font-weight: 700;
+}
 
 /* 3. Density: Stats Bar */
 .stats-bar {
@@ -269,8 +348,13 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
 }
 
-.prime-cta:hover { transform: translateY(-4px) scale(1.04) !important; box-shadow: 0 35px 60px -15px rgba(37, 99, 235, 0.5) !important; }
-.prime-cta:active { transform: scale(0.96) !important; }
+.prime-cta:hover {
+  transform: translateY(-4px) scale(1.04) !important;
+  box-shadow: 0 35px 60px -15px rgba(37, 99, 235, 0.5) !important;
+}
+.prime-cta:active {
+  transform: scale(0.96) !important;
+}
 
 .meta-links {
   display: flex;
@@ -288,9 +372,15 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
   align-items: center;
   transition: color 0.3s;
 }
-.github-link:hover { color: #0f172a; }
+.github-link:hover {
+  color: #0f172a;
+}
 
-.separator { width: 1px; height: 16px; background: #e2e8f0; }
+.separator {
+  width: 1px;
+  height: 16px;
+  background: #e2e8f0;
+}
 
 .status-badge {
   display: flex;
@@ -304,8 +394,18 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
 }
 
 /* Showcase Area */
-.visual-area { position: relative; display: flex; align-items: center; justify-content: center; }
-.showcase-stack { position: relative; width: 100%; max-width: 540px; height: 440px; }
+.visual-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.showcase-stack {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  height: 440px;
+}
 
 .showcase-card {
   position: absolute;
@@ -322,17 +422,50 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
   transition: all 0.6s ease;
 }
 
-.architecture-card { top: 5%; left: -5%; transform: rotate(-4deg); }
-.performance-card { top: 30%; left: 20%; transform: rotate(3deg); }
+.architecture-card {
+  top: 5%;
+  left: -5%;
+  transform: rotate(-4deg);
+}
+.performance-card {
+  top: 30%;
+  left: 20%;
+  transform: rotate(3deg);
+}
 
-.hover-lift:hover { z-index: 30; transform: translateY(-10px) rotate(0deg) scale(1.05); box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1); }
+.hover-lift:hover {
+  z-index: 30;
+  transform: translateY(-10px) rotate(0deg) scale(1.05);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
+}
 
-.card-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
-.card-icon.blue { background: #eff6ff; color: #2563eb; }
-.card-icon.emerald { background: #ecfdf5; color: #10b981; }
+.card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-icon.blue {
+  background: #eff6ff;
+  color: #2563eb;
+}
+.card-icon.emerald {
+  background: #ecfdf5;
+  color: #10b981;
+}
 
-.card-details h4 { font-size: 15px; font-weight: 900; margin-bottom: 2px; }
-.card-details p { font-size: 12px; color: #94a3b8; font-weight: 500; }
+.card-details h4 {
+  font-size: 15px;
+  font-weight: 900;
+  margin-bottom: 2px;
+}
+.card-details p {
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 500;
+}
 
 /* Code Window Component (Motion: Scan Line) */
 .code-window-card {
@@ -359,24 +492,79 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
 }
 
 @keyframes scan {
-  from { top: 0; }
-  to { top: 100%; }
+  from {
+    top: 0;
+  }
+  to {
+    top: 100%;
+  }
 }
 
-.window-header { background: #1e293b; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #334155; }
-.window-dots { display: flex; gap: 8px; }
-.window-dots span { width: 10px; height: 10px; border-radius: 50%; }
-.dot-red { background: #ff5f56; }
-.dot-amber { background: #ffbd2e; }
-.dot-green { background: #27c93f; }
-.file-tab { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #94a3b8; font-weight: 700; }
+.window-header {
+  background: #1e293b;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #334155;
+}
+.window-dots {
+  display: flex;
+  gap: 8px;
+}
+.window-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.dot-red {
+  background: #ff5f56;
+}
+.dot-amber {
+  background: #ffbd2e;
+}
+.dot-green {
+  background: #27c93f;
+}
+.file-tab {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 700;
+}
 
-.window-content { padding: 32px; font-family: 'JetBrains Mono', monospace; font-size: 15px; line-height: 1.7; text-align: left; position: relative; }
-.code-line { white-space: pre; }
-.indent { padding-left: 24px; }
-.indent-2 { padding-left: 48px; }
-.k { color: #f472b6; } .f { color: #fbbf24; } .p { color: #38bdf8; }
-.s { color: #4ade80; } .v { color: #818cf8; }
+.window-content {
+  padding: 32px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  line-height: 1.7;
+  text-align: left;
+  position: relative;
+}
+.code-line {
+  white-space: pre;
+}
+.indent {
+  padding-left: 24px;
+}
+.indent-2 {
+  padding-left: 48px;
+}
+.k {
+  color: #f472b6;
+}
+.f {
+  color: #fbbf24;
+}
+.p {
+  color: #38bdf8;
+}
+.s {
+  color: #4ade80;
+}
+.v {
+  color: #818cf8;
+}
 
 /* Scroll Indicator (Motion) */
 .scroll-indicator {
@@ -392,37 +580,136 @@ const handleStart = () => { window.scrollTo({ top: window.innerHeight, behavior:
   z-index: 15;
 }
 
-.mouse { width: 22px; height: 36px; border: 2px solid #0f172a; border-radius: 12px; position: relative; }
-.wheel { width: 2px; height: 6px; background: #0f172a; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); border-radius: 2px; animation: scroll-wheel 2s infinite; }
-.scroll-text { font-size: 9px; font-weight: 900; letter-spacing: 0.2em; color: #0f172a; }
+.mouse {
+  width: 22px;
+  height: 36px;
+  border: 2px solid #0f172a;
+  border-radius: 12px;
+  position: relative;
+}
+.wheel {
+  width: 2px;
+  height: 6px;
+  background: #0f172a;
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  animation: scroll-wheel 2s infinite;
+}
+.scroll-text {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: #0f172a;
+}
 
-@keyframes scroll-wheel { 0% { opacity: 1; top: 6px; } 100% { opacity: 0; top: 20px; } }
+@keyframes scroll-wheel {
+  0% {
+    opacity: 1;
+    top: 6px;
+  }
+  100% {
+    opacity: 0;
+    top: 20px;
+  }
+}
 
 /* Animations */
-.animate-reveal { animation: reveal 1.2s cubic-bezier(0.23, 1, 0.32, 1) backwards; }
-.animate-reveal-delayed { animation: reveal 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.5s backwards; }
-.animate-reveal-delayed-2 { animation: reveal 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.8s backwards; }
+.animate-reveal {
+  animation: reveal 1.2s cubic-bezier(0.23, 1, 0.32, 1) backwards;
+}
+.animate-reveal-delayed {
+  animation: reveal 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.5s backwards;
+}
+.animate-reveal-delayed-2 {
+  animation: reveal 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.8s backwards;
+}
 
-@keyframes reveal { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-.animate-float-slow { animation: float 10s ease-in-out infinite alternate; }
-.animate-float-delayed { animation: float 12s ease-in-out infinite alternate-reverse; animation-delay: 2s; }
-.animate-float-fast { animation: float 8s ease-in-out infinite alternate; animation-delay: 1s; }
+.animate-float-slow {
+  animation: float 10s ease-in-out infinite alternate;
+}
+.animate-float-delayed {
+  animation: float 12s ease-in-out infinite alternate-reverse;
+  animation-delay: 2s;
+}
+.animate-float-fast {
+  animation: float 8s ease-in-out infinite alternate;
+  animation-delay: 1s;
+}
 
-@keyframes float { from { transform: translate(0, 0) scale(1); } to { transform: translate(40px, 40px) scale(1.1); } }
+@keyframes float {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(40px, 40px) scale(1.1);
+  }
+}
 
-.animate-bounce-slow { animation: bounce 3s ease-in-out infinite; }
-@keyframes bounce { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 10px); } }
+.animate-bounce-slow {
+  animation: bounce 3s ease-in-out infinite;
+}
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, 10px);
+  }
+}
 
-.pulse { animation: pulse 2s infinite; }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+.pulse {
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
 
 @media (max-width: 1024px) {
-  .content-layout { grid-template-columns: 1fr; gap: 80px; text-align: center; }
-  .branding-area { display: flex; flex-direction: column; align-items: center; }
-  .action-zone { align-items: center; }
-  .stats-bar { justify-content: center; }
-  .visual-area { padding-bottom: 100px; }
-  .showcase-stack { transform: scale(0.9); height: 400px; }
+  .content-layout {
+    grid-template-columns: 1fr;
+    gap: 80px;
+    text-align: center;
+  }
+  .branding-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .action-zone {
+    align-items: center;
+  }
+  .stats-bar {
+    justify-content: center;
+  }
+  .visual-area {
+    padding-bottom: 100px;
+  }
+  .showcase-stack {
+    transform: scale(0.9);
+    height: 400px;
+  }
 }
 </style>

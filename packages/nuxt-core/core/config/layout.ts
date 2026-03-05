@@ -150,7 +150,9 @@ export const defaultLayoutConfig: LayoutConfig = {
   footer: {
     visible: productConfig.layout?.footer?.visible ?? true,
     fixed: false,
-    content: productConfig.layout?.footer?.content || `Copyright © ${new Date().getFullYear()} Demo App. All rights reserved.`
+    content:
+      productConfig.layout?.footer?.content ||
+      `Copyright © ${new Date().getFullYear()} Demo App. All rights reserved.`
   },
   theme: {
     defaultTheme: 'light',

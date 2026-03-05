@@ -9,12 +9,15 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "typecheck": "nuxi typecheck"
+    "prettier": "softleader-nuxt-core/prettier",
+    "eslintConfig": {
+      "extends": [
+        "softleader-nuxt-core/eslint"
+      ]
+    }
   },
   "dependencies": {
-    "softleader-nuxt-core": "1.0.0",
+    "softleader-nuxt-core": "*",
     "nuxt": "^3.15.4",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"

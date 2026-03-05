@@ -486,7 +486,8 @@ export function useFileUpload() {
     uploadFromBase64,
     uploadFromBlob,
     validate: validateFile,
-    validateMultiple: (files: File[], options: FileValidationOptions) => validateFiles(files, options),
+    validateMultiple: (files: File[], options: FileValidationOptions) =>
+      validateFiles(files, options),
     // 工具方法
     getSelectedFiles,
     formatFileSize,

@@ -41,7 +41,7 @@ withDefaults(defineProps<Props>(), {
         <span
           v-else
           class="crumb-current"
-          :class="{ 'disabled': item.disabled }"
+          :class="{ disabled: item.disabled }"
         >
           {{ item.title }}
         </span>

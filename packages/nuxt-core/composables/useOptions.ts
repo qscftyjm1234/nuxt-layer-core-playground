@@ -13,8 +13,17 @@
  */
 
 import { reactive, isRef } from 'vue'
-import type { OptionItem, OptionArray, OptionDefinition, OptionsRegistry } from '../core/options/types'
-import { optionsRegistry as coreRegistry, type OptionKey, type Options } from '../core/options/registry'
+import type {
+  OptionItem,
+  OptionArray,
+  OptionDefinition,
+  OptionsRegistry
+} from '../core/options/types'
+import {
+  optionsRegistry as coreRegistry,
+  type OptionKey,
+  type Options
+} from '../core/options/registry'
 
 // 本地註冊表 (可由 App 動態注入)
 const localRegistry = reactive<OptionsRegistry>({})
@@ -371,32 +380,32 @@ let singletonOptions: Options | null = null
  * @returns 全域選項物件代理，包含所有定義在 registry 的選項
  */
 export function useOptions(): Options {
-    const proxies: Record<string, OptionArray> = {}
-    
-    // 合併核心與本地註冊表
-    const getFullRegistry = () => ({ ...coreRegistry, ...localRegistry })
+  const proxies: Record<string, OptionArray> = {}
 
-    // 建立基礎代理物件
-    singletonOptions = new Proxy({} as any, {
-      get(target, prop: string) {
-        if (prop === 'registerLocalOptions') {
-          return (options: OptionsRegistry) => {
-            Object.assign(localRegistry, options)
-          }
-        }
+  // 合併核心與本地註冊表
+  const getFullRegistry = () => ({ ...coreRegistry, ...localRegistry })
 
-        const registry = getFullRegistry()
-        if (prop in registry) {
-          if (!proxies[prop]) {
-            proxies[prop] = createOptionProxy(prop, registry[prop] as any)
-          }
-          return proxies[prop]
+  // 建立基礎代理物件
+  singletonOptions = new Proxy({} as any, {
+    get(target, prop: string) {
+      if (prop === 'registerLocalOptions') {
+        return (options: OptionsRegistry) => {
+          Object.assign(localRegistry, options)
         }
-        
-        return undefined
       }
-    }) as Options & { registerLocalOptions: (config: OptionsRegistry) => void }
-    return singletonOptions as any
+
+      const registry = getFullRegistry()
+      if (prop in registry) {
+        if (!proxies[prop]) {
+          proxies[prop] = createOptionProxy(prop, registry[prop] as any)
+        }
+        return proxies[prop]
+      }
+
+      return undefined
+    }
+  }) as Options & { registerLocalOptions: (config: OptionsRegistry) => void }
+  return singletonOptions as any
 }
 
 // --- Standalone Helpers ---

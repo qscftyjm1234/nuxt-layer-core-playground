@@ -1,0 +1,69 @@
+{
+  // ========================================
+  // 編輯器基本設定
+  // ========================================
+  "editor.formatOnSave": true, // 儲存時自動格式化
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit", // 儲存時自動修正 ESLint 錯誤
+    "source.organizeImports": "never" // 不自動整理 import（避免與 ESLint 衝突）
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode", // 預設使用 Prettier 格式化
+
+  // ========================================
+  // TypeScript / JavaScript 檢查設定
+  // ========================================
+  "typescript.validate.enable": false, // 關閉 TypeScript 檢查
+  "javascript.validate.enable": false, // 關閉 JavaScript 檢查
+
+  // ========================================
+  // ESLint 設定
+  // ========================================
+  "eslint.enable": true, // 啟用 ESLint
+  "eslint.validate": [
+    // ESLint 要檢查的檔案類型
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue"
+  ],
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto" // 自動偵測專案根目錄
+    }
+  ],
+  "eslint.options": {
+    "overrideConfigFile": "eslint.config.mjs" // 指定 ESLint 設定檔
+  },
+  "eslint.run": "onType", // 輸入時即時檢查
+  "eslint.lintTask.enable": true, // 啟用 ESLint 任務
+
+  // ========================================
+  // 檔案關聯設定
+  // ========================================
+  "files.associations": {
+    "*.css": "postcss" // 將 .css 檔案視為 PostCSS
+  },
+
+  // ========================================
+  // 各檔案類型的格式化工具設定
+  // ========================================
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // JavaScript 使用 Prettier
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // Vue 使用 Prettier
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // TypeScript 使用 Prettier
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // JSON 使用 Prettier
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // JSONC (JSON with Comments) 使用 Prettier
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // Markdown 使用 Prettier
+  }
+}

@@ -338,20 +338,39 @@ const getStickyStyle = (col: any, isHeader = false) => {
       </template>
 
       <!-- Unified Slot Pass-through & Overrides -->
-      <template v-for="slotName in ['loading', ...forwardedSlots]" #[slotName]="scope">
+      <template
+        v-for="slotName in ['loading', ...forwardedSlots]"
+        #[slotName]="scope"
+      >
         <!-- Loading Override -->
-        <div v-if="slotName === 'loading'" class="pa-4 bg-white border-b">
-          <v-skeleton-loader type="table-row@5" elevation="0"></v-skeleton-loader>
+        <div
+          v-if="slotName === 'loading'"
+          class="pa-4 bg-white border-b"
+        >
+          <v-skeleton-loader
+            type="table-row@5"
+            elevation="0"
+          ></v-skeleton-loader>
         </div>
 
         <!-- Pass-through others -->
-        <slot v-else :name="slotName" v-bind="scope" />
+        <slot
+          v-else
+          :name="slotName"
+          v-bind="scope"
+        />
       </template>
 
       <!-- 4. Empty State (Polished) -->
       <template #no-data>
         <div class="d-flex flex-column align-center justify-center pa-8 text-grey-lighten-1">
-          <v-icon size="48" color="grey-lighten-3" class="mb-2">mdi-inbox-outline</v-icon>
+          <v-icon
+            size="48"
+            color="grey-lighten-3"
+            class="mb-2"
+          >
+            mdi-inbox-outline
+          </v-icon>
           <div class="text-body-2 font-weight-medium">無符合資料</div>
         </div>
       </template>

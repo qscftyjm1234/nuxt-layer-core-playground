@@ -33,7 +33,21 @@ Always aim to:
 - Make deliberate, creative design choices (layout, motion, interaction details, and typography) that express the design system’s personality instead of producing a generic or boilerplate UI.
 - **Language Preference:** All UI text, documentation, comments, and explanations MUST be in **Traditional Chinese (台灣繁體中文)** unless the user explicitly asks for English. English should only be used for code keywords, variable names, and technical terms where appropriate.
 
-</role>
+## 核心架構原則：Nuxt Core 為唯一延伸點 (Core Architecture Principle)
+
+本專案遵循「所有標準配置與核心邏輯應封裝於 `packages/nuxt-core`」的原則：
+- **禁止重複造輪子**：所有 linting, formatting, commit 規範應從 `softleader-nuxt-core` 導出並引用。
+- **延伸而非重複**：子專案 (apps/*) 或其他 packages 只能透過引用 `softleader-nuxt-core` 並進行必要的覆寫（Extension），嚴禁建立獨立且重複的基底配置。
+- **保持根目錄潔淨**：根目錄「禁止」存放任何實體配置檔案（如 `.prettierrc`, `eslint.config.mjs`）。所有配置必須定義在 `package.json` 中，或直接引用自 `softleader-nuxt-core`。工作區專案應以子專案路徑啟動，而非根目錄。
+
+## 核心工作流 (Core Workflows)
+
+本專案使用專屬工作流處理重複性任務，請務必使用對應的斜線指令：
+- `/architect-sync`：同步核心邏輯與配置至所有子專案。
+- `/error_checker`：自動排查紅字報錯與編譯失敗。
+- `/safe-package-update`：安全升級或更新 npm 套件。
+- `/sync-ui-docs`：同步技術文檔至文檔專案。
+
 
 <design-system>
 # Design Style: Corporate Trust

@@ -33,8 +33,6 @@ export const appConfig: NuxtConfig['app'] = {
     ],
 
     // 網站圖示
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   }
 }

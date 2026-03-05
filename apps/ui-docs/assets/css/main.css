@@ -9,7 +9,7 @@
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   background-color: var(--docs-bg);
   color: var(--docs-text);
   margin: 0;
@@ -20,7 +20,7 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
   letter-spacing: -0.02em;
 }
 
@@ -68,11 +68,7 @@ h4 {
 .hero {
   padding: 4rem 0;
   text-align: center;
-  background: radial-gradient(
-    circle at top center,
-    var(--docs-primary-glow),
-    transparent 70%
-  );
+  background: radial-gradient(circle at top center, var(--docs-primary-glow), transparent 70%);
 }
 
 .hero h1 {

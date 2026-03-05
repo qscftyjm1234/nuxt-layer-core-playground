@@ -18,7 +18,10 @@ const handleSubmit = () => {
       <h3 class="text-lg font-bold text-slate-100">Policy Form</h3>
     </template>
 
-    <form @submit.prevent="handleSubmit" class="space-y-4">
+    <form
+      @submit.prevent="handleSubmit"
+      class="space-y-4"
+    >
       <IInput
         v-model="policyName"
         label="Policy Name"
@@ -29,9 +32,12 @@ const handleSubmit = () => {
         label="Policy Type"
         placeholder="Enter policy type"
       />
-      
+
       <div class="flex justify-end pt-4">
-        <IButton type="submit" color="primary">
+        <IButton
+          type="submit"
+          color="primary"
+        >
           Submit Policy
         </IButton>
       </div>

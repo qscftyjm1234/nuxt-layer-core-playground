@@ -1,4 +1,3 @@
-
 import type { UseFetchOptions } from 'nuxt/app'
 import type { UserListResponse } from '../../types/api'
 

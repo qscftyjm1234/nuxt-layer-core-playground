@@ -18,9 +18,9 @@ npm install softleader-nuxt-core
 
 ```typescript
 export default defineNuxtConfig({
-  extends: ["softleader-nuxt-core"],
+  extends: ['softleader-nuxt-core']
   // ... 其他專案設定
-});
+})
 ```
 
 ### 3. 配置產品參數 (Configuration)

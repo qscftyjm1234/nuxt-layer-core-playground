@@ -2,7 +2,7 @@ import type { App } from 'vue'
 
 /**
  * API Registry (擴充運作模式)
- * 
+ *
  * 讓外部專案可以動態註冊自己的 Repository 到 $api 中
  */
 class ApiRegistry {

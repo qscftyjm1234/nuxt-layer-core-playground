@@ -15,11 +15,11 @@ ESLint 的核心機制是 **「基於配置的擴展 (Extends)」**。
 ```javascript
 module.exports = {
   root: true, // 停止向上尋找配置
-  extends: ["@nuxt/eslint-config", "plugin:@typescript-eslint/recommended"],
+  extends: ['@nuxt/eslint-config', 'plugin:@typescript-eslint/recommended'],
   rules: {
-    "vue/multi-word-component-names": "off",
-  },
-};
+    'vue/multi-word-component-names': 'off'
+  }
+}
 ```
 
 ### 子專案的繼承 (`apps/playground-app/.eslintrc.cjs`)
@@ -29,13 +29,13 @@ module.exports = {
 ```javascript
 module.exports = {
   extends: [
-    "../../packages/nuxt-core/.eslintrc.cjs", // 指向核心層的路徑
+    '../../packages/nuxt-core/.eslintrc.cjs' // 指向核心層的路徑
   ],
   rules: {
     // 這裡只寫「想改」的部分，沒寫的都會從核心層繼承
-    "no-console": "warn",
-  },
-};
+    'no-console': 'warn'
+  }
+}
 ```
 
 > [!IMPORTANT]

@@ -118,7 +118,10 @@ const vuetifyBindings = computed(() => {
     class="i-radio-field"
     @update:model-value="(val) => emit('update:modelValue', val)"
   >
-    <template v-if="$slots.label" #label>
+    <template
+      v-if="$slots.label"
+      #label
+    >
       <slot name="label">{{ label }}</slot>
     </template>
   </v-radio>
@@ -139,7 +142,10 @@ const vuetifyBindings = computed(() => {
       @change="handleChange"
     />
     <span class="i-radio__circle"></span>
-    <span v-if="label || $slots.label" class="i-radio__label">
+    <span
+      v-if="label || $slots.label"
+      class="i-radio__label"
+    >
       <slot name="label">{{ label }}</slot>
     </span>
   </label>

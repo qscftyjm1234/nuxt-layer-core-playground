@@ -3,7 +3,7 @@ import path from 'node:path'
 
 /**
  * 自動檢查環境變數範本 (.env.example)
- * 
+ *
  * 邏輯：
  * 1. 確保在專案根目錄執行 (檢查 package.json)
  * 2. 掃描 apps/* 資料夾下的所有子專案
@@ -13,7 +13,10 @@ import path from 'node:path'
 const projectRoot = process.cwd()
 
 // 防呆：確保在專案根目錄執行
-if (!fs.existsSync(path.join(projectRoot, 'package.json')) || !fs.existsSync(path.join(projectRoot, 'apps'))) {
+if (
+  !fs.existsSync(path.join(projectRoot, 'package.json')) ||
+  !fs.existsSync(path.join(projectRoot, 'apps'))
+) {
   console.error('[Setup] ❌ 錯誤：請在專案根目錄執行此腳本。')
   process.exit(1)
 }
@@ -44,13 +47,15 @@ NUXT_PUBLIC_ENABLE_SECURITY_MODE=false
 
 // 掃描 apps 下的所有目錄
 const appsDir = path.join(projectRoot, 'apps')
-const appFolders = fs.readdirSync(appsDir).filter(f => fs.statSync(path.join(appsDir, f)).isDirectory())
+const appFolders = fs
+  .readdirSync(appsDir)
+  .filter((f) => fs.statSync(path.join(appsDir, f)).isDirectory())
 
-const targets = ['.', ...appFolders.map(f => `apps/${f}`)]
+const targets = [...appFolders.map((f) => `apps/${f}`)]
 
 console.log('[Setup] 正在強制同步環境變數範本 (.env.example)...')
 
-targets.forEach(target => {
+targets.forEach((target) => {
   const examplePath = path.resolve(projectRoot, target, '.env.example')
 
   try {

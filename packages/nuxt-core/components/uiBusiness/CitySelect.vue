@@ -44,10 +44,10 @@ const options = useOptions()
 // 業務邏輯：處理選項
 const cityOptions = computed(() => {
   let opts = options.cities.get()
-  
+
   // 如果需要排除特定城市
   if (props.excludeCities && props.excludeCities.length > 0) {
-    opts = opts.filter(o => !props.excludeCities.includes(o.value as string))
+    opts = opts.filter((o) => !props.excludeCities.includes(o.value as string))
   }
 
   // 如果需要「全部」選項

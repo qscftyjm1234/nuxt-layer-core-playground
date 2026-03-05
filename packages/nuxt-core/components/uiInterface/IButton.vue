@@ -222,9 +222,9 @@ const nativeStyle = computed(() => {
     props.color.startsWith('var(') || props.color.startsWith('#') || props.color.startsWith('rgb')
       ? props.color
       : `var(--color-${props.color}, ${props.color})`
-  
+
   const isOutlinedOrText = ['text', 'outlined', 'plain'].includes(props.variant)
-  
+
   return {
     color: isOutlinedOrText ? colorValue : '#ffffff',
     backgroundColor: isOutlinedOrText ? 'transparent' : colorValue,
@@ -250,12 +250,18 @@ const nativeStyle = computed(() => {
     @click="handleClick"
   >
     <!-- Prepend Slot -->
-    <template v-if="prependIcon" #prepend>
+    <template
+      v-if="prependIcon"
+      #prepend
+    >
       <slot name="prepend">
-         <IIcon :icon="prependIcon" />
+        <IIcon :icon="prependIcon" />
       </slot>
     </template>
-    <template v-else-if="$slots.prepend" #prepend>
+    <template
+      v-else-if="$slots.prepend"
+      #prepend
+    >
       <slot name="prepend" />
     </template>
 
@@ -263,17 +269,26 @@ const nativeStyle = computed(() => {
     <slot />
 
     <!-- Append Slot -->
-    <template v-if="appendIcon" #append>
+    <template
+      v-if="appendIcon"
+      #append
+    >
       <slot name="append">
         <IIcon :icon="appendIcon" />
       </slot>
     </template>
-     <template v-else-if="$slots.append" #append>
+    <template
+      v-else-if="$slots.append"
+      #append
+    >
       <slot name="append" />
     </template>
 
     <!-- Loader Slot (Optional customization) -->
-    <template v-if="$slots.loader" #loader>
+    <template
+      v-if="$slots.loader"
+      #loader
+    >
       <slot name="loader" />
     </template>
   </v-btn>
@@ -304,15 +319,37 @@ const nativeStyle = computed(() => {
     @click="handleClick"
   >
     <!-- Loading -->
-    <span v-if="loading" class="i-button__loading">
-      <svg class="animate-spin h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    <span
+      v-if="loading"
+      class="i-button__loading"
+    >
+      <svg
+        class="animate-spin h-5 w-5 text-current"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        ></path>
       </svg>
     </span>
 
     <!-- Prepend Icon -->
-    <span v-if="!loading && (prependIcon || $slots.prepend)" class="i-button__prepend mr-2">
+    <span
+      v-if="!loading && (prependIcon || $slots.prepend)"
+      class="i-button__prepend mr-2"
+    >
       <slot name="prepend">
         <IIcon :icon="prependIcon!" />
       </slot>
@@ -322,7 +359,10 @@ const nativeStyle = computed(() => {
     <slot />
 
     <!-- Append Icon -->
-    <span v-if="!loading && (appendIcon || $slots.append)" class="i-button__append ml-2">
+    <span
+      v-if="!loading && (appendIcon || $slots.append)"
+      class="i-button__append ml-2"
+    >
       <slot name="append">
         <IIcon :icon="appendIcon!" />
       </slot>
@@ -353,15 +393,32 @@ const nativeStyle = computed(() => {
 }
 
 .i-button:focus-visible {
-  box-shadow: 0 0 0 2px white, 0 0 0 4px var(--color-primary, #4f46e5);
+  box-shadow:
+    0 0 0 2px white,
+    0 0 0 4px var(--color-primary, #4f46e5);
 }
 
 /* Sizes */
-.i-button--x-small { padding: 0.125rem 0.5rem; font-size: 0.75rem; }
-.i-button--small { padding: 0.25rem 0.75rem; font-size: 0.875rem; }
-.i-button--medium { padding: 0.5rem 1rem; font-size: 0.875rem; } /* Default is often text-sm in systems */
-.i-button--large { padding: 0.75rem 1.5rem; font-size: 1rem; }
-.i-button--x-large { padding: 1rem 2rem; font-size: 1.125rem; }
+.i-button--x-small {
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+}
+.i-button--small {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+}
+.i-button--medium {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+} /* Default is often text-sm in systems */
+.i-button--large {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+}
+.i-button--x-large {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+}
 
 /* Block */
 .i-button--block {
