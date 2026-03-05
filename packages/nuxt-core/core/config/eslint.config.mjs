@@ -16,6 +16,9 @@ export default tseslint.config(
       parser: vueParser,
       parserOptions: {
         parser: '@typescript-eslint/parser',
+        projectService: {
+          allowDefaultProject: ['*.config.mjs', '*.config.ts', 'prettier.config.cjs']
+        },
         extraFileExtensions: ['.vue'],
         ecmaVersion: 'latest',
         sourceType: 'module'
