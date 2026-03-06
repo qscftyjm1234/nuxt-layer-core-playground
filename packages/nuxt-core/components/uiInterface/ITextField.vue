@@ -136,16 +136,14 @@ const handleClear = () => {
 // ====================================================
 // 3. 屬性對照表 (Adapter)
 // ====================================================
-const vuetifyBindings = computed(() => {
-  return {
-    color: props.color === 'primary' ? 'primary' : props.color,
-    variant: props.variant,
-    density: props.density,
-    errorMessages: props.errorMessages,
-    prependInnerIcon: props.prependIcon,
-    appendInnerIcon: props.appendIcon
-  }
-})
+const vuetifyBindings = computed(() => ({
+  color: props.color === 'primary' ? 'primary' : props.color,
+  variant: props.variant,
+  density: props.density,
+  errorMessages: props.errorMessages,
+  prependInnerIcon: props.prependIcon,
+  appendInnerIcon: props.appendIcon
+}))
 </script>
 
 <template>
@@ -166,8 +164,8 @@ const vuetifyBindings = computed(() => {
     @click:clear="emit('clear')"
     @click:prepend-inner="emit('click:prepend')"
     @click:append-inner="emit('click:append')"
-    @focus="(e) => emit('focus', e)"
-    @blur="(e) => emit('blur', e)"
+    @focus="(e: FocusEvent) => emit('focus', e)"
+    @blur="(e: FocusEvent) => emit('blur', e)"
   />
 
   <!-- Native Fallback (Simplified) -->
@@ -202,8 +200,8 @@ const vuetifyBindings = computed(() => {
         :disabled="disabled"
         :readonly="readonly"
         class="field-input"
-        @focus="(e) => emit('focus', e)"
-        @blur="(e) => emit('blur', e)"
+        @focus="(e: any) => emit('focus', e)"
+        @blur="(e: any) => emit('blur', e)"
       />
       <button
         v-if="clearable && internalValue"

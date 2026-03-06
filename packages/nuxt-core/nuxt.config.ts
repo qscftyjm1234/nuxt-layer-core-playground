@@ -35,7 +35,7 @@ export default defineNuxtConfig({
   css: Array.isArray(cssConfig) ? (cssConfig as any[]).map((p) => resolve(p)) : [],
 
   /** Nuxt 模組 */
-  modules: [...modulesConfig, optionsScanner, repositoriesScanner],
+  modules: [...(modulesConfig || []), optionsScanner, repositoriesScanner],
 
   /** i18n 設定 */
   i18n: (modulesConfig?.includes('@nuxtjs/i18n') ? i18nConfig : undefined) as any,

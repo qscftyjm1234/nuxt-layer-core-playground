@@ -48,6 +48,12 @@ export interface ProductConfig {
       visible?: boolean
       content?: string
     }
+    branding?: {
+      title?: string
+      subtitle?: string
+      logoIcon?: string
+      logoImage?: string
+    }
   }
 
   /** 4. 主題視覺令牌 (Theme Tokens) - 所有配色與外觀 */
@@ -61,6 +67,7 @@ export interface ProductConfig {
     animation?: boolean // 是否啟用微動畫
     spacingSize?: 'small' | 'medium' | 'large' // 間距規格
     customCss?: string[] // [NEW] 允許專案額外注入全域 CSS 檔案
+    businessColor?: string // [NEW] 業務專屬色
   }
 
   /** 5. 網路開發與代理 (Network & Proxy) - 解決 Nginx 同工不同酬的問題 */

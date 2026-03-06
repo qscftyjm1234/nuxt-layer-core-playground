@@ -39,9 +39,6 @@ export const modulesConfig: NuxtConfig['modules'] = [
   // ESLint 整合 (程式碼品質檢查)
   isInstalled('@nuxt/eslint') && '@nuxt/eslint',
 
-  // Ant Design Vue 整合
-  isInstalled('@ant-design-vue/nuxt') && '@ant-design-vue/nuxt',
-
   // Tailwind CSS 整合
   isInstalled('@nuxtjs/tailwindcss') && '@nuxtjs/tailwindcss',
 

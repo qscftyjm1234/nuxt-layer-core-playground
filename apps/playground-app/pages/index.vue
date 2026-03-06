@@ -34,7 +34,7 @@ console.log(appConfig)
         <div class="d-flex ga-2">
           <v-chip
             v-for="item in options.claimStatus"
-            :key="item.value"
+            :key="String(item.value)"
             :color="item.color"
           >
             {{ item.label }}

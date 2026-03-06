@@ -1,4 +1,4 @@
-import { defineNuxtSchema } from '@nuxt/schema'
+import { defineNuxtSchema } from 'nuxt/schema'
 
 /**
  * 定義核心架構的配置架構 (Schema)

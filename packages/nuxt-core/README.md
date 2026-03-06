@@ -72,6 +72,10 @@ export default defineNuxtConfig({
 - **[第十三課：NPM 套件打包與發布流程 (package.json)](./package.json)**
 - **[第十四課：Git 工作流與 Commit 規範 (README.md)](../../README.md)**
 - **[第十五課：疑難排解與除錯指南 (error.ts)](./utils/api/error.ts)**
+- **[第十六課：CLI 工具設計原理 - 為何 `init` 不放在 scripts？ (bin/init.mjs)](./bin/init.mjs)**
+  - **全域執行能力**：放到 `bin` 欄位，才能讓使用者在「沒有專案的空目錄」下，直接透過 `npx softleader-nuxt-core init` 從無到有建立專案。如果是 `scripts`，就必須先有專案且安裝了套件才能跑，這會有雞生蛋的問題。
+  - **系統整合**：`bin` 腳本（搭配 `#!/usr/bin/env node`）會被 npm 註冊為命令列工具，自動建立符號連結並賦予執行權限。
+  - **職責分離**：`scripts` 是給「當下這個專案」的開發者用的任務；而 `bin` 則是提供給「套件的使用者」在終端機呼叫的工具。
 
 ---
 

@@ -157,15 +157,13 @@ onMounted(() => {
 // ====================================================
 // 3. 屬性對照表 (Adapter)
 // ====================================================
-const vuetifyBindings = computed(() => {
-  return {
-    color: props.color === 'primary' ? 'primary' : props.color,
-    density: props.density,
-    hideDetails: props.hideDetails,
-    errorMessages: props.errorMessages,
-    counter: props.counter
-  }
-})
+const vuetifyBindings = computed(() => ({
+  color: props.color === 'primary' ? 'primary' : props.color,
+  density: props.density,
+  hideDetails: props.hideDetails,
+  errorMessages: props.errorMessages,
+  counter: props.counter
+}))
 </script>
 
 <template>
@@ -184,8 +182,8 @@ const vuetifyBindings = computed(() => {
     variant="outlined"
     bg-color="white"
     class="i-textarea-field"
-    @blur="(e) => emit('blur', e)"
-    @focus="(e) => emit('focus', e)"
+    @blur="(e: FocusEvent) => emit('blur', e)"
+    @focus="(e: FocusEvent) => emit('focus', e)"
   >
     <template
       v-for="(_, name) in $slots"
@@ -222,8 +220,8 @@ const vuetifyBindings = computed(() => {
         :rows="rows"
         :maxlength="maxlength"
         class="textarea-field"
-        @blur="(e) => emit('blur', e)"
-        @focus="(e) => emit('focus', e)"
+        @blur="(e: any) => emit('blur', e)"
+        @focus="(e: any) => emit('focus', e)"
       />
     </div>
 

@@ -105,10 +105,9 @@ export {}
       if (path.startsWith(optionsDir)) {
         console.log(`[Options Scanner] 偵測到變動 (${event}): ${path}, 正在重新整理虛擬檔案...`)
         const { updateTemplates } = await import('@nuxt/kit')
-        await updateTemplates({
-          filter: (t) =>
-            t.filename === pluginTemplate.filename || t.filename === typeTemplate.filename
-        })
+        filter: (t: any) =>
+          t.filename === (pluginTemplate as any).filename ||
+          t.filename === (typeTemplate as any).filename
       }
     })
   }

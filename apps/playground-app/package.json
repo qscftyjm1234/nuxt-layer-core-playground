@@ -8,13 +8,13 @@
     "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "prettier": "softleader-nuxt-core/prettier",
-    "eslintConfig": {
-      "extends": [
-        "softleader-nuxt-core/eslint"
-      ]
-    }
+    "postinstall": "nuxt prepare"
+  },
+  "prettier": "softleader-nuxt-core/prettier",
+  "eslintConfig": {
+    "extends": [
+      "softleader-nuxt-core/eslint"
+    ]
   },
   "dependencies": {
     "softleader-nuxt-core": "*",

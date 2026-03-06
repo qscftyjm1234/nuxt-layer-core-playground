@@ -37,6 +37,21 @@
   3. **Git 錯誤**：在 `.husky/pre-commit` 中對 `lint-staged` 加入 `--no-stash`。
 - **預防措施**: 單一存儲庫 (Monorepo) 應統一處理 Hook 路徑與換行符號規範。
 
+### 11. TypeScript Config 讀取失敗與 vue-tsc 報錯
+
+- **發現日期**: 2026-03-05
+- **症狀**:
+  1. 終端機報錯 `failed to resolve "extends":"../../../tsconfig.base.json"`。
+  2. `vue-tsc` 噴出大量 `PropertyKey | undefined` 或 `unknown` 型別錯誤。
+- **根本原因**:
+  1. 根目錄遺失 `tsconfig.base.json`。
+  2. 部分 UI 元件 (如 `BDataTable`, `ITextarea`) 的事件或 Prop 型別宣告不夠嚴謹 (例如 `v-for` 的 `key` 使用了 `string | number | boolean` 作為 `PropertyKey`)。
+- **最佳解決方案**:
+  1. **補回設定**：在根目錄重新建立 `tsconfig.base.json`。
+  2. **關閉背景檢查**：在 `nuxt.config.ts` 中暫時設定 `typescript: { typeCheck: false }` 以加速開發並減少噪音。
+  3. **修正型別**：確保 `v-for` 的 `:key` 使用 `String()` 或 `Number()` 強制轉型，或在 Prop 中使用 `PropType`。
+- **預防措施**: 確保專案層次的 `extends` 路徑正確，並在開發期間適度調整型別檢查強度。
+
 ### 2. Property 'xxx' does not exist on type 'Options'
 
 - **發現日期**: 2026-03-04
@@ -47,4 +62,29 @@
 
 ---
 
-_請使用相同格式在下方新增項目。_
+### 12. ERR_MODULE_NOT_FOUND (client.manifest.mjs)
+
+- **發現日期**: 2026-03-05
+- **症狀**: 終端機報錯 `Cannot find module '.\.nuxt\dist\server\client.manifest.mjs'`。
+- **根本原因**:
+  1. `.nuxt` 資料夾中的快取或建置產物損壞。
+  2. 多個 `npm run dev` 進程同時執行導致檔案鎖定或建置不完整。
+- **最佳解決方案**:
+  1. 強制結束所有執行中的 Node 進程：`Get-Process node | Where-Object { $_.CommandLine -like "*nuxt-layer-core-playground*" } | Stop-Process -Force`。
+  2. 刪除 `.nuxt` 資料夾。
+  3. 重新執行 `npx nuxi prepare` 以整合 Layer 元件型別。
+  4. 重新啟動 `npm run dev`。
+- **預防措施**: 避免手動中斷建置過程，並確保關閉舊的開發伺服器後再啟動新的。
+
+### 13. Unable to load schema (defineNuxtSchema is not a function)
+
+- **發現日期**: 2026-03-05
+- **症狀**: 終端機報錯 `Unable to load schema from .../nuxt.schema.ts (0 , _schema.defineNuxtSchema) is not a function`。
+- **根本原因**:
+  1. 在 Nuxt 3 Layer 中，直接從 `@nuxt/schema` 導入 `defineNuxtSchema` 時，由於 `jiti` 配置或模組解析問題，可能導致導入的函式為 `undefined`。
+- **最佳解決方案**:
+  - 將導入來源從 `@nuxt/schema` 改為 `nuxt/schema`。
+  - 修改 `nuxt.schema.ts` 頂部導入：`import { defineNuxtSchema } from 'nuxt/schema'`。
+- **預防措施**: 確保在 Nuxt 3/4 環境中優先使用 `nuxt/schema` 進行架構定義，以保證與 `jiti` 的最佳相容性。
+
+---

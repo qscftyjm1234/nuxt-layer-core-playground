@@ -19,6 +19,7 @@
     "utils",
     "stores",
     "types",
+    "bin",
     "nuxt.config.ts",
     "tsconfig.json",
     "eslint.config.mjs",
@@ -52,7 +53,6 @@
     "sync-configs": "node scripts/sync-configs.mjs"
   },
   "dependencies": {
-    "@ant-design-vue/nuxt": "^1.0.0",
     "@nuxt/eslint-config": "^0.5.7",
     "@nuxt/fonts": "0.11.0",
     "@nuxt/icon": "^1.11.0",
@@ -62,7 +62,6 @@
     "@typescript-eslint/eslint-plugin": "^8.26.1",
     "@typescript-eslint/parser": "^8.26.1",
     "@vueuse/core": "^10.11.1",
-    "ant-design-vue": "^4.2.1",
     "dayjs": "1.11.13",
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^9.1.0",

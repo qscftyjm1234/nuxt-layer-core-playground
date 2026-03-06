@@ -27,12 +27,6 @@ export const viteConfig: NuxtConfig['vite'] = {
    * 強制 Vite 預先構建這些套件，避免 HMR Runtime 錯誤
    */
   optimizeDeps: {
-    include: [
-      'ant-design-vue',
-      'dayjs',
-      'lodash.clonedeep',
-      'vuetify',
-      ...(productConfig.build?.optimizeDeps || [])
-    ]
+    include: ['dayjs', 'lodash.clonedeep', 'vuetify', ...(productConfig.build?.optimizeDeps || [])]
   }
 }

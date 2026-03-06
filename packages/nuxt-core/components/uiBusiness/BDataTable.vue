@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useDisplay } from 'vuetify'
+import type { PropType } from 'vue'
 import { tableActionBtnsConfig } from '../../utils/config/table-action-btns'
 // 引用專案內的 uiInterface 組件
 import IDataTable from '../uiInterface/IDataTable.vue'
@@ -83,7 +84,7 @@ const props = defineProps({
     default: true
   },
   headers: {
-    type: Array,
+    type: Array as PropType<any[]>,
     default: () => []
   },
   showSelect: {
@@ -182,8 +183,8 @@ const actionBtnsList = computed(() => {
     .filter(Boolean) as any[]
 })
 
-const tableColumns = computed(() => {
-  return props.headers
+const tableColumns = computed(() =>
+  props.headers
     .filter((h: any) => visibleHeaders.value.includes(h.key))
     .map((h: any) => ({
       ...h,
@@ -191,7 +192,7 @@ const tableColumns = computed(() => {
       label: h.title || '',
       sortable: h.sortable
     }))
-})
+)
 
 const doFetch = async (type?: string) => {
   try {

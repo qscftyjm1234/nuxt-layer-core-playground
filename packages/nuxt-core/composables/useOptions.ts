@@ -397,7 +397,7 @@ export function useOptions(): Options {
       const registry = getFullRegistry()
       if (prop in registry) {
         if (!proxies[prop]) {
-          proxies[prop] = createOptionProxy(prop, registry[prop] as any)
+          proxies[prop] = createOptionProxy(prop, (registry as any)[prop])
         }
         return proxies[prop]
       }
@@ -416,7 +416,8 @@ export function useOptions(): Options {
  * @returns 選項資料 Promise
  */
 export async function fetchOption(key: OptionKey): Promise<OptionItem[]> {
-  const def = optionsRegistry[key]
+  const registry = { ...coreRegistry, ...localRegistry }
+  const def = (registry as any)[key] as OptionDefinition
   if (typeof def === 'function') {
     const res = def()
     if (res instanceof Promise) return await res
@@ -433,7 +434,8 @@ export async function fetchOption(key: OptionKey): Promise<OptionItem[]> {
  * @returns 選項資料陣列
  */
 export function getOptionSync(key: OptionKey): OptionItem[] {
-  const def = optionsRegistry[key]
+  const registry = { ...coreRegistry, ...localRegistry }
+  const def = (registry as any)[key] as OptionDefinition
   if (Array.isArray(def)) return def
   return []
 }
