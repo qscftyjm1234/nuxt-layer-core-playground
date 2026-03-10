@@ -98,7 +98,17 @@ export default defineNuxtConfig({
 - **[核心 Composable (useApi)](./composables/useApi.ts)**: 統一的 API 連線封裝。
 - **[選項管理 (useOptions)](./composables/useOptions.ts)**: 全域選項代理實作。
 
-### 4. 資料串接
+### 4. 設定檔優先級規則 (Configuration Precedence)
+
+當你在不同的地方定義了相同的變數時（例如 API URL 或逾時設定），系統會依照以下**嚴格的優先順序**覆蓋：
+
+1. **`.env` (最高)**：系統環境變數，通常由 CI/CD 或本地開發者手動設置。
+2. **`nuxt.config.ts` (次之)**：專案層級的 `runtimeConfig`。
+3. **`configs/default.json` (最底)**：全域的預設藍圖設置。
+
+> **最佳實踐**：請將「固定的開發結構設定（如模組開關）」寫進 JSON，將「隨環境變動的機敏資訊（如連線字串、API 端點）」寫進 `.env`。
+
+### 5. 資料串接
 
 - **[API 錯誤處理](./utils/api/error.ts)**: 統一的報錯處理機制。
 - **[認證攔截器](./utils/api/interceptors/request.ts)**: 處理 Header 注入邏輯。

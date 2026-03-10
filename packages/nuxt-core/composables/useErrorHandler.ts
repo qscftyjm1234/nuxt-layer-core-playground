@@ -3,7 +3,11 @@
  * 提供錯誤捕捉、分類、記錄和重試機制
  */
 
+import { ref } from 'vue'
+import type { Ref } from 'vue'
 import type { FetchContext } from 'ofetch'
+import { useNotify } from './useNotify'
+import { useRuntimeConfig } from '#app'
 
 export interface ErrorRecord {
   /** 錯誤 ID */
@@ -172,6 +176,14 @@ export function useErrorHandler(): UseErrorHandlerReturn {
    * @param message - 錯誤訊息
    */
   const showError = (message: string): void => {
+    // 取得全域設定看是否禁用錯誤彈窗
+    const { public: config } = useRuntimeConfig()
+    if (config?.api?.silentError) {
+      console.warn('[Silent Error]', message)
+      return
+    }
+
+    // 核心包皆綁定 Vuetify 與 useNotify，直接啟用彈框
     const { error } = useNotify()
     error(message)
   }

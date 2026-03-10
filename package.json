@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "prepare": "node scripts/setup-env.mjs && git config core.hooksPath packages/nuxt-core/core/templates/husky",
+    "dev": "npm run dev:ui-docs",
     "dev:playground": "npm run dev -w playground-app",
     "dev:ui-docs": "npm run dev -w ui-docs",
     "build": "npm run build --workspaces --if-present",

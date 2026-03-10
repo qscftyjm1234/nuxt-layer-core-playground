@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
 
-  // 擴展 Core Layer
+  // 擴展 Core Layer (回歸相對路徑以確保工作區源碼優先)
   extends: ['../../packages/nuxt-core'],
 
   // 覆寫 Runtime 配置

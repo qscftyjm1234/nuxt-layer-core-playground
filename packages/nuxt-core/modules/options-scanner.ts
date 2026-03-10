@@ -72,10 +72,7 @@ import { CustomOptions } from 'softleader-nuxt-core/core/options/registry'
 ${imports}
 
 declare module 'softleader-nuxt-core/core/options/registry' {
-  interface CustomOptions extends AnyOptions {}
-  type AnyOptions = {
-    [K in keyof (${types || 'object'})]: any
-  }
+  interface CustomOptions ${types ? `extends ${types}` : ''} {}
 }
 
 export {}
@@ -105,9 +102,11 @@ export {}
       if (path.startsWith(optionsDir)) {
         console.log(`[Options Scanner] 偵測到變動 (${event}): ${path}, 正在重新整理虛擬檔案...`)
         const { updateTemplates } = await import('@nuxt/kit')
-        (t: any) =>
-          t.filename === (pluginTemplate as any).filename ||
-          t.filename === (typeTemplate as any).filename
+        updateTemplates({
+          filter: (t: any) =>
+            t.filename === (pluginTemplate as any).filename ||
+            t.filename === (typeTemplate as any).filename
+        })
       }
     })
   }
