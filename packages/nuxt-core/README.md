@@ -29,50 +29,50 @@ export default defineNuxtConfig({
 
 ---
 
-## 核心教學課程 (Core Learning Path)
+## 開發指南 (Development Guide)
 
-專為開發人員設計，為了讓學習曲線更平滑，請依照以下 **五個階段** 掌握核心開發：
+為了讓開發人員能順利建立與維護專案，請參考以下文件循序漸進地了解核心功能：
 
-### 階段一：核心架構與基礎 (Core Architecture & Basics)
+### 1. 核心架構與基礎 (Core Architecture & Basics)
 
 了解層級設計理念、如何透過繼承快速啟動，以及配置系統。
 
-- **[第一課：Nuxt Core 導論與介面理念 (README_TEAM.md)](./README_TEAM.md)**
-- **[第二課：核心配置系統 (nuxt.schema.ts)](./nuxt.schema.ts)**
-- **[第三課：開發環境與 Playground 聯動 (README.md)](../../README.md)**
+- **[Nuxt Core 導論與介面理念 (README_TEAM.md)](./README_TEAM.md)**
+- **[核心配置系統 (nuxt.schema.ts)](./nuxt.schema.ts)**
+- **[開發環境與 Playground 聯動 (README.md)](../../README.md)**
 
-### 階段二：UI 與組件規範 (UI & Component Standards)
+### 2. UI 與組件規範 (UI & Component Standards)
 
 學習如何使用介面層組件，確保 UI 一致性與可替換性。
 
-- **[第四課：UI Interface 封裝理念 (IButton.vue)](./components/uiInterface/IButton.vue)**
-- **[第五課：設計系統與 Tokens (styles/)](./styles/)**
-- **[第六課：透傳屬性 ($attrs) 與彈性設計 (IDataTable.vue)](./components/uiInterface/IDataTable.vue)**
+- **[UI Interface 封裝理念 (IButton.vue)](./components/uiInterface/IButton.vue)**
+- **[設計系統與 Tokens (styles/)](./styles/)**
+- **[透傳屬性 ($attrs) 與彈性設計 (IDataTable.vue)](./components/uiInterface/IDataTable.vue)**
 
-### 階段三：資料映射與業務邏輯 (Data Mapping & Logic)
+### 3. 資料映射與業務邏輯 (Data Mapping & Logic)
 
 掌握自動化的資料層掃描與全域選項系統。
 
-- **[第七課：Smart Client 與 API 請求 (useApi.ts)](./composables/useApi.ts)**
-- **[第八課：自動化儲存庫掃描 (repositories-scanner.ts)](./modules/repositories-scanner.ts)**
-- **[第九課：全域與本地選項管理 (useOptions.ts)](./composables/useOptions.ts)**
+- **[Smart Client 與 API 請求 (useApi.ts)](./composables/useApi.ts)**
+- **[自動化儲存庫掃描 (repositories-scanner.ts)](./modules/repositories-scanner.ts)**
+- **[全域與本地選項管理 (useOptions.ts)](./composables/useOptions.ts)**
 
-### 階段四：架構進階應用 (Advanced Layer Usage)
+### 4. 架構進階應用 (Advanced Layer Usage)
 
 深入了解路由擴充、Mock Server 以及攔截器機制。
 
-- **[第十課：動態路由掃描 (routes-scanner.ts)](./router/routes-scanner.ts)**
-- **[第十一課：API 請求與回應攔截器 (interceptors/)](./utils/api/interceptors/)**
-- **[第十二課：純前端 Mock 機制實作 (useApi.ts)](./composables/useApi.ts)**
+- **[動態路由掃描 (routes-scanner.ts)](./router/routes-scanner.ts)**
+- **[API 請求與回應攔截器 (interceptors/)](./utils/api/interceptors/)**
+- **[純前端 Mock 機制實作 (useApi.ts)](./composables/useApi.ts)**
 
-### 階段五：發布與維運 (Publish & Maintenance)
+### 5. 發布與維運 (Publish & Maintenance)
 
-了解如何維護核心包、發布至私有 Registry 以及版本管理。
+了解如何維護核心包、發布至套件庫以及版本管理。
 
-- **[第十三課：NPM 套件打包與發布流程 (package.json)](./package.json)**
-- **[第十四課：Git 工作流與 Commit 規範 (README.md)](../../README.md)**
-- **[第十五課：疑難排解與除錯指南 (error.ts)](./utils/api/error.ts)**
-- **[第十六課：CLI 工具設計原理 - 為何 `init` 不放在 scripts？ (bin/init.mjs)](./bin/init.mjs)**
+- **[NPM 套件打包與發布流程 (package.json)](./package.json)**
+- **[Git 工作流與 Commit 規範 (README.md)](../../README.md)**
+- **[疑難排解與除錯指南 (error.ts)](./utils/api/error.ts)**
+- **[CLI 工具設計原理 - 為何 `init` 不放在 scripts？ (bin/init.mjs)](./bin/init.mjs)**
   - **全域執行能力**：放到 `bin` 欄位，才能讓使用者在「沒有專案的空目錄」下，直接透過 `npx softleader-nuxt-core init` 從無到有建立專案。如果是 `scripts`，就必須先有專案且安裝了套件才能跑，這會有雞生蛋的問題。
   - **系統整合**：`bin` 腳本（搭配 `#!/usr/bin/env node`）會被 npm 註冊為命令列工具，自動建立符號連結並賦予執行權限。
   - **職責分離**：`scripts` 是給「當下這個專案」的開發者用的任務；而 `bin` 則是提供給「套件的使用者」在終端機呼叫的工具。

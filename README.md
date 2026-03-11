@@ -1,109 +1,102 @@
-﻿# Nuxt Layer Core Monorepo 開發指南 (`nuxt-layer-core-playground`)
+﻿# Nuxt Layer Core Monorepo
 
-這是一套基於 **Nuxt 3 Layer** 架構打造的企業級前端開發總部。
-本專案採用 **Monorepo (NPM Workspaces)** 架構，完美分離了「核心 NPM 套件」與「本地模擬測試環境」，讓您能在享受高效率 Layer 開發體驗的同時，無須頻繁發布 NPM 即刻驗證成果。
+> **開發核心原則：本專案是為了實現「一次開發，全專案使用」而設計。**
 
----
+## 1. 專案價值與開發邏輯
 
-## 第一部分：核心架構解析 (`packages/nuxt-core`)
+這是一套給松凌同仁使用的開發核心。往後所有延伸專案都應由此核心專案建立。
 
-`packages/nuxt-core` 是整套架構的**心臟**，所有會被打包上傳至 NPM 的核心邏輯、UI 組件與企業級系統配置皆放置於此。它是未來所有子專案的基底 (Base Layer)。
+- **複用原則**：開發時應直接利用本專案內「松凌研發」的組件、功能或具複用性的商業邏輯。
+- **收納規範**：除非該功能獨特性極高，否則所有具備共用性質的項目都必須收錄在本專案中，確保資源統一。
 
-### 目錄結構與職責說明
+## 2. 專案組成深度解析
 
-| 目錄名稱           | 核心職責與使用情境                                                                                                                                                | 範例與位置                                                                                 |
-| :----------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------- |
-| **`components/`**  | **共用 UI 組件庫**<br>分為 `uiInterface` (底層介面封裝) 與 `uiBusiness` (跨專案共用業務組件)。<br>_開發規範：禁止元件直接依賴特定專案的 API，需透過 Props 傳入。_ | `components/uiInterface/IButton.vue`<br>`components/uiInterface/IDataTable.vue`            |
-| **`composables/`** | **核心共用邏輯 (Hooks)**<br>存放所有跨元件共用的狀態機制或工具。<br>_如 API 請求封裝、全域錯誤處理、選項取得等。_                                                 | `composables/useApi.ts`<br>`composables/useErrorHandler.ts`<br>`composables/useOptions.ts` |
-| **`core/`**        | **分類後的核心設定檔**<br>將原本龐大的 `nuxt.config.ts` 依照功能拆解成多個獨立設定檔 (例如 Build, i18n, Security, Theme 等)，讓主設定檔保持乾淨好維護。           | `core/config/security.ts`<br>`core/options/registry.ts` (選項註冊表)                       |
-| **`plugins/`**     | **Nuxt 插件**<br>在 Vue App 實體化時執行的全域擴充套件，如權限攔截、日誌追蹤等。                                                                                  | `plugins/security.client.ts`                                                               |
-| **`modules/`**     | **自定義 Nuxt 內部模組**<br>編譯時期的擴充機制。<br>_如 `options-scanner`，負責在編譯時自動抓取子專案 `options/` 資料夾並生成型別。_                              | `modules/options-scanner.ts`                                                               |
-| **`router/`**      | **路由與導航攔截**<br>包含共用的路由掃描器 (`routes-scanner.ts`) 與守衛機制。                                                                                     | `router/routes-scanner.ts`                                                                 |
-| **`configs/`**     | **預設設定檔**<br>存放如 `product.json` 等預設配置，供後續深層合併參考。                                                                                          | `configs/product.json`                                                                     |
-| **`utils/`**       | **純函數工具庫**<br>不依賴 Vue/Nuxt context 的輔助函式，如日期格式轉換、字串處理。                                                                                | `utils/formatters.ts`                                                                      |
-| **`types/`**       | **TypeScript 型別定義**<br>核心層的全域共用 Interface 與 Type 定義。                                                                                              | `types/common.d.ts`                                                                        |
+本 Monorepo 由以下三個核心部分組成，各自負擔明確的技術職責：
 
----
+```text
+nuxt-layer-core-playground/
+├── packages/
+│   └── nuxt-core       <-- [核心程式碼包] 所有共用組件、邏輯與設定的核心來源
+│
+└── apps/
+    ├── ui-docs         <-- [核心功能指南] 繼承 nuxt-core，用於對外展示
+    └── playground-app  <-- [開發練習區]   繼承 nuxt-core，用於本地開發測試
+```
 
-## 第二部分：本地模擬與應用層 (`apps/`)
+### 核心程式碼包
 
-`apps/` 目錄提供給開發者在「不發布至 NPM」的情況下，於本地端直接模擬、測試與撰寫文件。這些專案透過 `nuxt.config.ts` 中的 `extends: ["../../packages/nuxt-core"]` 直接繼承核心能力。
+- **要做什麼**：這是整套系統最原始的程式碼，所有的組件與功能都寫在這裡。
+- **技術細節**：裡面處理了按鈕樣式、API 怎麼接、錯誤處理，以及多國語系。
+- **版本控制**：開發完成後，透過「更新版本號」來建立不同的版本記錄。這樣做是為了讓其他專案可以自由選擇：是要留在舊的穩定版，還是要升級到最新的 v5 版本。
+- **後續動作**：記得將這包「上傳到套件庫」，這樣大家才能選用您開發的新版功能。
 
-### 1. `apps/playground-app` (業務模擬沙盒)
+### 核心功能指南與 UI 參考站
 
-**定位**：用於模擬真實業務專案，隨改隨測核心包邏輯與版面。
+- **職責**：整套核心包的「官方說明書」。除了提供組件的即時範例與規格外，還收納了所有 **Composables**（邏輯功能）與 **Utils**（工具函式）的使用教學。
+- **正式站價值**：此專案專門部署到正式環境，讓同仁不論是要找畫面組件，還是要找資料處理工具，都能在這裡找到正確的用法。
+- **維護要求**：核心套件若有任何功能更新（包含邏輯調整），必須同步更新此站台確保範例正確。
 
-- **如何使用**：當你在 `nuxt-core` 中新增了一個組件（例如 `<IDataTable>`），請切換到此專案的 `pages/index.vue` 中將其引入並測試邊界條件。
-- **擴充示範 (`options/`)**：你可以在此專案內建立 `options/taskStatus.ts`，然後在頁面中呼叫 `useOptions().taskStatus`，藉此測試核心包強大的「零配置選項合併機制」。
-- **覆寫示範 (`app.config.ts`)**：在此專案的 `app.config.ts` 中修改 API 網址，測試核心包的深層覆寫 (Deep Merge) 是否正常運作。
+### 開發練習區
 
-### 2. `apps/ui-docs` (組件使用說明庫)
-
-**定位**：專門用來展示 UI 組件與撰寫使用方式 Document 的站台。
-
-- **如何使用**：這是一個基於 `@nuxt/content` 與核心代碼的說明手冊。當核心組件開發完畢，你應該在此專案下建立 Markdown 文件或展示範例 (Showcase)。
-- **架構特點**：它不處理任何業務邏輯，是一個純淨的展示空間，確保其他團隊成員或未來子專案的開發者能快速複製貼上你的 UI 程式碼。
+- **職責**：專門用於本地整合測試。模擬真實業務專案引入核心包後的整合狀況。
+- **技術價值**：在不影響正式站的情況下，驗證單一功能的邊界條件或特定業務邏輯。
+- **部署策略**：此專案僅供本地端開發使用，不對外進行任何形式的部署。
 
 ---
 
-## 第三部分：標準開發流程 (Step-by-Step)
+## 3. 開發指南索引
 
-請依照以下條列式步驟，體驗從核心修改到 UI 展示的完整開發流：
+為協助開發者快速掌握架構，請依循以下兩大階段閱讀：
 
-### 步驟一：初始化專案環境
+### 第一部分：架構與核心概念
 
-1. 開啟終端機，確保路徑位於專案根目錄 (`nuxt-layer-core-playground`)。
-2. 執行依賴安裝指令，這會自動連結 `packages` 與 `apps` 下的所有 Workspace：
-   ```bash
-   npm install
-   ```
+適合初次接觸本專案，需要了解系統藍圖與底層運作機制的開發者閱讀。
 
-### 步驟二：在本地開發與測試 (Playground)
+- **[如何開始使用本模組 (安裝與啟動)](docs/guide/01-getting-started.md)**
+  > 重點：Monorepo `npm install` 捷徑機制、`workspaces` 觀念解析與啟動指令。
+- **[未來可擴充性與企業級藍圖](docs/guide/02-future-scalability.md)**
+  > 重點：了解專案基石：設計 Token 化、模組積木化與 LTS 平行維護策略。
+- **[專案目錄結構與資料流協作機制](docs/guide/03-directory-structure.md)**
+  > 重點：了解 Apps 取用 Packages 的運作機制，以及核心包內各資料夾的層級劃分與請求資料流。
+- **[核心設計理念與依賴反轉](docs/guide/04-core-philosophy.md)**
+  > 重點：剖析引進 `nuxt-core` 的原因，了解如何創造隔離底層技術的保護傘介面。
+- **[如何安全地擴充核心架構](docs/guide/05-how-to-extend.md)**
+  > 重點：了解覆蓋核心組件、設定檔遞迴累加，以及正確的依賴套件安裝邊界。
 
-情境：新增一個共用按鈕或修改一段底層邏輯
+### 第二部分：核心功能實戰
 
-1. 在 `packages/nuxt-core/` 建立或修改檔案（如 `components/uiInterface/IButton.vue`）。
-2. 在 `apps/playground-app/pages/index.vue` 中測試引入該檔案。
-3. 啟動測試沙盒：
-   ```bash
-   npm run dev:playground
-   ```
-4. **驗證結果**：得益於 Nuxt Layer 繼承機制，你在 `nuxt-core` 的任何修改都會**熱更新 (HMR)** 到瀏覽器，**無須打包或發布 NPM**。
+適合準備進入業務開發，需要了解如何引用組件、處理資料與發布套件的工程師閱讀。
 
-### 步驟三：撰寫使用手冊 (UI Docs)
-
-情境：組件開發完成，需補上使用文件供團隊參考
-
-1. 啟動文件展示系統：
-   ```bash
-   npm run dev:ui-docs
-   ```
-2. 進入 `apps/ui-docs/` 編寫文件與 Showcase 範例。
-3. 確保團隊成員日後可以一目了然地知道元件具備哪些 Props 與 Events。
-
-### 步驟四：發布前檢查與打包
-
-情境：準備將核心包推上 npm registry
-
-1. **型別檢查**：確保 TypeScript 沒有報錯。
-   ```bash
-   npm run typecheck
-   ```
-2. **風格掃描**：確保符合團隊 ESLint/Prettier 規範。
-   ```bash
-   npm run lint
-   ```
-3. **編譯打包 (`nuxt-core`)**：
-   ```bash
-   npm run build:core
-   ```
+- **[發布與套件引用指南](docs/guide/06-publishing-and-usage.md)**
+  > 重點：核心版本發布至 npm 流程、專案一鍵自動生成，以及既有專案的無痛繼承。
+- **[全域 UI 組件規範](docs/guide/07-ui-interfaces.md)**
+  > 重點：UI 組件封裝與隔絕底層依賴的規範。
+- **[資料與分頁處理實務](docs/guide/08-data-pagination.md)**
+  > 重點：了解 `usePagination` 與下拉資料源的實踐方式。
+- **[API 請求與倉庫模式 (Repositories)](docs/guide/09-repositories-api.md)**
+  > 重點：理解 `useApi` 請求攔截機制，透過 Repository 模式管理服務。
+- **[實用開發工具函式 (Composables & Utils)](docs/guide/10-composables-utils.md)**
+  > 重點：盤點開發效率工具：日期處理、檔案上傳下載、防抖管理等。
+- **[團隊規範與程式碼撰寫紀律](docs/guide/11-coding-standards.md)**
+  > 重點：遵守動詞命名紀律、專業用語、客觀開發準則。
+- **[狀態管理與儲存機制](docs/guide/12-state-storage.md)**
+  > 重點：Pinia 控制時機與 Storage API 的快取安全防禦。
 
 ---
 
-## 延伸閱讀與進階指南
+## 4. 參考文件總覽
 
-為了讓團隊無縫接軌這套強大架構，請參閱以下深入探討的架構決策與擴充文件：
+_(更多相關文件將在此更新)_
 
-1. **[團隊協作規則與標準 (.agent/knowledge)](.agent/knowledge/development_standards.md)**：開發組件與邏輯強制遵守的命名與結構規範。
-2. **子專案獨立新增 vs 繼承擴充比較 (知識庫指南)**：判斷何時該寫新元件、何時該用 Wrapper 擴充核心元件的架構決策樹。(見 `addition_vs_extension_guide.md`)
-3. **[疑難排解與常見問題 (.agent/knowledge/troubleshooting_log.md)](.agent/knowledge/troubleshooting_log.md)**：包含 TypeScript 配置、環境變數與套件衝突的解法。
+---
+
+## 4. 上手步驟與導引
+
+[**[第一步：目錄定位]**] | [**[第二步：驗證開發功能]**] | [**[第三步：工作流程與補版]**]
+
+---
+
+## 快速連結
+
+- **開發規範標準**：[.agent/knowledge/development_standards.md](.agent/knowledge/development_standards.md)
+- **排錯紀錄**：[.agent/knowledge/troubleshooting_log.md](.agent/knowledge/troubleshooting_log.md)
