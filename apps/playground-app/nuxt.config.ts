@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
 
   // 擴展 Core Layer
-  extends: ['../../packages/nuxt-core'],
+  extends: ['softleader-nuxt-core'],
 
   // 覆寫 Runtime 配置
   runtimeConfig: {

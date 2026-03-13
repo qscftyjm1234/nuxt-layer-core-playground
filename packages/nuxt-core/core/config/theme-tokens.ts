@@ -11,24 +11,24 @@ export const themeConfig = {
   // 品牌與語意色彩 (Semantic Colors)
   // ========================================================================
   colors: {
-    primary: productConfig.theme?.primaryColor || '#1677ff',
+    primary: productConfig.theme?.primaryColor || '#2563eb',
     business: productConfig.theme?.businessColor || '#fa541c',
-    success: '#52c41a',
-    warning: '#faad14',
-    error: '#ff4d4f',
-    info: '#1677ff'
+    success: productConfig.theme?.successColor || '#10b981',
+    warning: productConfig.theme?.warningColor || '#f59e0b',
+    error: productConfig.theme?.errorColor || '#ef4444',
+    info: productConfig.theme?.infoColor || '#3b82f6'
   },
 
   // ========================================================================
   // 基礎樣式變數 (Base Variables)
   // ========================================================================
   typography: {
-    fontFamily: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'`,
+    fontFamily: `Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif`,
     fontSizeBase: 14
   },
 
   shape: {
-    borderRadius: productConfig.theme?.borderRadius ?? 6,
+    borderRadius: productConfig.theme?.borderRadius ?? 8,
     lineWidth: 1
   },
 
@@ -36,6 +36,7 @@ export const themeConfig = {
   // 預留其他彈性擴充
   // ========================================================================
   animation: {
+    enabled: productConfig.theme?.animation ?? true,
     motionUnit: 0.1
   }
 }

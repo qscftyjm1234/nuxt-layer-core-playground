@@ -1,9 +1,11 @@
+import { productConfig } from '../../scripts/product-loader'
+
 /**
  * i18n 國際化設定
  *
  * 使用 @nuxtjs/i18n 模組進行多語言管理
  * - 支援英文 (en) 與繁體中文 (zh)
- * - 預設語言為繁體中文
+ * - 預設語言讀取自 configs/*.json (meta.lang)
  * - 自動偵測瀏覽器語言
  */
 export const i18nConfig = {
@@ -14,21 +16,21 @@ export const i18nConfig = {
     {
       code: 'en',
       name: 'English',
-      iso: 'en-US', // ISO 語言代碼 (Language Code) + 地區代碼 (Country Code)
-      file: 'en-US.json' // 對應檔案路徑：i18n/locales/en-US.json
+      iso: 'en-US',
+      file: 'en-US.json'
     },
     {
       code: 'zh',
       name: '中文',
-      iso: 'zh-TW', // ISO 語言代碼 (Language Code) + 地區代碼 (Country Code)
-      file: 'zh-TW.json' // 對應檔案路徑：i18n/locales/zh-TW.json
+      iso: 'zh-TW',
+      file: 'zh-TW.json'
     }
   ],
 
   /**
-   * 預設語言
+   * 預設語言 (由藍圖驅動)
    */
-  defaultLocale: 'zh',
+  defaultLocale: productConfig.meta?.lang?.split('-')[0] || 'zh',
 
   /**
    * 語言檔存放目錄

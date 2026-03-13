@@ -10,22 +10,36 @@
 
 當您在本地端完成了 `nuxt-core` 的功能開發，並通過了 `ui-docs` 的視覺驗證後，我們需要將新版本打包上傳，讓其他專案能抓取到最新版。
 
+### 1. 執行發布 (自動化)
+
+專案現已提供自動化發布腳本，建議優先使用此方式：
+
+- 進入核心包目錄：`cd packages/nuxt-core`
+- 執行發布指令：
+  ```bash
+  # 預設跳 patch (1.1.0 -> 1.1.1) 並發布
+  npm run release
+
+  # 若是大版本變動
+  npm run release minor  # (1.1.0 -> 1.2.0)
+  npm run release major  # (1.1.0 -> 2.0.0)
+  ```
+- **腳本行為**：該腳本會自動完成 `npm version` 版號提升並接著執行 `npm publish`。
+
+### 2. 執行發布 (手動 - 若有特殊需求)
+
+若不想使用自動化腳本，仍可維持手動流程：
+
 1. **更新版號**
    - 進入核心包目錄：`cd packages/nuxt-core`
-   - 修改 `packages/nuxt-core/package.json` 中的 `"version"` 欄位（例如：遵循 Semantic Versioning 從 `1.0.9` 升級為 `1.1.0`）。
+   - 手動修改 `package.json` 中的 `"version"` 或執行 `npm version <type>`。
 
-2. **登入 npm**
-   - 確保您已經在終端機登入了公司授權的 npm 帳號：
-     ```bash
-     npm login
-     ```
-
-3. **執行發布**
-   - 確認目前終端機位置在 **`packages/nuxt-core`** 底下後，下達發布指令：
+2. **執行發布**
+   - 確保已執行 `npm login`：
      ```bash
      npm publish
      ```
-   - _(發布成功後，雲端套件庫就會生效，同仁們即可下載這份最新版本)_
+
 
 ---
 

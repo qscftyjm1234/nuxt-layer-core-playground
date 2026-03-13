@@ -20,6 +20,7 @@
     "stores",
     "types",
     "bin",
+    "schemas",
     "nuxt.config.ts",
     "tsconfig.json",
     "eslint.config.mjs",
@@ -51,7 +52,8 @@
     "lint:fix": "eslint . --fix",
     "typecheck": "nuxi typecheck",
     "sync-configs": "node scripts/sync-configs.mjs",
-    "release": "node scripts/release.mjs"
+    "release": "node scripts/release.mjs",
+    "test:init": "npm pack && node bin/init.mjs init tmp-test-project && rm *.tgz"
   },
   "dependencies": {
     "@nuxt/eslint-config": "^0.5.7",
@@ -92,8 +94,11 @@
   "keywords": [
     "nuxt3",
     "layer",
+    "softleader",
+    "configuration-driven",
+    "blueprint",
     "design-system"
   ],
-  "author": "",
+  "author": "Softleader",
   "license": "MIT"
 }

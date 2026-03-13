@@ -9,10 +9,10 @@ import type { NuxtConfig } from 'nuxt/schema'
 export const appConfig: NuxtConfig['app'] = {
   head: {
     /** 網頁標題 - 顯示在瀏覽器分頁上 */
-    title: 'Nuxt 3 Development Kit',
+    title: 'Softleader Nuxt Core',
 
     /** 標題模板 */
-    titleTemplate: '%s - Nuxt 3 Kit',
+    titleTemplate: '%s | Softleader Nuxt Core',
 
     /** HTML 語言屬性 */
     htmlAttrs: {
@@ -25,7 +25,7 @@ export const appConfig: NuxtConfig['app'] = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         name: 'description',
-        content: 'Enterprise-grade Nuxt 3 Development Kit'
+        content: '企業級 Nuxt 3 前端開發核心架構 - 松凌科技'
       },
       { name: 'author', content: 'Softleader' },
       { name: 'robots', content: 'index, follow' },

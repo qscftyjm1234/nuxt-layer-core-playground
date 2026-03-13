@@ -116,26 +116,26 @@ import { productConfig } from '../../scripts/product-loader'
 export const defaultLayoutConfig: LayoutConfig = {
   branding: {
     logo: {
-      icon: productConfig.layout?.branding?.logoIcon || 'mdi-rocket-launch',
-      image: productConfig.layout?.branding?.logoImage
+      icon: productConfig.layout?.branding?.logoIcon || 'mdi-alpha-s-circle',
+      image: productConfig.layout?.branding?.logoImage || productConfig.branding?.logo
     },
-    title: productConfig.layout?.branding?.title || 'Demo App Framework',
-    subtitle: productConfig.layout?.branding?.subtitle || 'Enterprise Framework'
+    title: productConfig.layout?.branding?.title || productConfig.branding?.name || '松凌科技 Nuxt Core',
+    subtitle: productConfig.layout?.branding?.subtitle || '企業級前端開發架構'
   },
   header: {
-    visible: true,
+    visible: productConfig.layout?.header?.visible ?? true,
     height: productConfig.layout?.header?.height || 64,
     breadcrumbs: true,
     search: productConfig.layout?.header?.search ?? true,
-    searchPlaceholder: productConfig.layout?.header?.searchPlaceholder || '搜尋全站...',
+    searchPlaceholder: productConfig.layout?.header?.searchPlaceholder || '搜尋功能或文件...',
     notifications: productConfig.layout?.header?.notifications ?? true,
     userMenu: {
-      visible: true,
+      visible: productConfig.layout?.header?.showUserAction ?? true,
       items: [
-        { title: '個人設定', icon: 'mdi-account-cog', action: 'profile' },
+        { title: '個人中心', icon: 'mdi-account-circle', action: 'profile' },
         { title: '系統設定', icon: 'mdi-cog', action: 'settings' },
         { divider: true },
-        { title: '登出系統', icon: 'mdi-logout', action: 'logout', color: 'error' }
+        { title: '安全登出', icon: 'mdi-logout', action: 'logout', color: 'error' }
       ]
     },
     themeToggle: true,
@@ -143,19 +143,20 @@ export const defaultLayoutConfig: LayoutConfig = {
   },
   sidebar: {
     visible: true,
-    width: productConfig.layout?.sidebar?.width || 280,
+    width: productConfig.layout?.sidebar?.width || 260,
     collapsible: true,
-    mainMenuTitle: productConfig.layout?.sidebar?.mainMenuTitle || '主選單'
+    mainMenuTitle: productConfig.layout?.sidebar?.mainMenuTitle || '功能導覽'
   },
   footer: {
     visible: productConfig.layout?.footer?.visible ?? true,
     fixed: false,
     content:
       productConfig.layout?.footer?.content ||
-      `Copyright © ${new Date().getFullYear()} Demo App. All rights reserved.`
+      productConfig.branding?.copyright ||
+      `Copyright © ${new Date().getFullYear()} Softleader. All rights reserved.`
   },
   theme: {
     defaultTheme: 'light',
-    primaryColor: productConfig.theme?.primaryColor || '#1976D2'
+    primaryColor: productConfig.theme?.primaryColor || '#2563eb'
   }
 }
