@@ -9,3 +9,12 @@ export interface ComponentApiDoc {
   slots: Array<{ name: string, desc: string }>
   codeExample: string
 }
+
+export interface FeatureApiDoc {
+  name: string
+  description: string
+  importPath: string
+  summary: string
+  methods: Array<{ name: string, params: string, desc: string, returnType: string }>
+  examples: Array<{ title: string, code: string }>
+}

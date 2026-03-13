@@ -35,23 +35,21 @@
 
 ### 情境 A：建立全新專案並繼承
 
-若業務團隊需要開啟全新的專案，並直接套用本核心架構，請依照 Nuxt 官方建立方式輔以本核心層安裝：
+若業務團隊需要開啟全新的專案，並直接套用本核心架構，只需在終端機執行本模組提供的初始化指令：
 
-1. **初始化 Nuxt 專案**：
-   使用 Nuxt 官方指令建立全新專案。
+```bash
+npx softleader-nuxt-core init my-new-project
+```
 
-   ```bash
-   npx nuxi@latest init my-new-project
-   cd my-new-project
-   ```
+執行後，系統會自動建立 `my-new-project` 資料夾，並包含完整的目錄藍圖（如 `configs/default.json`, ESLint / Prettier 等設定檔）與 Nuxt 3 核心整合設定。
 
-2. **安裝核心依賴與繼承**：
-   ```bash
-   npm install softleader-nuxt-core
-   ```
-   並在 `nuxt.config.ts` 中加入 `extends: ['softleader-nuxt-core']`，即可成功繼承所有核心設定。
+接著，進入專案並安裝網路依賴（不需要手動新增 `extends`，CLI 已經幫您設定好了）：
 
-### 情境 B：整合進「既有」的 Nuxt 3 專案
+```bash
+cd my-new-project
+npm install
+npm run dev
+```
 
 如果業務同仁的專案已經開發到一半，他們依然可以無痛引入這包核心層，直接享受核心層帶來的共用組件與邏輯。
 

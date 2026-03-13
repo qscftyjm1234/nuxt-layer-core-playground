@@ -35,11 +35,16 @@ const handleAction = (item: any) => {
 }
 
 onMounted(fetchData)
+
+const { formatDateTime } = useDateTime()
+const now = formatDateTime(new Date())
+// 輸出: 2024-03-13 10:20:00
 </script>
 
 <template>
   <IApp>
     <div class="pa-10">
+      now:{{ now }}
       <div class="d-flex align-center justify-space-between mb-8">
         <div>
           <h1 class="text-h4 font-weight-bold text-indigo-darken-4 mb-2">專案測試場 (Playground)</h1>

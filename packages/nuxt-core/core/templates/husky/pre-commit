@@ -1,2 +1,6 @@
 #!/bin/sh
-npx lint-staged --no-stash
+npx lint-staged --no-stash || {
+  printf "\n\033[1;31m[Commit Check Failed]\033[0m 若需跳過檢核強行提交，請下：\033[1;36mgit commit --no-verify\033[0m\n\n"
+  exit 1
+}
+

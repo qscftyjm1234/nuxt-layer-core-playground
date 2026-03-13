@@ -2355,3 +2355,383 @@ export const componentDocs: Record<string, ComponentApiDoc> = {
 export function getComponentDoc(name: string) {
   return componentDocs[name] || null
 }
+
+export const featureDocs: Record<string, any> = {
+  'useDateTime': {
+    name: 'useDateTime',
+    description: '日期時間處理 Composable',
+    importPath: "import { useDateTime } from 'softleader-nuxt-core'",
+    summary: '提供完整的日期時間格式化、解析、計算與驗證功能。',
+    methods: [
+      { name: 'formatDate', params: '(date, format?)', desc: '格式化日期 (預設 YYYY-MM-DD)', returnType: 'string' },
+      { name: 'formatTime', params: '(date, format?)', desc: '格式化時間 (預設 HH:mm:ss)', returnType: 'string' },
+      { name: 'formatDateTime', params: '(date, format?)', desc: '格式化日期時間 (預設 YYYY-MM-DD HH:mm:ss)', returnType: 'string' },
+      { name: 'formatRelative', params: '(date, options?)', desc: '格式化為相對時間（例如：3 天前）', returnType: 'string' },
+      { name: 'add', params: '(date, amount, unit)', desc: '新增時間', returnType: 'Date' },
+      { name: 'subtract', params: '(date, amount, unit)', desc: '減少時間', returnType: 'Date' },
+      { name: 'diff', params: '(date1, date2, unit?)', desc: '計算時間差', returnType: 'number' },
+      { name: 'isBefore/isAfter', params: '(date1, date2)', desc: '日期比較', returnType: 'boolean' }
+    ],
+    examples: [
+      { title: '基礎格式化', code: "const { formatDateTime } = useDateTime()\nconst now = formatDateTime(new Date())\n// 輸出: 2024-03-13 10:20:00" },
+      { title: '自定義格式', code: "const { formatDate } = useDateTime()\nconst date = formatDate(new Date(), 'YYYY/MM/DD')\n// 輸出: 2024/03/13" },
+      { title: '相對時間 (剛剛/幾分鐘前)', code: "const { formatRelative } = useDateTime()\nconst time = formatRelative(new Date(Date.now() - 5000))\n// 輸出: 剛剛" },
+      { title: '日期計算 (下一週)', code: "const { add } = useDateTime()\nconst nextWeek = add(new Date(), 1, 'week')\n// 回傳新的 Date 物件" },
+      { title: '判斷是否為今天', code: "const { isToday } = useDateTime()\nconst check = isToday('2024-01-01') // false" }
+    ]
+  },
+  'usePagination': {
+    name: 'usePagination',
+    description: '分頁管理 Composable',
+    importPath: "import { usePagination } from 'softleader-nuxt-core'",
+    summary: '提供完整的分頁邏輯處理，包含頁碼切換、每頁筆數設定與範圍計算。',
+    methods: [
+      { name: 'setTotal', params: '(count)', desc: '設定總筆數', returnType: 'void' },
+      { name: 'goToPage', params: '(page)', desc: '前往指定頁碼', returnType: 'void' },
+      { name: 'nextPage/prevPage', params: '()', desc: '上下頁切換', returnType: 'void' },
+      { name: 'reset', params: '()', desc: '重置到第一頁', returnType: 'void' }
+    ],
+    examples: [
+      { title: '搭配 DataTable 使用', code: "const { currentPage, pageSize, total, setTotal } = usePagination()\n\n// 在 API 獲取後更新總筆數，會自動計算頁數\nsetTotal(res.total)" },
+      { title: '自定義每頁筆數', code: "const { pageSize } = usePagination({ pageSize: 20 })" }
+    ]
+  },
+  'useOptions': {
+    name: 'useOptions',
+    description: '選項資料管理 Composable',
+    importPath: "import { useOptions } from 'softleader-nuxt-core'",
+    summary: '自動掃描並載入專案定義的選項 (Options)，支援非同步載入、快取與多種擴充工具。',
+    methods: [
+      { name: 'xxx.withAll', params: '-', desc: '取得含「全部」選項的陣列', returnType: 'OptionItem[]' },
+      { name: 'xxx.label(val)', params: '(value)', desc: '根據值取得對應的顯示名稱', returnType: 'string' },
+      { name: 'xxx.isLoading', params: '-', desc: '取得該選項是否正在載入中', returnType: 'boolean' },
+      { name: 'xxx.reload()', params: '-', desc: '強制重新載入該選項資料', returnType: 'Promise' }
+    ],
+    examples: [
+      { title: '用於 Select 組件 (含全部選項)', code: "const options = useOptions()\n// .withAll 會在陣列第一項插入 { label: '全部', value: '' }\n<ISelect :items=\"options.claimStatus.withAll\" />" },
+      { title: '在表格中轉換顯示文字', code: "const options = useOptions()\nconst label = options.claimStatus.label('pending') // 輸出: \"待處理\"" },
+      { title: '過濾特定選項', code: "const options = useOptions()\n// 排除掉不想要的 options\nconst filtered = options.claimStatus.exclude(['closed', 'cancelled'])" },
+      { title: '非同步載入狀態判斷', code: "const options = useOptions()\n<ILoading v-if=\"options.claimStatus.isLoading\" />\n<div v-else>{{ options.claimStatus.value }}</div>" }
+    ]
+  },
+  'useApi': {
+    name: 'useApi',
+    description: 'API 請求處理 Composable',
+    importPath: "import { useApi } from 'softleader-nuxt-core'",
+    summary: '統一的 API 請求介面，封裝了 Token 注入、錯誤處理與 Loading 狀態連動。',
+    methods: [
+      { name: 'get/post/put/delete', params: '(url, data?, config?)', desc: '標準 HTTP 請求方法', returnType: 'Promise<T>' },
+      { name: 'loading', params: '-', desc: '獲取當前請求的全域 Loading 狀態', returnType: 'Ref<boolean>' }
+    ],
+    examples: [
+      { title: '基礎 GET 請求', code: "const api = useApi()\nconst users = await api.get('/api/users')" },
+      { title: 'POST 提交資料', code: "const api = useApi()\nawait api.post('/api/users', { name: 'Gino', email: 'gino@example.com' })" },
+      { title: '搭配 Loading 狀態', code: "const api = useApi()\n// api.loading 是一個 Ref<boolean>，會自動連動請求狀態\n<ITable :loading=\"api.loading.value\" />" }
+    ]
+  },
+  'useNotify': {
+    name: 'useNotify',
+    description: '全域通知 Composable',
+    importPath: "import { useNotify } from 'softleader-nuxt-core'",
+    summary: '提供跨頁面的訊息通知，支援 Success, Error, Info, Warning 四種狀態。',
+    methods: [
+      { name: 'success/error/info/warn', params: '(message, title?)', desc: '發送不同類型的通知', returnType: 'void' }
+    ],
+    examples: [
+      { title: '成功通知', code: "const notify = useNotify()\nnotify.success('資料儲存成功')" }
+    ]
+  },
+  'useLoading': {
+    name: 'useLoading',
+    description: '全域/區域 Loading 管理',
+    importPath: "import { useLoading } from 'softleader-nuxt-core'",
+    summary: '控制應用程式的載入遮罩，支援計數器模式以處理多個併行請求。',
+    methods: [
+      { name: 'show/hide', params: '()', desc: '顯示或隱藏全域 Loading', returnType: 'void' },
+      { name: 'withLoading', params: '(fn)', desc: '自動在執行函式期間開啟 Loading', returnType: 'Promise' }
+    ],
+    examples: [
+      { title: '手動控制', code: "const loading = useLoading()\nloading.show()\nawait doSomething()\nloading.hide()" }
+    ]
+  },
+  'useValidation': {
+    name: 'useValidation',
+    description: '表單驗證工具',
+    importPath: "import { useValidation } from 'softleader-nuxt-core'",
+    summary: '封裝常用的表單驗證規則，如必填、Email、數字、長度等。',
+    methods: [
+      { name: 'required', params: '-', desc: '必填驗證規則', returnType: 'Rule' },
+      { name: 'email', params: '-', desc: 'Email 格式驗證', returnType: 'Rule' },
+      { name: 'minLength/maxLength', params: '(len)', desc: '長度驗證', returnType: 'Rule' }
+    ],
+    examples: [
+      { title: '搭配 IInput 使用', code: "const { required, email } = useValidation()\n<IInput label=\"信箱\" :rules=\"[required, email]\" />" },
+      { title: '多重規則結合', code: "const { required, minLength, maxLength } = useValidation()\n// 限制長度在 5 到 10 之間且必填\nconst passRules = [required, minLength(5), maxLength(10)]" }
+    ]
+  },
+  'useStorage': {
+    name: 'useStorage',
+    description: '本地儲存 Composable',
+    importPath: "import { useStorage } from 'softleader-nuxt-core'",
+    summary: '提供 LocalStorage 和 SessionStorage 的封裝，支援過期時間與響應式同步。',
+    methods: [
+      { name: 'setItem', params: '(key, value, options?)', desc: '存入資料', returnType: 'void' },
+      { name: 'getItem', params: '(key, defaultValue?)', desc: '讀取資料', returnType: 'T' },
+      { name: 'useStorageRef', params: '(key, defaultValue)', desc: '建立響應式儲存連動', returnType: 'Ref<T>' }
+    ],
+    examples: [
+      { title: '響應式 LocalStorage', code: "const { useStorageRef } = useStorage()\nconst userSet = useStorageRef('user-settings', { theme: 'dark' })\n// 修改 userSet.value 會自動同步至 LocalStorage" },
+      { title: '設定到期時間', code: "const { setItem } = useStorage()\n// 儲存一個 1 小時後過期的 Token\nsetItem('temp_token', 'abc', { expires: 3600 })" },
+      { title: '使用 SessionStorage', code: "const { setItem } = useStorage()\nsetItem('temp_key', 'value', { type: 'session' })" }
+    ]
+  },
+  'useErrorHandler': {
+    name: 'useErrorHandler',
+    description: '全域錯誤處理',
+    importPath: "import { useErrorHandler } from 'softleader-nuxt-core'",
+    summary: '提供錯誤捕捉、分類、發送通知與 API 錯誤自動處理機制。',
+    methods: [
+      { name: 'captureError', params: '(error, context?)', desc: '手動捕捉並記錄錯誤', returnType: 'void' },
+      { name: 'handleApiError', params: '(context, autoNotify?)', desc: '處理 API 異常', returnType: 'void' },
+      { name: 'retry', params: '(fn, options?)', desc: '錯誤自動重試機制', returnType: 'Promise' }
+    ],
+    examples: [
+      { title: '自動重試 API', code: "const { retry } = useErrorHandler()\nconst data = await retry(() => api.get('/user/profile'), { retries: 3 })" },
+      { title: '手動處理 API 錯誤', code: "const { handleApiError } = useErrorHandler()\ntry {\n  await api.get('/locked/data')\n} catch (e) {\n  handleApiError(e) // 會自動判定是否顯示 403/401 訊息\n}" }
+    ]
+  },
+  'useFileUpload': {
+    name: 'useFileUpload',
+    description: '檔案上傳工具',
+    importPath: "import { useFileUpload } from 'softleader-nuxt-core'",
+    summary: '封裝檔案上傳邏輯，支援進度回報、多檔案處理與格式驗證。',
+    methods: [
+      { name: 'upload', params: '(file, url, config?)', desc: '執行檔案上傳', returnType: 'Promise' },
+      { name: 'progress', params: '-', desc: '獲取當前上傳進度 (0-100)', returnType: 'Ref<number>' }
+    ],
+    examples: [
+      { title: '單檔上傳', code: "const { upload, progress } = useFileUpload()\nawait upload(myFile, '/api/upload')" }
+    ]
+  },
+  'useFileDownload': {
+    name: 'useFileDownload',
+    description: '檔案下載工具',
+    importPath: "import { useFileDownload } from 'softleader-nuxt-core'",
+    summary: '封裝 Blob 轉換與下載觸發邏輯，處理檔名編碼問題。',
+    methods: [
+      { name: 'download', params: '(blob, fileName)', desc: '觸發瀏覽器下載', returnType: 'void' },
+      { name: 'downloadByUrl', params: '(url, fileName)', desc: '根據 URL 下載檔案', returnType: 'Promise' }
+    ],
+    examples: [
+      { title: '下載 Blob', code: "const { download } = useFileDownload()\ndownload(pdfBlob, 'report.pdf')" }
+    ]
+  },
+  'useDebounce': {
+    name: 'useDebounce',
+    description: '防抖 (Debounce) 工具',
+    importPath: "import { useDebounce } from 'softleader-nuxt-core'",
+    summary: '延遲執行函數，常用於搜尋輸入框或視窗大小調整事件。',
+    methods: [
+      { name: 'debounce', params: '(fn, delay)', desc: '建立防抖函數', returnType: 'Function' }
+    ],
+    examples: [
+      { title: '搜尋防抖', code: "const { debounce } = useDebounce()\nconst onInput = debounce(() => fetchData(), 300)" }
+    ]
+  },
+  'useEncryption': {
+    name: 'useEncryption',
+    description: '資料加密工具',
+    importPath: "import { useEncryption } from 'softleader-nuxt-core'",
+    summary: '提供前端資料加密與解密，常用於保護本地儲存的敏感資訊。',
+    methods: [
+      { name: 'encrypt', params: '(text)', desc: '加密字串', returnType: 'string' },
+      { name: 'decrypt', params: '(hash)', desc: '解密字串', returnType: 'string' }
+    ],
+    examples: [
+      { title: '加密儲存', code: "const { encrypt } = useEncryption()\nconst hash = encrypt('sensitive-data')" }
+    ]
+  },
+  'useLanguage': {
+    name: 'useLanguage',
+    description: '多語系切換工具',
+    importPath: "import { useLanguage } from 'softleader-nuxt-core'",
+    summary: '控制應用程式的語系切換，與 i18n 模組連動。',
+    methods: [
+      { name: 'current', params: '-', desc: '當前語系代碼 (zh-TW, en)', returnType: 'Ref<string>' },
+      { name: 'setLanguage', params: '(lang)', desc: '切換語系', returnType: 'void' }
+    ],
+    examples: [
+      { title: '切換至英文', code: "const { setLanguage } = useLanguage()\nsetLanguage('en')" }
+    ]
+  },
+  'useAppDevice': {
+    name: 'useAppDevice',
+    description: '裝置與環境偵測',
+    importPath: "import { useAppDevice } from 'softleader-nuxt-core'",
+    summary: '偵測使用者裝置類型（Mobile/Desktop）以及執行環境（App WebView/Browser）。',
+    methods: [
+      { name: 'isApp', params: '-', desc: '是否在 App WebView 內執行', returnType: 'Ref<boolean>' },
+      { name: 'isDesktop/isMobile', params: '-', desc: '基本裝置類型判斷', returnType: 'Ref<boolean>' },
+      { name: 'deviceName', params: '-', desc: '整合裝置與環境的名稱（如 ios-app）', returnType: 'Ref<string>' }
+    ],
+    examples: [
+      { title: '情境化顯示 (SEO/UI)', code: "const { isApp, isMobile } = useAppDevice()\n// 如果在 Mobile App 內，隱藏導覽列並開啟 Native 介面功能\nif (isApp.value && isMobile.value) { ... }" },
+      { title: '取得裝置組合名稱', code: "const { deviceName } = useAppDevice()\nconsole.log(deviceName.value) // 輸出範例: \"ios-app\", \"android-web\", \"desktop\"" }
+    ]
+  },
+  'useFeatureFlag': {
+    name: 'useFeatureFlag',
+    description: '功能開關 (Feature Flag)',
+    importPath: "import { useFeatureFlag } from 'softleader-nuxt-core'",
+    summary: '管理應用程式功能開關，支援環境變數控制與熱重載。',
+    methods: [
+      { name: 'isEnabled', params: '(path)', desc: '檢查特定功能是否啟用', returnType: 'boolean' },
+      { name: 'getAllFeatures', params: '-', desc: '獲取所有功能清單及其狀態', returnType: 'Object' }
+    ],
+    examples: [
+      { title: '功能檢查', code: "const { isEnabled } = useFeatureFlag()\nif (isEnabled('devTools.history')) { ... }" }
+    ]
+  },
+  'useCustomIcon': {
+    name: 'useCustomIcon',
+    description: '自訂圖示載入器',
+    importPath: "import { useCustomIcon } from 'softleader-nuxt-core'",
+    summary: '在 IIcon 組件中動態載入 assets/icons 下的自訂 SVG 圖示。',
+    methods: [
+      { name: 'svgContent', params: '-', desc: '當前載入的 SVG 內容', returnType: 'Ref<string>' },
+      { name: 'isLoading', params: '-', desc: '圖示是否正在載入', returnType: 'Ref<boolean>' }
+    ],
+    examples: [
+      { title: '搭配 IIcon 使用', code: "<IIcon icon=\"custom:my-icon\" />" }
+    ]
+  },
+  'usePermission': {
+    name: 'usePermission',
+    description: '權限與角色管理',
+    importPath: "import { usePermission } from 'softleader-nuxt-core'",
+    summary: '提供使用者權限檢查、角色驗證和功能權限控制。',
+    methods: [
+      { name: 'hasPermission', params: '(code)', desc: '檢查是否擁有指定權限', returnType: 'boolean' },
+      { name: 'hasRole', params: '(role)', desc: '檢查是否擁有指定角色', returnType: 'boolean' },
+      { name: 'setPermissions', params: '(map)', desc: '批次設定權限', returnType: 'void' }
+    ],
+    examples: [
+      { title: '權限控管', code: "const { hasPermission } = usePermission()\n<IButton v-if=\"hasPermission('USER_CREATE')\">新增</IButton>" }
+    ]
+  },
+  'useFormatter': {
+    name: 'useFormatter',
+    description: '資料格式化工具',
+    importPath: "import { useFormatter } from 'softleader-nuxt-core'",
+    summary: '提供常用的資料格式化功能，如貨幣、千分位、電話、身分證等。',
+    methods: [
+      { name: 'formatCurrency', params: '(num)', desc: '格式化為貨幣字串', returnType: 'string' },
+      { name: 'formatPhone', params: '(str)', desc: '格式化台灣手機號碼', returnType: 'string' },
+      { name: 'maskEmail', params: '(email)', desc: '遮罩 Email 敏感資訊', returnType: 'string' }
+    ],
+    examples: [
+      { title: '金額與千分位', code: "const { formatCurrency } = useFormatter()\n<div>{{ formatCurrency(1234.5) }}</div> // NT$ 1,235" },
+      { title: '個資遮罩 (Email/手機)', code: "const { maskEmail, maskPhone } = useFormatter()\nmaskEmail('gino@softleader.com') // gi***@softleader.com\nmaskPhone('0912345678') // 0912-***-678" },
+      { title: '台灣證件/卡號格式化', code: "const { formatTaiwanId, formatCreditCard } = useFormatter()\nformatTaiwanId('a123456789') // A123456789\nformatCreditCard('1234567812345678') // 1234-5678-1234-5678" }
+    ]
+  },
+  'useWatermark': {
+    name: 'useWatermark',
+    description: '防走漏浮水印',
+    importPath: "import { useWatermark } from 'softleader-nuxt-core'",
+    summary: '在頁面底層建立不可點擊的浮水印，防止螢幕截圖外流敏感資訊。',
+    methods: [
+      { name: 'showWatermark', params: '({ text })', desc: '顯示浮水印', returnType: 'void' },
+      { name: 'hideWatermark', params: '-', desc: '移除浮水印', returnType: 'void' }
+    ],
+    examples: [
+      { title: '頁面載入時啟用', code: "const { showWatermark } = useWatermark()\nonMounted(() => showWatermark({ text: 'CONFIDENTIAL' }))" }
+    ]
+  },
+  'useNetwork': {
+    name: 'useNetwork',
+    description: '網路狀態監控',
+    importPath: "import { useNetwork } from 'softleader-nuxt-core'",
+    summary: '即時監測網路連線狀態、速度與斷線時間。',
+    methods: [
+      { name: 'isOnline', params: '-', desc: '當前網路是否連線', returnType: 'Ref<boolean>' },
+      { name: 'offlineAt', params: '-', desc: '最後一次斷線時間', returnType: 'Ref<Date>' }
+    ],
+    examples: [
+      { title: '斷線提示', code: "const { isOnline } = useNetwork()\n<Alert v-if=\"!isOnline\">目前處於離線狀態</Alert>" }
+    ]
+  },
+  'useIdle': {
+    name: 'useIdle',
+    description: '使用者閒置偵測',
+    importPath: "import { useIdle } from 'softleader-nuxt-core'",
+    summary: '偵測使用者是否閒置，可用於自動登出、自動存檔等安全機制。',
+    methods: [
+      { name: 'isIdle', params: '-', desc: '是否處於閒置狀態', returnType: 'Ref<boolean>' },
+      { name: 'reset', params: '-', desc: '手動重置閒置計時器', returnType: 'void' }
+    ],
+    examples: [
+      { title: '超時自動處理', code: "const { isIdle } = useIdle({ timeout: 10 * 60 * 1000 })\nwatch(isIdle, (val) => { if (val) logout() })" }
+    ]
+  },
+  'useModal': {
+    name: 'useModal',
+    description: '全域彈窗管理',
+    importPath: "import { useModal } from 'softleader-nuxt-core'",
+    summary: '提供統一的彈窗控制介面，支援多層級彈窗、確認對話框與元件動態掛載。',
+    methods: [
+      { name: 'open', params: '(config)', desc: '開啟自定義元件彈窗', returnType: 'Promise<boolean>' },
+      { name: 'confirm', params: '(config)', desc: '開啟確認對話框', returnType: 'Promise<boolean>' },
+      { name: 'closeAll', params: '()', desc: '關閉所有開啟中的彈窗', returnType: 'void' }
+    ],
+    examples: [
+      { title: '二次確認對話框', code: "const { confirm } = useModal()\nconst ok = await confirm({\n  title: '刪除確認',\n  content: '確定要刪除此項目嗎？此操作不可還原。',\n  confirmText: '我要刪除',\n  cancelText: '再想想'\n})" },
+      { title: '開啟自定義組件', code: "const { open } = useModal()\nimport UserEditForm from './UserEditForm.vue'\n\nawait open({\n  title: '編輯用戶',\n  component: UserEditForm,\n  componentProps: { id: 123 }\n})" }
+    ]
+  },
+  'useTableData': {
+    name: 'useTableData',
+    description: '表格資料載入管理',
+    importPath: "import { useTableData } from 'softleader-nuxt-core'",
+    summary: '封裝表格的分頁、搜尋、排序與載入邏輯，支援後端分頁與前端分頁兩種模式。',
+    methods: [
+      { name: 'loadItems', params: '({ page, itemsPerPage })', desc: '觸發資料載入', returnType: 'Promise<void>' },
+      { name: 'items', params: '-', desc: '當前表格資料陣列', returnType: 'Ref<any[]>' },
+      { name: 'totalItems', params: '-', desc: '資料總筆數', returnType: 'Ref<number>' }
+    ],
+    examples: [
+      { title: '搭配 IDataTable (Server-side)', code: "const { items, totalItems, loadItems, loading } = useTableData({ api: '/api/v1/users' })\n\n// 傳遞給封裝組件\n<IDataTable \n  :data-source=\"items\" \n  :total=\"totalItems\" \n  :loading=\"loading\" \n  @change=\"loadItems\" \n/>" },
+      { title: '手動觸發搜尋', code: "const { search, loadItems } = useTableData({ api: '/api/v1/users' })\nsearch.value = '張三' // 修改 search 後，手動 loadItems\nawait loadItems({ page: 1, itemsPerPage: 10 })" }
+    ]
+  },
+  'useMenuFilter': {
+    name: 'useMenuFilter',
+    description: '選單權限過濾',
+    importPath: "import { useMenuFilter } from 'softleader-nuxt-core'",
+    summary: '根據當前登入使用者的角色與權限，過濾不符條件的選單項目，支援多層級遞迴過濾。',
+    methods: [
+      { name: 'filterMenu', params: '(items)', desc: '執行選單項目過濾', returnType: 'MenuItem[]' }
+    ],
+    examples: [
+      { title: '側邊欄權限過濾', code: "const { filterMenu } = useMenuFilter()\nconst accessibleMenu = filterMenu(rawMenuData)" }
+    ]
+  },
+  'useModules': {
+    name: 'useModules',
+    description: '核心邏輯模組入口',
+    importPath: "import { useModules } from 'softleader-nuxt-core'",
+    summary: '依照開發規範，統一提供專案所需的核心邏輯模組，避免零散引用過多 Composable。',
+    methods: [
+      { name: 'usePagination', params: '-', desc: '分頁管理模組', returnType: 'Composable' },
+      { name: 'useApi', params: '-', desc: 'API 請求模組', returnType: 'Composable' },
+      { name: 'useValidation', params: '-', desc: '資料驗證模組', returnType: 'Composable' }
+    ],
+    examples: [
+      { title: '標準用法', code: "const { usePagination, useApi } = useModules()\nconst { currentPage } = usePagination()" }
+    ]
+  }
+}
+
+export function getFeatureDoc(name: string) {
+  return featureDocs[name] || null
+}

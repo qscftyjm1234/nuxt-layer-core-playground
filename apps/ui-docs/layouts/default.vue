@@ -20,9 +20,13 @@ const businessComponents = [
 
 // 核心功能與組合函式 (Composables)
 const composablesList = [
-  'useApi', 'useAuth', 'useDebounce', 'useEncryption', 
-  'useErrorHandler', 'useFileUpload', 'useOptions', 'usePagination', 
-  'useValidation'
+  'useApi', 'useAppDevice', 'useCustomIcon', 'useDateTime', 
+  'useDebounce', 'useEncryption', 'useErrorHandler', 'useFeatureFlag',
+  'useFileDownload', 'useFileUpload', 'useFormatter', 'useIdle',
+  'useLanguage', 'useLoading', 'useMenuFilter', 'useModal', 
+  'useModules', 'useNetwork', 'useNotify', 'useOptions', 
+  'usePagination', 'usePermission', 'useStorage', 'useTableData', 
+  'useValidation', 'useWatermark'
 ].sort()
 
 // 判斷當前是否在使用特定的路由
@@ -70,7 +74,7 @@ const isCurrentFeature = (name: string) => route.path.includes(`/features/${name
 
         <!-- Composables Section -->
         <div>
-          <div class="px-3 mb-2 text-[11px] font-black text-gray-400 uppercase tracking-widest">核心功能 (Composables)</div>
+          <div class="px-3 mb-2 text-[11px] font-black text-gray-400 uppercase tracking-widest">核心功能</div>
           <div class="flex flex-col gap-1">
             <NuxtLink v-for="comp in composablesList" :key="comp" :to="`/features/${comp}`" class="nav-item font-mono text-[13px]" :class="{ 'active': isCurrentFeature(comp) }">
               <span class="w-1.5 h-1.5 rounded-full bg-gray-300 mr-3 marker-dot"></span>

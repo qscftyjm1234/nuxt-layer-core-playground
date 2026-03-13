@@ -49,10 +49,11 @@ if (values.help) {
 
 // =========================================================
 // 解析目標資料夾路徑與套件名稱
-// positionals[0] 是使用者傳入的專案名稱，預設 my-nuxt-app
-// packageName 會移除非英數字元，確保符合 npm 命名規則
+// 由於指令為 npx softleader-nuxt-core init [project-name]
+// 我們判斷第一個參數是否為 'init'，若是則取第二個參數當專案名稱
 // =========================================================
-const projectName = positionals[0] || 'my-nuxt-app'
+const args = positionals[0] === 'init' ? positionals.slice(1) : positionals
+const projectName = args[0] || 'my-nuxt-app'
 const targetDir = path.resolve(process.cwd(), projectName)
 const packageName =
   path
