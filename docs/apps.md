@@ -1,5 +1,4 @@
-> [!NOTE]
-> [回首頁](../README.md) | [上一頁：核心架構](architecture.md) | [下一頁：開發流程](workflow.md)
+[回到首頁](../README.md) | [上一頁：核心架構](architecture.md) | [下一頁：開發流程](workflow.md)
 
 # 步驟二：各專案用途細節
 

@@ -1,3 +1,5 @@
+[回到套件首頁](../README.md)
+
 # ESLint 繼承與配置指南
 
 在 Nuxt Layer 或 Monorepo 架構中，我們通常希望子專案能夠繼承核心層 (Core Layer) 的程式碼風格檢查規則，同時保留微調的彈性。

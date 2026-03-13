@@ -1,4 +1,4 @@
-[返回指南總覽](../../README.md)
+[回到首頁](../../README.md)
 
 # API 請求與倉庫模式 (Repositories)
 

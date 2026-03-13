@@ -1,5 +1,4 @@
-> [!NOTE]
-> [回首頁](../README.md) | [上一頁：開發流程](workflow.md) | 這是最後一頁
+[回到首頁](../README.md) | [上一頁：開發流程](workflow.md)
 
 # 步驟四：進階資源與支援
 

@@ -1,3 +1,5 @@
+[回到全域首頁](../../README.md)
+
 # Nuxt Core 核心開發包 (`softleader-nuxt-core`)
 
 一個基於 Nuxt 3 的企業級 Layer 開發框架，提供可重用的基礎架構、元件與工具。
@@ -37,7 +39,7 @@ export default defineNuxtConfig({
 
 了解層級設計理念、如何透過繼承快速啟動，以及配置系統。
 
-- **[Nuxt Core 導論與介面理念 (README_TEAM.md)](./README_TEAM.md)**
+- **[Nuxt Core 導論與介面理念 (README_TEAM.md)](./docs/README_TEAM.md)**
 - **[核心配置系統 (nuxt.schema.ts)](./nuxt.schema.ts)**
 - **[開發環境與 Playground 聯動 (README.md)](../../README.md)**
 
@@ -83,7 +85,7 @@ export default defineNuxtConfig({
 
 ### 1. 核心手冊 (必讀)
 
-- **[團隊開發指南 (README_TEAM.md)](./README_TEAM.md)**: 小組員如何快速上手與配置。
+- **[團隊開發指南 (README_TEAM.md)](./docs/README_TEAM.md)**: 小組員如何快速上手與配置。
 - **[核心配置系統 (nuxt.schema.ts)](./nuxt.schema.ts)**: 配置項架構定義。
 - **[核心入口 (nuxt.config.ts)](./nuxt.config.ts)**: Layer 的主配置入口。
 

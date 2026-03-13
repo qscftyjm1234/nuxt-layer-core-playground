@@ -1,4 +1,4 @@
-[返回上一頁 (未來可擴充性)](../guide/02-future-scalability.md)
+[回到首頁](../../README.md) | [返回上一頁 (未來可擴充性)](../guide/02-future-scalability.md)
 
 # 擴充藍圖：業務模組樂高化
 

@@ -1,5 +1,4 @@
-> [!NOTE]
-> [回首頁](../README.md) | [上一頁：測試環境](apps.md) | [下一頁：資源指南](resources.md)
+[回到首頁](../README.md) | [上一頁：測試環境](apps.md) | [下一頁：資源指南](resources.md)
 
 # 步驟三：開發與 NPM 補版流程
 

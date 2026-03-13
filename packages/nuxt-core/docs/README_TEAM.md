@@ -1,3 +1,5 @@
+[回到套件首頁](../README.md)
+
 # Nuxt Core 開發手冊 (Team Guide)
 
 本手冊引導小組員如何在子專案中正確使用與擴充 `nuxt-core` 核心架構。
