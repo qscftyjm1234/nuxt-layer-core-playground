@@ -1,43 +1,43 @@
 <template>
   <div class="layout-default">
     <!-- Header: 頂部導覽列 -->
-    <header v-if="layout.header.visible" class="header" :style="{ height: `${layout.header.height}px` }">
+    <header v-if="layout?.header?.visible" class="header" :style="{ height: `${layout?.header?.height || 64}px` }">
       <div class="container d-flex align-center justify-space-between h-100">
         <div class="branding d-flex align-center gap-2">
-          <IIcon v-if="layout.branding.logo.icon && !layout.branding.logo.image" :name="layout.branding.logo.icon" size="28" color="primary" />
-          <img v-if="layout.branding.logo.image" :src="layout.branding.logo.image" class="logo-img" alt="logo" />
+          <IIcon v-if="layout?.branding?.logo?.icon && !layout?.branding?.logo?.image" :name="layout.branding.logo.icon" size="28" color="primary" />
+          <img v-if="layout?.branding?.logo?.image" :src="layout.branding.logo.image" class="logo-img" alt="logo" />
           <div class="branding-text">
-            <h1 class="logo-title">{{ layout.branding.title }}</h1>
-            <p v-if="layout.branding.subtitle" class="logo-subtitle">{{ layout.branding.subtitle }}</p>
+            <h1 class="logo-title">{{ layout?.branding?.title }}</h1>
+            <p v-if="layout?.branding?.subtitle" class="logo-subtitle">{{ layout.branding.subtitle }}</p>
           </div>
         </div>
 
         <div class="actions d-flex align-center gap-4">
           <!-- 搜尋框 -->
-          <div v-if="layout.header.search" class="search-bar">
-            <input type="text" :placeholder="layout.header.searchPlaceholder" />
+          <div v-if="layout?.header?.search" class="search-bar">
+            <input type="text" :placeholder="layout?.header?.searchPlaceholder" />
           </div>
 
           <slot name="header-actions" />
 
           <!-- 使用者選單按鈕 (示意) -->
-          <div v-if="layout.header.userMenu.visible" class="user-action">
+          <div v-if="layout?.header?.userMenu?.visible" class="user-action">
             <IIcon name="mdi-account-circle" size="32" class="cursor-pointer" />
           </div>
         </div>
       </div>
     </header>
 
-    <main class="main" :class="{ 'has-header': layout.header.visible }">
+    <main class="main" :class="{ 'has-header': layout?.header?.visible }">
       <div class="container py-10">
         <slot />
       </div>
     </main>
 
     <!-- Footer: 頁尾 -->
-    <footer v-if="layout.footer.visible" class="footer">
+    <footer v-if="layout?.footer?.visible" class="footer">
       <div class="container">
-        <div class="footer-content" v-html="layout.footer.content"></div>
+        <div class="footer-content" v-html="layout?.footer?.content"></div>
       </div>
     </footer>
   </div>
@@ -57,24 +57,25 @@ const layout = computed(() => core.layout)
 useHead({
   style: [
     {
-      innerHTML: `
+      innerHTML: computed(() => `
         :root {
           /* 基礎語意色彩 */
-          --color-primary: ${themeConfig.colors.primary};
-          --color-success: ${themeConfig.colors.success};
-          --color-warning: ${themeConfig.colors.warning};
-          --color-error: ${themeConfig.colors.error};
-          --color-info: ${themeConfig.colors.info};
+          --color-primary: ${layout.value?.theme?.primaryColor || core.theme?.primaryColor || themeConfig.colors.primary};
+          --color-primary-alpha: ${layout.value?.theme?.primaryColor || core.theme?.primaryColor || themeConfig.colors.primary}40;
+          --color-success: ${core.theme?.successColor || themeConfig.colors.success};
+          --color-warning: ${core.theme?.warningColor || themeConfig.colors.warning};
+          --color-error: ${core.theme?.errorColor || themeConfig.colors.error};
+          --color-info: ${core.theme?.infoColor || themeConfig.colors.info};
           
           /* 覆寫 main.css 中的特定變數以達成 100% 連動 */
-          --color-primary-600: ${themeConfig.colors.primary};
-          --color-primary-500: ${themeConfig.colors.primary}e6; /* 加入透明度模擬 */
+          --color-primary-600: ${layout.value?.theme?.primaryColor || core.theme?.primaryColor || themeConfig.colors.primary};
+          --color-primary-500: ${layout.value?.theme?.primaryColor || core.theme?.primaryColor || themeConfig.colors.primary}e6; /* 加入透明度模擬 */
           
           /* 基礎圓角 */
-          --radius-md: ${themeConfig.shape.borderRadius}px;
-          --radius-lg: ${themeConfig.shape.borderRadius + 4}px;
+          --radius-md: ${core.theme?.borderRadius || themeConfig.shape.borderRadius}px;
+          --radius-lg: ${(core.theme?.borderRadius || themeConfig.shape.borderRadius) + 4}px;
         }
-      `
+      `)
     }
   ]
 })

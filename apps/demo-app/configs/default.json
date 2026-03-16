@@ -1,0 +1,10 @@
+{
+  "$schema": "./schema.json",
+  "//": "Softleader Nuxt Core 專案設定檔",
+  "branding": { "name": "demo-app", "shortName": "DEMO-APP" },
+  "meta": { "title": "demo-app", "description": "企業級 Nuxt 3 核心架構1234", "lang": "zh-TW" },
+  "layout": { "menuStyle": "sidebar", "sidebar": { "width": 260, "title": "管理系統" } },
+  "theme": { "primaryColor": "#8e5eff", "borderRadius": 12 },
+  "network": { "apiBaseUrl": "/api/v1" },
+  "features": { "enableAuth": true, "enableLog": true }
+}

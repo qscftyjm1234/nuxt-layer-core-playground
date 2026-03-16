@@ -88,8 +88,8 @@ const writeFile = (filePath, content, overwrite = true) => {
 // --- Main Execution ---
 
 if (isInit) {
-  if (fs.existsSync(targetDir)) {
-    log.error(`錯誤: 目錄 "${targetPath}" 已經存在。初始化必須使用新目錄。`)
+  if (fs.existsSync(targetDir) && fs.existsSync(path.join(targetDir, 'package.json'))) {
+    log.error(`錯誤: 目錄 "${targetPath}" 已經存在且包含 package.json。初始化失敗。`)
     process.exit(1)
   }
   log.step('Initializing New Project...')
@@ -150,23 +150,8 @@ writeFile('app.vue', appVue, false)
 
 // 4. 首頁 (Init 模式才產生)
 if (isInit) {
-  const indexVue = `<script setup lang="ts">
-const { formatDateTime } = useDateTime()
-const notify = useNotify()
-const now = ref(formatDateTime(new Date()))
-const handleClick = () => notify.success('連動成功！')
-</script>
-
-<template>
-  <div class="pa-10">
-    <IAlert type="info" title="專案已就緒" text="這是繼承自 softleader-nuxt-core 的新專案。" class="mb-6" />
-    <ICard title="功能示範">
-      <div class="d-flex align-center gap-4">
-        <div>時間: {{ now }}</div>
-        <IButton variant="primary" @click="handleClick">測試通知</IButton>
-      </div>
-    </ICard>
-  </div>
+  const indexVue = `<template>
+  <Welcome />
 </template>
 `
   writeFile('pages/index.vue', indexVue, false)
@@ -180,15 +165,19 @@ const useAppInfoTs = `export const useAppInfo = () => {
 `
 writeFile('composables/useAppInfo.ts', useAppInfoTs, false)
 
-const exampleRepoTs = `export const exampleRepository = () => {
-  const api = useApi()
-  return {
-    getUsers: () => api.get('/users'),
-    createUser: (data: any) => api.post('/users', data)
-  }
+const exampleRepoTs = `/**
+ * 示範：Repository 模式與 useApi 的整合
+ */
+const exampleRepository = {
+  /** 獲取使用者列表 */
+  getUsers: () => useApi().get('/users'),
+  /** 建立使用者 */
+  createUser: (data: any) => useApi().post('/users', data)
 }
+
+export default exampleRepository
 `
-writeFile('repositories/exampleRepository.ts', exampleRepoTs, false)
+writeFile('repositories/exampleRepository.ts', exampleRepoTs, true)
 
 // 6. Config Blueprint
 const defaultConfig = `{
@@ -211,7 +200,40 @@ if (fs.existsSync(schemaPath)) {
   log.info('  [更新] Config Schema 指引')
 }
 
-// 8. README (僅在 Init 或檔案不存在時產生)
+// 8. package.json (僅在 Init 或檔案不存在時產生)
+if (isInit) {
+  // 讀取當前 core 的版本
+  let coreVersion = 'latest'
+  try {
+    const corePkg = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf-8'))
+    coreVersion = corePkg.version
+  } catch (e) {}
+
+  const packageJson = {
+    name: packageName,
+    private: true,
+    type: 'module',
+    scripts: {
+      dev: 'nuxt dev',
+      build: 'nuxt build',
+      generate: 'nuxt generate',
+      preview: 'nuxt preview',
+      postinstall: 'nuxt prepare',
+      typecheck: 'nuxi typecheck'
+    },
+    dependencies: {
+      'softleader-nuxt-core': `^${coreVersion}`,
+      'nuxt': '^3.15.4'
+    },
+    devDependencies: {
+      'vue-tsc': '^2.0.0',
+      'typescript': '^5.0.0'
+    }
+  }
+  writeFile('package.json', JSON.stringify(packageJson, null, 2), false)
+}
+
+// 9. README (僅在 Init 或檔案不存在時產生)
 const readmeMd = `# ${projectName}\n\n基於 \`softleader-nuxt-core\` 核心架構。\n\n## 🚀 快速開始\n1. \`npm install\`\n2. \`npm run dev\`\n`
 writeFile('README.md', readmeMd, false)
 

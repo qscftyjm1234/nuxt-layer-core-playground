@@ -189,8 +189,8 @@ const buttonClasses = computed(() => {
   // Design System: Primary Button Gradients & Shadows
   if (props.variant === 'primary' && !props.disabled && !props.loading && !props.color) {
     classes.push(
-      'bg-gradient-to-r from-indigo-600 to-violet-600 text-white',
-      'hover:shadow-[0_10px_25px_-5px_rgba(79,70,229,0.4)]', // Enhanced Colored Shadow
+      'bg-[var(--color-primary,#4f46e5)] text-white',
+      'hover:shadow-[0_10px_25px_-5px_var(--color-primary-alpha,rgba(79,70,229,0.4))]', // Enhanced Colored Shadow
       'hover:-translate-y-0.5', // Lift effect
       'transition-all duration-200 ease-out'
     )

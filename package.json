@@ -12,13 +12,15 @@
     "dev": "npm run dev:ui-docs",
     "dev:playground": "npm run dev -w playground-app",
     "dev:ui-docs": "npm run dev -w ui-docs",
+    "dev:demo": "npm run dev -w demo-app",
     "build": "npm run build --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "lint:fix": "npm run lint:fix --workspaces --if-present",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "commit": "cz"
+    "commit": "cz",
+    "recreate-demo": "node scripts/recreate-demo.mjs"
   },
   "config": {
     "commitizen": {

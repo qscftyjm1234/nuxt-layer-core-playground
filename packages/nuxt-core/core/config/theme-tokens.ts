@@ -1,7 +1,5 @@
 import { productConfig } from '../../scripts/product-loader'
 
-import { productConfig } from '../../scripts/product-loader'
-
 /**
  * 全域主題設計變數 (Design Tokens)
  * 供 Vuetify、Tailwind 或其他 UI 框架共用的基礎變數

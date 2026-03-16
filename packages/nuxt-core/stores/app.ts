@@ -2,8 +2,31 @@ import { defineStore } from 'pinia'
 import { defaultLayoutConfig, type LayoutConfig } from '../core/config/layout'
 
 export const useAppStore = defineStore('app', () => {
-  // 狀態
-  const config = ref<LayoutConfig>({ ...defaultLayoutConfig })
+  const appConfig = useAppConfig()
+  const coreConfig = appConfig.core as any
+
+  // 狀態：從 appConfig.core 獲取初始值，若無則回退到 defaultLayoutConfig
+  const config = ref<LayoutConfig>({ 
+    ...defaultLayoutConfig,
+    ...(coreConfig?.layout || {}),
+    // 深度處理特定區塊
+    theme: {
+      ...defaultLayoutConfig.theme,
+      ...(coreConfig?.theme || {})
+    },
+    header: {
+      ...defaultLayoutConfig.header,
+      ...(coreConfig?.layout?.header || {})
+    },
+    footer: {
+      ...defaultLayoutConfig.footer,
+      ...(coreConfig?.layout?.footer || {})
+    },
+    sidebar: {
+      ...defaultLayoutConfig.sidebar,
+      ...(coreConfig?.layout?.sidebar || {})
+    }
+  })
   const drawer = ref(true)
   const loading = ref(false)
 

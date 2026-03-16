@@ -163,10 +163,17 @@ import { computed } from 'vue'
 import IIcon from '../uiInterface/IIcon.vue'
 import IButton from '../uiInterface/IButton.vue'
 
-const runtimeConfig = useRuntimeConfig()
-const productConfig = runtimeConfig.public.app.productConfig as any
+const appConfig = useAppConfig()
+const productConfig = appConfig.core as any
 
 const projectName = computed(() => productConfig?.meta?.title || 'Softleader Project')
+
+// 診斷日誌
+onMounted(() => {
+  console.log('🎨 Welcome Page mounted with productConfig:', productConfig)
+  console.log('🖌️ Current Primary Color:', productConfig?.theme?.primaryColor)
+})
+
 const handleStart = () => {
   window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })
 }
@@ -219,7 +226,8 @@ const handleStart = () => {
   right: -5%;
   width: 50vw;
   height: 50vw;
-  background: rgba(59, 130, 246, 0.1);
+  background: var(--color-primary, rgba(59, 130, 246, 0.1));
+  opacity: 0.1;
 }
 .glow-2 {
   bottom: -10%;
@@ -274,7 +282,7 @@ const handleStart = () => {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, var(--color-primary, #2563eb) 0%, #7c3aed 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -336,7 +344,7 @@ const handleStart = () => {
 }
 
 .prime-cta {
-  background: #2563eb !important;
+  background: var(--color-primary, #2563eb) !important;
   color: white !important;
   width: fit-content !important;
   height: 68px !important;
@@ -344,13 +352,13 @@ const handleStart = () => {
   border-radius: 1.25rem !important;
   font-weight: 900 !important;
   font-size: 1.25rem !important;
-  box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.4) !important;
+  box-shadow: 0 25px 50px -12px var(--color-primary-alpha, rgba(37, 99, 235, 0.4)) !important;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
 }
 
 .prime-cta:hover {
   transform: translateY(-4px) scale(1.04) !important;
-  box-shadow: 0 35px 60px -15px rgba(37, 99, 235, 0.5) !important;
+  box-shadow: 0 35px 60px -15px var(--color-primary-alpha, rgba(37, 99, 235, 0.5)) !important;
 }
 .prime-cta:active {
   transform: scale(0.96) !important;
@@ -485,7 +493,7 @@ const handleStart = () => {
   position: absolute;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.5), transparent);
+  background: linear-gradient(90deg, transparent, var(--color-primary-alpha, rgba(37, 99, 235, 0.5)), transparent);
   top: 0;
   animation: scan 3s linear infinite;
   z-index: 20;

@@ -31,6 +31,9 @@ npm install
 - **`npm run dev:playground`** (預設 `http://localhost:8081`)：
   - **行為**：啟動 `apps/playground-app` (開發練習區)。
   - **時機**：當您需要測試一個極端情境、串接特定的外部 API，但不希望這些測試髒 code 被推上 UI 正式站時使用。
+- **`npm run dev:demo`** (預設 `http://localhost:xxxx`)：
+  - **行為**：啟動 `apps/demo-app`。
+  - **時機**：當您需要查看整合了核心架構的完整 Demo 範例時使用。
 
 ## 3. 全域掃描與編譯
 

@@ -23,6 +23,22 @@ const { resolve } = createResolver(import.meta.url)
 export default defineNuxtConfig({
   ssr: false,
 
+  // Server-side Log
+  hooks: {
+    ready: () => {
+      console.log('🚀 Nuxt Core started with product:', productConfig.meta?.title, 'Color:', productConfig.theme?.primaryColor)
+    }
+  },
+
+  /** 支援配置驅動：監控 JSON 變動並自動重啟伺服器 (即改即變) */
+  watch: [
+    'configs/*.json',
+    'configs/**/*.json',
+    // 使用絕對路徑確保在不同 CWD 下都能監控到目前專案的 configs
+    `${process.cwd()}/configs/*.json`,
+    `${process.cwd()}/configs/**/*.json`
+  ],
+
   compatibilityDate: '2024-04-03',
 
   /** 編譯與打包設定 */
@@ -61,7 +77,8 @@ export default defineNuxtConfig({
       app: {
         ...projectRuntimeConfig.public.app,
         uaIdentifier:
-          projectRuntimeConfig.public.app.uaIdentifier || productConfig.branding?.uaIdentifier
+          projectRuntimeConfig.public.app.uaIdentifier || productConfig.branding?.uaIdentifier,
+        productConfig
       },
       // 將 JSON 裡的網路設定同步到 runtimeConfig (環境變數優先)
       api: {

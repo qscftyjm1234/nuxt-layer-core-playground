@@ -28,8 +28,11 @@ type FeaturePath =
  * @returns 功能是否啟用
  */
 function getFeatureValue(config: FeatureConfig): boolean {
+  // 安全檢查：確保是在 Node 環境或有 process polyfill
+  const hasProcess = typeof process !== 'undefined' && process.env
+
   // 優先使用環境變數
-  if (config.envKey) {
+  if (config.envKey && hasProcess) {
     const envValue = process.env[config.envKey]
     if (envValue !== undefined) {
       return envValue === 'true' || envValue === '1'
@@ -38,7 +41,7 @@ function getFeatureValue(config: FeatureConfig): boolean {
 
   // 檢查環境限制
   if (config.environments && config.environments.length > 0) {
-    const currentEnv = process.env.NODE_ENV || 'development'
+    const currentEnv = (hasProcess ? process.env.NODE_ENV : 'development') || 'development'
     const isAllEnvironments = config.environments.includes('all')
     const isCurrentEnvironment = config.environments.includes(
       currentEnv as 'development' | 'staging' | 'production'
