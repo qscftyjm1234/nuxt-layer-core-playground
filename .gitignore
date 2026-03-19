@@ -28,3 +28,7 @@ dist
 coverage
 
 .npmrc
+
+# Test Projects
+packages/nuxt-core/tmp-test-project/
+tmp-test-project/
