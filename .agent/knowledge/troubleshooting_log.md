@@ -88,3 +88,13 @@
 - **預防措施**: 確保在 Nuxt 3/4 環境中優先使用 `nuxt/schema` 進行架構定義，以保證與 `jiti` 的最佳相容性。
 
 ---
+
+### 14. E404 Not Found - PUT https://registry.npmjs.org/
+
+- **發現日期**: 2026-03-19
+- **症狀**: 執行 `npm publish` 或 `npm run release` 時，終端機報錯 `npm error 404 Not Found - PUT https://registry.npmjs.org/...`。
+- **根本原因**: 使用者尚未登入 npm (`npm whoami` 回傳 401 Unauthorized)，npm 在未授權存取某些 package 時預設會回傳 404 以避免洩密。
+- **最佳解決方案**:
+  1. 執行 `npm login` 重新登入你的 npm 帳號。
+  2. 登入成功後，再次執行發布指令。
+- **預防措施**: 在執行發布腳本前確保終端機已登入正確的 npm 帳號。
