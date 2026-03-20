@@ -1,5 +1,5 @@
 import { reactive } from 'vue'
-import coreRepositories from '../repositories'
+import coreRepositories from '../core/repositories'
 
 /**
  * 提供專案層級擴充的介面

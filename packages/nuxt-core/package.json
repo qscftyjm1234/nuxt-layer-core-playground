@@ -1,6 +1,6 @@
 {
   "name": "softleader-nuxt-core",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Nuxt 3 Core Layer - 可重用的基礎架構",
   "type": "module",
   "files": [
@@ -30,7 +30,8 @@
     "lint-staged.config.js",
     ".eslintrc.cjs",
     ".prettierrc",
-    "README.md"
+    "README.md",
+    "repositories"
   ],
   "exports": {
     ".": "./nuxt.config.ts",
